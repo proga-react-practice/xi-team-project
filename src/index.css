@@ -28,7 +28,15 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  padding: 0;
+  font-size: 20px;
+  font-family: 'Roboto', sans-serif;
+  background-color: #f2f2f2;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
+
 
 h1 {
   font-size: 3.2em;
@@ -66,3 +74,122 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: "Quicksand", sans-serif;
+  line-height: 1.5;
+
+  color: #ebe7ef;
+  /* background: radial-gradient(#280a48, #20043d); */
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  min-height: 80rem;
+}
+
+main {
+  width: 90%;
+  max-width: 50rem;
+  margin: auto;
+}
+#examples {
+  margin: 3rem auto;
+}
+
+
+.container {
+  margin-top: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+#content {
+  max-width: 900px;
+  min-height: 76.9vh;
+  width: 70%;
+  background-color: #fff;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  border-radius: 0.4rem;
+}
+
+form {
+  width: 100%;
+}
+
+.form-group {
+  margin-bottom: 1em;
+  width: 100%;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.25em;
+}
+
+
+input[type="submit"] {
+  background-color: #747bff;
+  color: white;
+  padding: 1em 1.25em;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+input[type="submit"] :hover {
+  background-color: #747bff;
+}
+
+
+.radio-group,.checkbox-group {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.radio-group input[type="radio"],.checkbox-group input[type="checkbox"] {
+  display: none;
+}
+
+.radio-group input[type="radio"]:checked+label,.checkbox-group input[type="checkbox"]:checked+label {
+  background-color: #747bff;
+  color: white;
+}
+
+.radio-group label, .checkbox-group label {
+  display: inline-block;
+  padding: 0.5em 1em;
+  margin-right: 0.5em;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.range-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+input[type="range"] {
+  width: 100%;
+  margin: 0;
+}
+
+
+
+
