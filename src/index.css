@@ -30,7 +30,7 @@ body {
   padding: 0;
   font-size: 20px;
   font-family: 'Roboto', sans-serif;
-  background-color: #f2f2f2;
+  background: radial-gradient(circle at center, #3c77f5, #2a31bd);
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -79,24 +79,16 @@ button:focus-visible {
 }
 
 html {
-  font-family: "Quicksand", sans-serif;
-  line-height: 1.5;
-
-  color: #ebe7ef;
-  /* background: radial-gradient(#280a48, #20043d); */
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
 
 main {
-  width: 90%;
-  max-width: 50rem;
+  width: 100%;
+  max-width: 100vw;
   margin: auto;
 }
+
+
 #examples {
   margin: 3rem auto;
 }
@@ -159,13 +151,9 @@ main {
   border-radius: 0.4rem;
 }
 
-form {
-  width: 100%;
-}
 
 .form-group {
   margin-bottom: 1em;
-  width: 100%;
 }
 
 label {
@@ -174,18 +162,16 @@ label {
 }
 
 
-input[type="submit"] {
-  background-color: #747bff;
+button[type="submit"] {
+  background: #747bff;
   color: white;
-  padding: 1em 1.25em;
-  border: none;
-  border-radius: 5px;
+  border: 1px solid #747bff;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background 0.3s ease;
 }
 
-input[type="submit"] :hover {
-  background-color: #747bff;
+button[type="submit"]:hover {
+  background: #535bf2;
 }
 
 
@@ -194,6 +180,7 @@ input[type="submit"] :hover {
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
 }
 
 .radio-group input[type="radio"],.checkbox-group input[type="checkbox"] {
@@ -205,13 +192,23 @@ input[type="submit"] :hover {
   color: white;
 }
 
-.radio-group label, .checkbox-group label {
+.radio-group label,
+.checkbox-group label {
   display: inline-block;
   padding: 0.5em 1em;
-  margin-right: 0.5em;
-  background-color: #f0f0f0;
+  margin-right: 0.25em;
+  background: #dfdfdf;
   border-radius: 5px;
   cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.radio-group label:hover {
+  background-color: #cacedb;
+}
+
+.checkbox-group label:hover {
+  background-color: #cacedb;
 }
 
 .range-container {
@@ -230,6 +227,9 @@ input[type="range"] {
   padding: 0.5em;
   border: 1px solid #ddd;
   border-radius: 0.5em;
+  opacity: 0;
+  transform: translateY(-1em);
+  animation: appear 0.5s forwards ease-out;
 }
 
 .cards-container .card table {
@@ -237,10 +237,33 @@ input[type="range"] {
   margin-bottom: 0.5em;
 }
 
+@keyframes appear {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 .cards-container .card table td {
   padding: 0.25em;
   border: 1px solid #ddd;
 }
+.cards-container .card button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  color: #fff;
+  border: none;
+  border-radius: 0.25em;
+  cursor: pointer;
+  background: radial-gradient(circle at center, #3c77f5, #2a31bd);
+}
 
+.value-block {
+  display: inline-block;
+  margin-right: 0.5em;
+  padding: 0.25em;
+  border: 1px solid #ddd;
+  border-radius: 0.25em;
+}
 

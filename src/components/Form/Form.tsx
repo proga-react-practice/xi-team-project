@@ -8,8 +8,32 @@ interface IFormProps {
   setFormData: (data: (prevData: ICardData[]) => ICardData[]) => void;
 }
 
+const Modal = ({
+  message,
+  onClose,
+}: {
+  message: string;
+  onClose: () => void;
+}) => (
+  <div
+    style={{
+      position: "fixed",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      backgroundColor: "white",
+      padding: "20px",
+      zIndex: 1000,
+    }}
+  >
+    <p>{message}</p>
+    <button onClick={onClose}>Close</button>
+  </div>
+);
+
 export default function Form({ setFormData }: IFormProps) {
   const [rangeValue, setRangeValue] = React.useState(0);
+  const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -30,7 +54,7 @@ export default function Form({ setFormData }: IFormProps) {
       !TypeOfAI ||
       rateAIIntelligence === 0
     ) {
-      alert("Please fill out all fields.");
+      setErrorMessage("Please select at least one option.");
       return;
     }
 
@@ -66,6 +90,9 @@ export default function Form({ setFormData }: IFormProps) {
 
   return (
     <div className="form-container">
+      {errorMessage && (
+        <Modal message={errorMessage} onClose={() => setErrorMessage(null)} />
+      )}
       <form onSubmit={handleSubmit}>
         <section id="examples">
           <CheckRadioConcept {...CHECK_AND_RADIO[0]} />
@@ -76,7 +103,9 @@ export default function Form({ setFormData }: IFormProps) {
             value={rangeValue}
             onChange={setRangeValue}
           />
-          <button onClick={handleSubmit}>Submit</button>
+          <button type="submit" onClick={handleSubmit}>
+            Submit
+          </button>
           <button type="reset" onClick={handleClear}>
             Clear
           </button>

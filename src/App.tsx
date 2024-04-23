@@ -1,7 +1,6 @@
 import "./App.css";
 import Form from "./components/Form/Form";
 import Cards from "./components/Cards";
-import { dummyData } from "././dummydata";
 import { useState } from "react";
 import { ICardData } from "./components/Cards";
 
