@@ -9,18 +9,20 @@ export default function Form() {
     e.preventDefault();
   };
   return (
-    <form onSubmit={handleSubmit}>
-      <section id="examples">
-        <CheckRadioConcept {...CHECK_AND_RADIO[0]} />
-        <CheckRadioConcept {...CHECK_AND_RADIO[1]} />
-        <CheckRadioConcept {...CHECK_AND_RADIO[2]} />
-        <RangeConcept
-          {...RANGE[0]}
-          value={rangeValue}
-          onChange={setRangeValue}
-        />
-        <button>Submit</button>
-      </section>
-    </form>
+    <div className="form-container">
+      <form onSubmit={handleSubmit}>
+        <section id="examples">
+          <CheckRadioConcept {...CHECK_AND_RADIO[0]} />
+          <CheckRadioConcept {...CHECK_AND_RADIO[1]} />
+          <CheckRadioConcept {...CHECK_AND_RADIO[2]} />
+          <RangeConcept
+            {...RANGE[0]}
+            value={rangeValue}
+            onChange={setRangeValue}
+          />
+          <button>Submit</button>
+        </section>
+      </form>
+    </div>
   );
 }

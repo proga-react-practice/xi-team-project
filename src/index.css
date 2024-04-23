@@ -90,7 +90,6 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
-  min-height: 80rem;
 }
 
 main {
@@ -111,14 +110,51 @@ main {
   flex-wrap: wrap;
 }
 
+
+.main-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.main-container .form-container {
+  min-width: calc(40vw - 1em);
+  border-right: 1px solid #000;
+  border-radius: 0.3em;
+}
+
+.main-container .cards-container {
+  min-width: calc(60vw - 1em);
+  border-left: 1px solid #000;
+  border-radius: 0.3em;
+}
+
+@media screen and (max-width: 768px) {
+  .main-container {
+    flex-direction: column;
+  }
+
+  .main-container .form-container,
+  .main-container .cards-container {
+    min-width: 100%;
+  }
+
+  .main-container .form-container {
+    border-right: none;
+    border-bottom: 1px solid #000;
+  }
+
+  .main-container .cards-container {
+    border-left: none;
+    border-top: 1px solid #000;
+  }
+}
+
 #content {
-  max-width: 900px;
-  min-height: 76.9vh;
-  width: 70%;
+  min-width: 100vw;
+  margin: auto;
   background-color: #fff;
   padding-left: 0.5em;
   padding-right: 0.5em;
-  box-sizing: border-box;
   border: 1px solid #ddd;
   border-radius: 0.4rem;
 }
@@ -189,6 +225,22 @@ input[type="range"] {
   margin: 0;
 }
 
+.cards-container .card {
+  margin-bottom: 1em;
+  padding: 0.5em;
+  border: 1px solid #ddd;
+  border-radius: 0.5em;
+}
 
+.cards-container .card table {
+  width: 100%;
+  margin-bottom: 0.5em;
+}
+
+
+.cards-container .card table td {
+  padding: 0.25em;
+  border: 1px solid #ddd;
+}
 
 
