@@ -16,6 +16,7 @@ export default function RangeConcept(props: IRangeConceptProps) {
   useEffect(() => {
     setRangeValue(props.value);
   }, [props.value]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = parseInt(e.target.value);
     setRangeValue(newValue);

@@ -10,12 +10,6 @@ function App() {
   const handleDelete = (index: number) => {
     setFormData((prevCards) => prevCards.filter((_, i) => i !== index));
   };
-  // const [formData, setFormData] = useState<ICardData>({
-  //   levelOfAI: [],
-  //   whereAIIsUsed: [],
-  //   TypeOfAI: "",
-  //   rateAIIntelligence: 0,
-  // });
   return (
     <>
       <main>

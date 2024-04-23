@@ -2,34 +2,12 @@ import CheckRadioConcept from "./CheckRadioConcept";
 import RangeConcept from "./RangeConcept";
 import { CHECK_AND_RADIO, RANGE } from "../../data";
 import { ICardData } from "../Cards";
+import Alert from "../Alert";
 import React from "react";
 
 interface IFormProps {
   setFormData: (data: (prevData: ICardData[]) => ICardData[]) => void;
 }
-
-const Modal = ({
-  message,
-  onClose,
-}: {
-  message: string;
-  onClose: () => void;
-}) => (
-  <div
-    style={{
-      position: "fixed",
-      top: "50%",
-      left: "50%",
-      transform: "translate(-50%, -50%)",
-      backgroundColor: "white",
-      padding: "20px",
-      zIndex: 1000,
-    }}
-  >
-    <p>{message}</p>
-    <button onClick={onClose}>Close</button>
-  </div>
-);
 
 export default function Form({ setFormData }: IFormProps) {
   const [rangeValue, setRangeValue] = React.useState(0);
@@ -67,13 +45,6 @@ export default function Form({ setFormData }: IFormProps) {
         rateAIIntelligence,
       },
     ]);
-
-    console.log("Data sent:", {
-      levelOfAI,
-      whereAIIsUsed,
-      TypeOfAI,
-      rateAIIntelligence,
-    });
   };
   const handleClear = () => {
     document
@@ -91,7 +62,7 @@ export default function Form({ setFormData }: IFormProps) {
   return (
     <div className="form-container">
       {errorMessage && (
-        <Modal message={errorMessage} onClose={() => setErrorMessage(null)} />
+        <Alert message={errorMessage} onClose={() => setErrorMessage(null)} />
       )}
       <form onSubmit={handleSubmit}>
         <section id="examples">

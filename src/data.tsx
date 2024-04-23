@@ -1,11 +1,11 @@
-type CROptions = {
+type CheckboxRadioOptions = {
   label: string;
   class_Name: string;
   input_Type: string;
   name: string;
   value: string[];
 };
-type ROptions = {
+type RangeOptions = {
   label: string;
   class_Name: string;
   name: string;
@@ -13,7 +13,7 @@ type ROptions = {
   max: number;
   value: number;
 };
-export const CHECK_AND_RADIO: CROptions[] = [
+export const CHECK_AND_RADIO: CheckboxRadioOptions[] = [
   {
     label: "Level of AI",
     class_Name: "checkbox-group",
@@ -43,9 +43,9 @@ export const CHECK_AND_RADIO: CROptions[] = [
   },
 ];
 
-export const RANGE: ROptions[] = [
+export const RANGE: RangeOptions[] = [
   {
-    label: "Rate AI Intelligence:",
+    label: "Rate AI Intelligence",
     class_Name: "range-container",
     name: "rating",
     min: 1,

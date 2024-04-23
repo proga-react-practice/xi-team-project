@@ -1,3 +1,5 @@
+import { CHECK_AND_RADIO, RANGE } from "../data";
+
 export interface ICardData {
   levelOfAI: string[];
   whereAIIsUsed: string[];
@@ -5,12 +7,12 @@ export interface ICardData {
   rateAIIntelligence: number;
 }
 
-interface CardsProps {
+interface ICardsProps {
   cards: ICardData[];
   onDelete: (index: number) => void;
 }
 
-export default function Cards({ cards, onDelete }: CardsProps) {
+export default function Cards({ cards, onDelete }: ICardsProps) {
   return (
     <div className="cards-container">
       {cards.map((card, index) => (
@@ -18,7 +20,7 @@ export default function Cards({ cards, onDelete }: CardsProps) {
           <table>
             <tbody>
               <tr>
-                <td>Level of AI</td>
+                <td>{CHECK_AND_RADIO[0].label}</td>
                 <td>
                   {card.levelOfAI.map((level, levelIndex) => (
                     <span key={levelIndex} className="value-block">
@@ -28,7 +30,7 @@ export default function Cards({ cards, onDelete }: CardsProps) {
                 </td>
               </tr>
               <tr>
-                <td>Where AI is used for?</td>
+                <td>{CHECK_AND_RADIO[1].label}</td>
                 <td>
                   {card.whereAIIsUsed.map((use, useIndex) => (
                     <span key={useIndex} className="value-block">
@@ -38,13 +40,13 @@ export default function Cards({ cards, onDelete }: CardsProps) {
                 </td>
               </tr>
               <tr>
-                <td>Type of AI</td>
+                <td>{CHECK_AND_RADIO[2].label}</td>
                 <td>
                   <span className="value-block">{card.TypeOfAI}</span>
                 </td>
               </tr>
               <tr>
-                <td>Rate AI Intelligence</td>
+                <td>{RANGE[0].label}</td>
                 <td>{card.rateAIIntelligence}</td>
               </tr>
             </tbody>
