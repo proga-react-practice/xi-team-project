@@ -7,9 +7,10 @@ export interface ICardData {
 
 interface CardsProps {
   cards: ICardData[];
+  onDelete: (index: number) => void;
 }
 
-export default function Cards({ cards }: CardsProps) {
+export default function Cards({ cards, onDelete }: CardsProps) {
   return (
     <div className="cards-container">
       {cards.map((card, index) => (
@@ -48,7 +49,7 @@ export default function Cards({ cards }: CardsProps) {
               </tr>
             </tbody>
           </table>
-          <button>Delete</button>
+          <button onClick={() => onDelete(index)}>Delete</button>
         </div>
       ))}
     </div>

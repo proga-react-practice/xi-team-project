@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 interface IRangeConceptProps {
   label: string;
@@ -13,6 +13,9 @@ interface IRangeConceptProps {
 export default function RangeConcept(props: IRangeConceptProps) {
   const [rangeValue, setRangeValue] = useState(props.value);
 
+  useEffect(() => {
+    setRangeValue(props.value);
+  }, [props.value]);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = parseInt(e.target.value);
     setRangeValue(newValue);

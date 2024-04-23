@@ -5,7 +5,7 @@ import { ICardData } from "../Cards";
 import React from "react";
 
 interface IFormProps {
-  setFormData: (data: ICardData) => void;
+  setFormData: (data: (prevData: ICardData[]) => ICardData[]) => void;
 }
 
 export default function Form({ setFormData }: IFormProps) {
@@ -15,21 +15,34 @@ export default function Form({ setFormData }: IFormProps) {
 
     const levelOfAI = Array.from(
       document.querySelectorAll('input[name="level"]:checked')
-    ).map((input) => (input as HTMLInputElement)?.value || "");
+    ).map((input) => (input as HTMLInputElement).value);
     const whereAIIsUsed = Array.from(
       document.querySelectorAll('input[name="occupancy"]:checked')
-    ).map((input) => (input as HTMLInputElement)?.value || "");
+    ).map((input) => (input as HTMLInputElement).value);
     const TypeOfAI = (
       document.querySelector('input[name="type"]:checked') as HTMLInputElement
-    ).value;
+    )?.value;
     const rateAIIntelligence = rangeValue;
 
-    setFormData({
-      levelOfAI,
-      whereAIIsUsed,
-      TypeOfAI,
-      rateAIIntelligence,
-    });
+    if (
+      levelOfAI.length === 0 ||
+      whereAIIsUsed.length === 0 ||
+      !TypeOfAI ||
+      rateAIIntelligence === 0
+    ) {
+      alert("Please fill out all fields.");
+      return;
+    }
+
+    setFormData((prevData) => [
+      ...prevData,
+      {
+        levelOfAI,
+        whereAIIsUsed,
+        TypeOfAI,
+        rateAIIntelligence,
+      },
+    ]);
 
     console.log("Data sent:", {
       levelOfAI,
@@ -39,12 +52,16 @@ export default function Form({ setFormData }: IFormProps) {
     });
   };
   const handleClear = () => {
-    setFormData({
-      levelOfAI: [],
-      whereAIIsUsed: [],
-      TypeOfAI: "",
-      rateAIIntelligence: 0,
-    });
+    document
+      .querySelectorAll('input[name="level"]')
+      .forEach((input) => ((input as HTMLInputElement).checked = false));
+    document
+      .querySelectorAll('input[name="occupancy"]')
+      .forEach((input) => ((input as HTMLInputElement).checked = false));
+    (
+      document.querySelector('input[name="type"]:checked') as HTMLInputElement
+    ).checked = false;
+    setRangeValue(0);
   };
 
   return (
