@@ -1,62 +1,75 @@
-import CheckRadioConcept from "./CheckRadioConcept";
-import RangeConcept from "./RangeConcept";
 import { CHECK_AND_RADIO, RANGE } from "../../data";
-import { ICardData } from "../Cards";
 import Alert from "../Alert";
-import React from "react";
-
+import React, { useState } from "react";
+export interface AI {
+  levelOfAI: string[];
+  whereAIIsUsed: string[];
+  TypeOfAI: string;
+  rateAIIntelligence: number;
+}
 interface IFormProps {
-  setFormData: (data: (prevData: ICardData[]) => ICardData[]) => void;
+  onSubmit: (Ai: AI) => void;
 }
 
-export default function Form({ setFormData }: IFormProps) {
+const Form = ({ onSubmit }: IFormProps) => {
   const [rangeValue, setRangeValue] = React.useState(0);
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
+
+  const defaultFormState = {
+    levelOfAI: [],
+    whereAIIsUsed: [],
+    TypeOfAI: "",
+    rateAIIntelligence: 0,
+  };
+
+  const [Ai, setAI] = useState<AI>(defaultFormState);
+
+  const onLevelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAI({ ...Ai, levelOfAI: [...Ai.levelOfAI, e.target.value] });
+  };
+
+  const onWhereUsedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAI({ ...Ai, whereAIIsUsed: [...Ai.whereAIIsUsed, e.target.value] });
+  };
+
+  const onTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAI({ ...Ai, TypeOfAI: e.target.value });
+  };
+
+  const onRateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = parseInt(e.target.value);
+    setAI({ ...Ai, rateAIIntelligence: newValue });
+    setRangeValue(newValue);
+  };
+
+  const validateAI = (Ai: AI) => {
+    if (
+      Ai.levelOfAI.length === 0 ||
+      Ai.whereAIIsUsed.length === 0 ||
+      !Ai.TypeOfAI ||
+      Ai.rateAIIntelligence === 0
+    ) {
+      return "Please fill all the fields";
+    }
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMessage("");
 
-    const levelOfAI = Array.from(
-      document.querySelectorAll('input[name="level"]:checked')
-    ).map((input) => (input as HTMLInputElement).value);
-    const whereAIIsUsed = Array.from(
-      document.querySelectorAll('input[name="occupancy"]:checked')
-    ).map((input) => (input as HTMLInputElement).value);
-    const TypeOfAI = (
-      document.querySelector('input[name="type"]:checked') as HTMLInputElement
-    )?.value;
-    const rateAIIntelligence = rangeValue;
-
-    if (
-      levelOfAI.length === 0 ||
-      whereAIIsUsed.length === 0 ||
-      !TypeOfAI ||
-      rateAIIntelligence === 0
-    ) {
-      setErrorMessage("Please select at least one option.");
+    const error = validateAI(Ai);
+    if (error) {
+      setErrorMessage(error);
       return;
     }
-
-    setFormData((prevData) => [
-      ...prevData,
-      {
-        levelOfAI,
-        whereAIIsUsed,
-        TypeOfAI,
-        rateAIIntelligence,
-      },
-    ]);
+    onSubmit(Ai);
+    console.log(Ai);
   };
   const handleClear = () => {
-    document
-      .querySelectorAll('input[name="level"]')
-      .forEach((input) => ((input as HTMLInputElement).checked = false));
-    document
-      .querySelectorAll('input[name="occupancy"]')
-      .forEach((input) => ((input as HTMLInputElement).checked = false));
-    (
-      document.querySelector('input[name="type"]:checked') as HTMLInputElement
-    ).checked = false;
+    setErrorMessage(null);
     setRangeValue(0);
+    setAI(defaultFormState);
+    console.log(Ai);
   };
 
   return (
@@ -66,14 +79,71 @@ export default function Form({ setFormData }: IFormProps) {
       )}
       <form onSubmit={handleSubmit}>
         <section id="examples">
-          <CheckRadioConcept {...CHECK_AND_RADIO[0]} />
-          <CheckRadioConcept {...CHECK_AND_RADIO[1]} />
-          <CheckRadioConcept {...CHECK_AND_RADIO[2]} />
-          <RangeConcept
-            {...RANGE[0]}
-            value={rangeValue}
-            onChange={setRangeValue}
-          />
+          <div className="form-group">
+            <label>Level of AI</label>
+            <div className="checkbox-group">
+              {CHECK_AND_RADIO[0].value.map((val, index) => (
+                <React.Fragment key={index}>
+                  <input
+                    type="checkbox"
+                    name="levelOfAI"
+                    value={val}
+                    id={val}
+                    onChange={onLevelChange}
+                  />
+                  <label htmlFor={val}>{val}</label>
+                </React.Fragment>
+              ))}
+            </div>
+          </div>
+          <div className="form-group">
+            <label>Where AI is used</label>
+            <div className="checkbox-group">
+              {CHECK_AND_RADIO[1].value.map((val, index) => (
+                <React.Fragment key={index}>
+                  <input
+                    type="checkbox"
+                    name="levelOfAI"
+                    value={val}
+                    id={val}
+                    onChange={onWhereUsedChange}
+                  />
+                  <label htmlFor={val}>{val}</label>
+                </React.Fragment>
+              ))}
+            </div>
+          </div>
+          <div className="form-group">
+            <label>Type of AI</label>
+            <div className="radio-group">
+              {CHECK_AND_RADIO[2].value.map((val, index) => (
+                <React.Fragment key={index}>
+                  <input
+                    type="radio"
+                    name="TypeOfAI"
+                    value={val}
+                    id={val}
+                    onChange={onTypeChange}
+                  />
+                  <label htmlFor={val}>{val}</label>
+                </React.Fragment>
+              ))}
+            </div>
+          </div>
+          <div className="form-group">
+            <label>Rate AI intelligence</label>
+            <div className="range-group">
+              <input
+                type="range"
+                name="rateAIIntelligence"
+                min={RANGE[0].min}
+                max={RANGE[0].max}
+                value={rangeValue}
+                onChange={onRateChange}
+              />
+              <span>{rangeValue}</span>
+            </div>
+          </div>
           <button type="submit" onClick={handleSubmit}>
             Submit
           </button>
@@ -84,4 +154,6 @@ export default function Form({ setFormData }: IFormProps) {
       </form>
     </div>
   );
-}
+};
+
+export default Form;
