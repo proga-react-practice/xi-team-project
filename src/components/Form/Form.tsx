@@ -12,6 +12,10 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
+import Button from "@mui/material/Button";
+import ClearIcon from "@mui/icons-material/Clear";
+import SendIcon from "@mui/icons-material/Send";
+import Stack from "@mui/material/Stack";
 
 export interface AI {
   levelOfAI: string[];
@@ -47,6 +51,8 @@ const Form = ({ onSubmit }: IFormProps) => {
   const theme = useTheme();
   const [levelOfAI, setLevelOfAI] = React.useState<string[]>([]);
   const [whereAIIsUsed, setWhereAIIsUsed] = React.useState<string[]>([]);
+  const [TypeOfAI, setTypeOfAI] = React.useState<string>("");
+
   const [rangeValue, setRangeValue] = React.useState<number>(0);
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
   const defaultFormState = {
@@ -78,11 +84,12 @@ const Form = ({ onSubmit }: IFormProps) => {
     setAI({ ...Ai, whereAIIsUsed: newOption });
   };
 
-  const onTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onTypeChange = (e: SelectChangeEvent) => {
+    setTypeOfAI(e.target.value);
     setAI({ ...Ai, TypeOfAI: e.target.value });
   };
 
-  const onRateSliderChange = (event: Event, newValue: number | number[]) => {
+  const onRateSliderChange = (_: Event, newValue: number | number[]) => {
     const value = Array.isArray(newValue) ? newValue[0] : newValue;
     setAI({ ...Ai, rateAIIntelligence: value });
     setRangeValue(value);
@@ -131,6 +138,7 @@ const Form = ({ onSubmit }: IFormProps) => {
     setAI(defaultFormState);
     setLevelOfAI([]);
     setWhereAIIsUsed([]);
+    setTypeOfAI("");
     console.log(Ai);
     document.querySelectorAll('input[type="checkbox"]').forEach((element) => {
       const checkbox = element as HTMLInputElement;
@@ -298,21 +306,59 @@ const Form = ({ onSubmit }: IFormProps) => {
             </FormControl>
           </div>
           <div className="form-group">
-            <label>Type of AI</label>
-            <div className="radio-group">
-              {CHECK_AND_RADIO[2].value.map((val, index) => (
-                <React.Fragment key={index}>
-                  <input
-                    type="radio"
-                    name="TypeOfAI"
-                    value={val}
-                    id={val}
-                    onChange={onTypeChange}
-                  />
-                  <label htmlFor={val}>{val}</label>
-                </React.Fragment>
-              ))}
-            </div>
+            <FormControl
+              variant="standard"
+              sx={{
+                m: 1,
+                minWidth: "95%",
+                display: "block",
+                marginBottom: "0.25em",
+                "& label": {
+                  display: "block",
+                  marginBottom: "0.25em",
+                  fontSize: "1.3em",
+                },
+                "& .MuiInputBase-root": {
+                  minWidth: "95%",
+                },
+                "& .MuiSelect-root": {
+                  display: "inline-block",
+                  padding: "0.5em 1em",
+
+                  marginRight: "0.25em",
+                  background: "#dfdfdf",
+                  borderRadius: "5px",
+                  cursor: "pointer",
+                  transition: "background 0.3s ease",
+                  fontSize: "1.2em",
+                  "&:hover": {
+                    backgroundColor: "#cacedb",
+                  },
+                  "&.Mui-selected": {
+                    backgroundColor: "#747bff",
+                    color: "white",
+                  },
+                },
+              }}
+            >
+              <InputLabel id="TypeOfAI-select-standard-label">
+                Type of AI
+              </InputLabel>
+              <Select
+                labelId="TypeOfAI-select-standard-label"
+                id="TypeOfAI-select-standard"
+                value={TypeOfAI}
+                onChange={onTypeChange}
+                label="Type of AI"
+              >
+                <MenuItem value="">
+                  <em>None</em>
+                </MenuItem>
+                <MenuItem value={"NPC"}>NPC</MenuItem>
+                <MenuItem value={"Neural Network"}>Neural Network</MenuItem>
+                <MenuItem value={"Function"}>Function</MenuItem>
+              </Select>
+            </FormControl>
           </div>
           <div className="form-group">
             <label>Rate AI intelligence</label>
@@ -391,12 +437,55 @@ const Form = ({ onSubmit }: IFormProps) => {
               </Grid>
             </Box>
           </div>
-          <button type="submit" onClick={handleSubmit}>
-            Submit
-          </button>
-          <button type="reset" onClick={handleClear}>
-            Clear
-          </button>
+          <Stack direction="row" spacing={2}>
+            <Button
+              variant="contained"
+              endIcon={<SendIcon />}
+              onClick={handleSubmit}
+              sx={{
+                borderRadius: "8px",
+                border: "1px solid transparent",
+                padding: "0.6em 1.2em",
+                fontSize: "1em",
+                fontWeight: "500",
+                fontFamily: "inherit",
+                backgroundColor: "#1a1a1a",
+                cursor: "pointer",
+                transition: "border-color 0.25s",
+                "&:hover": {
+                  borderColor: "#646cff",
+                },
+                "&:focus": {
+                  outline: "4px auto -webkit-focus-ring-color",
+                },
+              }}
+            >
+              Submit
+            </Button>
+            <Button
+              variant="outlined"
+              startIcon={<ClearIcon />}
+              onClick={handleClear}
+              sx={{
+                borderRadius: "8px",
+                border: "1px solid transparent",
+                padding: "0.6em 1.2em",
+                fontSize: "1em",
+                fontWeight: "500",
+                fontFamily: "inherit",
+                cursor: "pointer",
+                transition: "border-color 0.25s",
+                "&:hover": {
+                  borderColor: "#646cff",
+                },
+                "&:focus": {
+                  outline: "4px auto -webkit-focus-ring-color",
+                },
+              }}
+            >
+              Clear
+            </Button>
+          </Stack>
         </section>
       </form>
     </div>
