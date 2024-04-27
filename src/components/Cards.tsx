@@ -56,6 +56,9 @@ export default function Cards({ cards, onDelete }: ICardsProps) {
                   textAlign: "center",
                   fontSize: "1em",
                 },
+                "& .MuiChip-root": {
+                  marginBottom: 0,
+                },
               }}
               aria-label="customized table"
             >
@@ -112,7 +115,17 @@ export default function Cards({ cards, onDelete }: ICardsProps) {
                       }}
                     />
                   </StyledTableCell>
-                  <StyledTableCell>{card.rateAIIntelligence}</StyledTableCell>
+                  <StyledTableCell>
+                    <Chip
+                      label={card.rateAIIntelligence.toString()}
+                      variant="outlined"
+                      sx={{
+                        borderRadius: 1,
+                        fontSize: "1.2em",
+                        textAlign: "center",
+                      }}
+                    />
+                  </StyledTableCell>
                 </StyledTableRow>
               </TableBody>
             </Table>

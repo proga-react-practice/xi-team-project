@@ -109,7 +109,7 @@ main {
 }
 
 .main-container .form-container {
-  min-width: calc(40vw - 1em);
+  min-width: 40vw;
   border-right: 1px solid #000;
   border-radius: 0.3em;
 }
@@ -238,7 +238,6 @@ button[type="submit"]:hover {
   border: 1px solid #ddd;
 }
 .cards-container .card button {
-  display: block;
   width: 100%;
   padding: 10px;
   color: #fff;

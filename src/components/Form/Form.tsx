@@ -324,7 +324,6 @@ const Form = ({ onSubmit }: IFormProps) => {
                 "& .MuiSelect-root": {
                   display: "inline-block",
                   padding: "0.5em 1em",
-
                   marginRight: "0.25em",
                   background: "#dfdfdf",
                   borderRadius: "5px",
@@ -338,6 +337,9 @@ const Form = ({ onSubmit }: IFormProps) => {
                     backgroundColor: "#747bff",
                     color: "white",
                   },
+                  "& .MuiFormControl-root": {
+                    lineHeight: "1em",
+                  }, //!
                 },
               }}
             >
@@ -350,6 +352,14 @@ const Form = ({ onSubmit }: IFormProps) => {
                 value={TypeOfAI}
                 onChange={onTypeChange}
                 label="Type of AI"
+                sx={{
+                  "& .MuiSelect-select": {
+                    fontSize: "1.2em",
+                  },
+                  "& .MuiFormControl-root": {
+                    lineHeight: "1em",
+                  }, //!
+                }}
               >
                 <MenuItem value="">
                   <em>None</em>
