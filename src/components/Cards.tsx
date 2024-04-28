@@ -17,17 +17,37 @@ interface ICardsProps {
 
 export default function Cards({ cards, onDelete }: ICardsProps) {
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "50px",
+      }}
+    >
       {cards.map((card, index) => (
         <Box
           key={index}
           sx={{
             display: "flex",
             flexDirection: "column",
-            gap: "10px",
             padding: "20px",
             border: "1px solid black",
             borderRadius: "5px",
+            textAlign: "left",
+            position: "relative",
+            "&::after": {
+              content: '""',
+              position: "absolute",
+              bottom: "10px",
+              left: "40px",
+              right: "20px",
+              height: "1px",
+              backgroundColor: "#000",
+              "@media (max-width: 600px)": {
+                left: "20px",
+                right: "10px",
+              },
+            },
           }}
         >
           <h3>
@@ -43,18 +63,18 @@ export default function Cards({ cards, onDelete }: ICardsProps) {
             {RANGE[0].label}: {card.rateAIIntelligence}
           </h3>
           <Button
-            variant="outlined"
+            variant="contained"
             endIcon={<ClearIcon />}
             onClick={() => onDelete(index)}
             sx={{
-              borderRadius: "8px",
+              position: "relative",
+              bottom: "-50px",
+              left: "70%",
               border: "1px solid transparent",
-              padding: "0.6em 1.2em",
-              fontSize: "1em",
-              fontWeight: "500",
-              fontFamily: "inherit",
+              padding: "0.6em 1em",
               cursor: "pointer",
               transition: "border-color 0.25s",
+              width: "200px",
               "&:hover": {
                 borderColor: "#646cff",
               },
@@ -64,9 +84,7 @@ export default function Cards({ cards, onDelete }: ICardsProps) {
               "&:hover, &:focus-visible": {
                 borderColor: "#646cff",
               },
-              "@media (prefers-color-scheme: light)": {
-                backgroundColor: "#f9f9f9",
-              },
+              zIndex: "2",
             }}
           >
             Delete

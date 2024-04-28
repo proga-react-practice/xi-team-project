@@ -6,7 +6,6 @@ import {
   Grid,
   Slider,
   Input,
-  useTheme,
   OutlinedInput,
   InputLabel,
   MenuItem,
@@ -15,7 +14,6 @@ import {
   Chip,
   Button,
   Stack,
-  Theme,
 } from "@mui/material";
 import { SelectChangeEvent } from "@mui/material/Select";
 import ClearIcon from "@mui/icons-material/Clear";
@@ -31,28 +29,7 @@ interface IFormProps {
   onSubmit: (Ai: AI) => void;
 }
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
-
-function getStyles(name: string, option: readonly string[], theme: Theme) {
-  return {
-    fontWeight:
-      option.indexOf(name) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
-  };
-}
-
 const Form = ({ onSubmit }: IFormProps) => {
-  const theme = useTheme();
   const [levelOfAI] = React.useState<string[]>([]);
   const [whereAIIsUsed] = React.useState<string[]>([]);
   const [rateAIIntelligence] = React.useState<number>(0);
@@ -131,11 +108,7 @@ const Form = ({ onSubmit }: IFormProps) => {
   };
   const handleClear = () => {
     setErrorMessage(null);
-    // setRangeValue(0);
     setAI(defaultFormState);
-    // setLevelOfAI([]);
-    // setWhereAIIsUsed([]);
-    // setTypeOfAI("");
     console.log(Ai);
     document.querySelectorAll('input[type="checkbox"]').forEach((element) => {
       const checkbox = element as HTMLInputElement;
@@ -148,306 +121,186 @@ const Form = ({ onSubmit }: IFormProps) => {
   };
 
   return (
-    <div className="form-container">
+    <div>
       {errorMessage && (
         <Alert message={errorMessage} onClose={() => setErrorMessage(null)} />
       )}
       <form onSubmit={handleSubmit}>
         <section id="examples">
-          <div className="form-group">
-            <FormControl
-              sx={{
-                m: 1,
-                width: "95%",
-                fontFamily: "Roboto, sans-serif",
-                background:
-                  "radial-gradient(circle at center, #3c77f5, #2a31bd)",
-                color: "rgba(255, 255, 255, 0.87)",
-              }}
+          <FormControl>
+            <InputLabel id="LevelOfAI-chip">Level of AI</InputLabel>
+            <Select
+              labelId="LevelOfAI-chip"
+              id="Level of AI"
+              multiple
+              value={Ai.levelOfAI}
+              onChange={onLevelChange}
+              input={<OutlinedInput id="Level of AI" label="" />}
+              renderValue={(selected) => (
+                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                  {selected.map((value) => (
+                    <Chip key={value} label={value} />
+                  ))}
+                </Box>
+              )}
             >
-              <InputLabel
-                id="LevelOfAI-chip"
-                sx={{
-                  fontSize: "1.5rem",
-                  color: "#213547",
-                  "&.MuiInputLabel-shrink": {
-                    transform: "translate(0.6rem, -2rem) scale(0.85)",
-                  },
-                  "&.Mui-focused": {
-                    color: "#213547",
-                  },
-                }}
-              >
-                Level of AI
-              </InputLabel>
-              <Select
-                labelId="LevelOfAI-chip"
-                id="Level of AI"
-                multiple
-                value={Ai.levelOfAI}
-                onChange={onLevelChange}
-                input={<OutlinedInput id="Level of AI" label="" />}
-                renderValue={(selected) => (
-                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                    {selected.map((value) => (
-                      <Chip
-                        key={value}
-                        label={value}
-                        sx={{
-                          height: "2.5rem",
-                          fontSize: "1.3rem",
-                          background: "#dfdfdf",
-                          borderRadius: "5px",
-                          padding: "0.7rem",
-                          "&:hover": { background: "#cacedb" },
-                        }}
-                      />
-                    ))}
-                  </Box>
-                )}
-                MenuProps={MenuProps}
-                sx={{
-                  background:
-                    "radial-gradient(circle at center, #3c77f5, #2a31bd)",
-                  "&:hover": { borderColor: "#646cff" },
-                }}
-              >
-                {CHECK_AND_RADIO[0].value.map((name) => (
-                  <MenuItem
-                    key={name}
-                    value={name}
-                    style={getStyles(name, Ai.levelOfAI, theme)}
-                    sx={{
-                      background: "#cacedb",
-                      "&:hover": { background: "#bcbcbc" },
-                    }}
-                  >
-                    {name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </div>
-          <div className="form-group">
-            <FormControl
-              sx={{
-                m: 1,
-                width: "95%",
-                fontFamily: "Roboto, sans-serif",
-                background:
-                  "radial-gradient(circle at center, #3c77f5, #2a31bd)",
-                color: "rgba(255, 255, 255, 0.87)",
-              }}
-            >
-              <InputLabel
-                id="WhereAIIsUsed-chip"
-                sx={{
-                  fontSize: "1.5rem",
-                  color: "#213547",
-                  "&.MuiInputLabel-shrink": {
-                    transform: "translate(0.6rem, -2rem) scale(0.85)",
-                  },
-                  "&.Mui-focused": {
-                    color: "#213547",
-                  },
-                }}
-              >
-                Where AI is used
-              </InputLabel>
-              <Select
-                labelId="WhereAIIsUsed-chip"
-                id="Where AI Is Used"
-                multiple
-                value={Ai.whereAIIsUsed}
-                onChange={onWhereUsedChange}
-                input={<OutlinedInput id="Where AI Is Used" label="" />}
-                renderValue={(selected) => (
-                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                    {selected.map((value) => (
-                      <Chip
-                        key={value}
-                        label={value}
-                        sx={{
-                          height: "2.5rem",
-                          fontSize: "1.3rem",
-                          background: "#dfdfdf",
-                          borderRadius: "5px",
-                          padding: "0.7rem",
-                          "&:hover": { background: "#cacedb" },
-                        }}
-                      />
-                    ))}
-                  </Box>
-                )}
-                MenuProps={MenuProps}
-                sx={{
-                  background:
-                    "radial-gradient(circle at center, #3c77f5, #2a31bd)",
-                  "&:hover": { borderColor: "#646cff" },
-                }}
-              >
-                {CHECK_AND_RADIO[1].value.map((name) => (
-                  <MenuItem
-                    key={name}
-                    value={name}
-                    style={getStyles(name, Ai.whereAIIsUsed, theme)}
-                    sx={{
-                      background: "#cacedb",
-                      "&:hover": { background: "#bcbcbc" },
-                    }}
-                  >
-                    {name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </div>
-          <div className="form-group">
-            <FormControl
-              variant="standard"
-              sx={{
-                m: 1,
-                minWidth: "95%",
-                display: "block",
-                marginBottom: "0.25em",
-                "& label": {
-                  display: "block",
-                  marginBottom: "0.25em",
-                  fontSize: "1.3em",
-                },
-                "& .MuiInputBase-root": {
-                  minWidth: "95%",
-                },
-                "& .MuiSelect-root": {
-                  display: "inline-block",
-                  padding: "0.5em 1em",
-                  marginRight: "0.25em",
-                  background: "#dfdfdf",
-                  borderRadius: "5px",
-                  cursor: "pointer",
-                  transition: "background 0.3s ease",
-                  fontSize: "1.2em",
-                  "&:hover": {
-                    backgroundColor: "#cacedb",
-                  },
-                  "&.Mui-selected": {
-                    backgroundColor: "#747bff",
-                    color: "white",
-                  },
-                  "& .MuiFormControl-root": {
-                    lineHeight: "1em",
-                  }, //!
-                },
-              }}
-            >
-              <InputLabel id="TypeOfAI-select-standard-label">
-                Type of AI
-              </InputLabel>
-              <Select
-                labelId="TypeOfAI-select-standard-label"
-                id="TypeOfAI-select-standard"
-                value={Ai.TypeOfAI}
-                onChange={onTypeChange}
-                label="Type of AI"
-                sx={{
-                  "& .MuiSelect-select": {
-                    fontSize: "1.2em",
-                  },
-                  "& .MuiFormControl-root": {
-                    lineHeight: "1em",
-                  }, //!
-                }}
-              >
-                <MenuItem value="">
-                  <em>None</em>
+              {CHECK_AND_RADIO[0].value.map((name) => (
+                <MenuItem key={name} value={name}>
+                  {name}
                 </MenuItem>
-                <MenuItem value={"NPC"}>NPC</MenuItem>
-                <MenuItem value={"Neural Network"}>Neural Network</MenuItem>
-                <MenuItem value={"Function"}>Function</MenuItem>
-              </Select>
-            </FormControl>
-          </div>
-          <div className="form-group">
-            <label>Rate AI intelligence</label>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl>
+            <InputLabel id="WhereAIIsUsed-chip">Where AI is used</InputLabel>
+            <Select
+              labelId="WhereAIIsUsed-chip"
+              id="Where AI Is Used"
+              multiple
+              value={Ai.whereAIIsUsed}
+              onChange={onWhereUsedChange}
+              input={<OutlinedInput id="Where AI Is Used" label="" />}
+              renderValue={(selected) => (
+                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                  {selected.map((value) => (
+                    <Chip key={value} label={value} />
+                  ))}
+                </Box>
+              )}
+            >
+              {CHECK_AND_RADIO[1].value.map((name) => (
+                <MenuItem key={name} value={name}>
+                  {name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl
+            variant="standard"
+            sx={{
+              marginBottom: "2em",
+              "& .MuiSelect-root": {
+                transition: "background 0.3s ease",
+                "&:hover": {
+                  backgroundColor: "#cacedb",
+                },
+                "&.Mui-selected": {
+                  backgroundColor: "#747bff",
+                  color: "white",
+                },
+              },
+            }}
+          >
+            <InputLabel id="TypeOfAI-select-standard-label">
+              Type of AI
+            </InputLabel>
+            <Select
+              labelId="TypeOfAI-select-standard-label"
+              id="TypeOfAI-select-standard"
+              value={Ai.TypeOfAI}
+              onChange={onTypeChange}
+              label="Type of AI"
+              input={<OutlinedInput id="TypeOfAI-select-standard" label="" />}
+              renderValue={(selected) => (
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    gap: 0.5,
+                    justifyContent: "center",
+                  }}
+                >
+                  <Chip key={selected} label={selected} />
+                </Box>
+              )}
+              sx={{
+                fontSize: "1.1em",
+                fontFamily: "Do Hyeon",
+              }}
+            >
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              <MenuItem value={"NPC"}>NPC</MenuItem>
+              <MenuItem value={"Neural Network"}>Neural Network</MenuItem>
+              <MenuItem value={"Function"}>Function</MenuItem>
+            </Select>
+          </FormControl>
+          <label>Rate AI intelligence</label>
 
-            <Box sx={{ width: "100%" }}>
-              <Grid container spacing={1} alignItems="center">
-                <Grid item xs>
-                  <Slider
-                    aria-label="Volume"
-                    value={
-                      typeof Ai.rateAIIntelligence === "number"
-                        ? Ai.rateAIIntelligence
-                        : 0
-                    }
-                    onChange={onRateSliderChange}
-                    aria-labelledby="input-slider"
-                    sx={{
-                      width: "95%",
-                      margin: 0,
-                      "& .MuiSlider-thumb": {
-                        height: 20,
-                        width: 20,
-                        backgroundColor: "#747bff",
-                        "&:hover": {
-                          backgroundColor: "#535bf2",
-                        },
-                        "&.Mui-focusVisible": {
-                          boxShadow:
-                            "0px 0px 0px 8px rgba(116, 123, 255, 0.16)",
-                        },
-                        "&.Mui-active": {
-                          boxShadow:
-                            "0px 0px 0px 14px rgba(116, 123, 255, 0.16)",
-                        },
+          <Box sx={{ width: "95%", marginBottom: "1em" }}>
+            <Grid container spacing={1} alignItems="center">
+              <Grid item xs>
+                <Slider
+                  aria-label="Volume"
+                  value={
+                    typeof Ai.rateAIIntelligence === "number"
+                      ? Ai.rateAIIntelligence
+                      : 0
+                  }
+                  onChange={onRateSliderChange}
+                  aria-labelledby="input-slider"
+                  sx={{
+                    width: "95%",
+                    margin: 0,
+                    "& .MuiSlider-thumb": {
+                      height: 20,
+                      width: 20,
+                      backgroundColor: "#747bff",
+                      "&:hover": {
+                        backgroundColor: "#535bf2",
                       },
-                      "& .MuiSlider-rail": {
-                        height: 8,
-                        borderRadius: 4,
-                        backgroundColor: "#747bff",
+                      "&.Mui-focusVisible": {
+                        boxShadow: "0px 0px 0px 8px rgba(116, 123, 255, 0.16)",
                       },
-                      "& .MuiSlider-track": {
-                        height: 8,
-                        borderRadius: 4,
-                        backgroundColor: "#747bff",
+                      "&.Mui-active": {
+                        boxShadow: "0px 0px 0px 14px rgba(116, 123, 255, 0.16)",
                       },
-                    }}
-                  />
-                </Grid>
-                <Grid item>
-                  <Input
-                    value={Ai.rateAIIntelligence}
-                    size="small"
-                    onChange={onRateInputChange}
-                    onBlur={handleBlur}
-                    inputProps={{
-                      step: 1,
-                      min: 0,
-                      max: 100,
-                      type: "number",
-                      "aria-labelledby": "input-slider",
-                    }}
-                    sx={{
-                      mt: -1,
-                      "& .MuiInputBase-input": {
-                        color: "#213547", // Text color
-                        backgroundColor: "#f9f9f9", // Background color
-                        borderRadius: "4px", // Border radius
-                        padding: "0.5em", // Padding
-                        border: "1px solid #ddd", // Border
-                        "&:hover": {
-                          borderColor: "#747bff", // Border color on hover
-                        },
-                        "&.Mui-focused": {
-                          borderColor: "#747bff", // Border color when focused
-                        },
-                      },
-                    }}
-                  />
-                </Grid>
+                    },
+                    "& .MuiSlider-rail": {
+                      height: 8,
+                      borderRadius: 4,
+                      backgroundColor: "#747bff",
+                    },
+                    "& .MuiSlider-track": {
+                      height: 8,
+                      borderRadius: 4,
+                      backgroundColor: "#747bff",
+                    },
+                  }}
+                />
               </Grid>
-            </Box>
-          </div>
+              <Grid item>
+                <Input
+                  value={Ai.rateAIIntelligence}
+                  size="small"
+                  onChange={onRateInputChange}
+                  onBlur={handleBlur}
+                  inputProps={{
+                    step: 1,
+                    min: 0,
+                    max: 100,
+                    type: "number",
+                    "aria-labelledby": "input-slider",
+                  }}
+                  sx={{
+                    mt: -1,
+                    "& .MuiInputBase-input": {
+                      textAlign: "center",
+                      backgroundColor: "#f9f9f9",
+                      borderRadius: "4px",
+                      padding: "0.5em 0em",
+                      border: "1px solid #ddd",
+                      width: "2.7em",
+                      "&:hover": {
+                        borderColor: "#747bff",
+                      },
+                    },
+                  }}
+                />
+              </Grid>
+            </Grid>
+          </Box>
           <Stack direction="row" spacing={2}>
             <Button
               variant="contained"
@@ -460,7 +313,6 @@ const Form = ({ onSubmit }: IFormProps) => {
                 fontSize: "1em",
                 fontWeight: "500",
                 fontFamily: "inherit",
-                backgroundColor: "#1a1a1a",
                 cursor: "pointer",
                 transition: "border-color 0.25s",
                 "&:hover": {
