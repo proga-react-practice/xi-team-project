@@ -1,15 +1,7 @@
 import { CHECK_AND_RADIO, RANGE } from "../data";
 import Button from "@mui/material/Button";
 import ClearIcon from "@mui/icons-material/Clear";
-import { styled } from "@mui/material/styles";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import Chip from "@mui/material/Chip";
+import Box from "@mui/material/Box";
 
 export interface ICardData {
   levelOfAI: string[];
@@ -23,113 +15,33 @@ interface ICardsProps {
   onDelete: (index: number) => void;
 }
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  "&:nth-of-type(odd)": {
-    backgroundColor: theme.palette.action.hover,
-  },
-  // hide last border
-  "&:last-child td, &:last-child th": {
-    border: 0,
-  },
-}));
-
 export default function Cards({ cards, onDelete }: ICardsProps) {
   return (
-    <div className="cards-container">
+    <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
       {cards.map((card, index) => (
-        <div key={index} className="card">
-          <TableContainer component={Paper}>
-            <Table
-              sx={{
-                minWidth: 700,
-                "& .MuiTableCell-root": {
-                  textAlign: "center",
-                  fontSize: "1em",
-                },
-                "& .MuiChip-root": {
-                  marginBottom: 0,
-                },
-              }}
-              aria-label="customized table"
-            >
-              <TableHead>
-                <TableRow>
-                  {CHECK_AND_RADIO.map((item, index) => (
-                    <StyledTableCell key={index}>{item.label}</StyledTableCell>
-                  ))}
-                  <StyledTableCell>{RANGE[0].label}</StyledTableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                <StyledTableRow key={index}>
-                  <StyledTableCell>
-                    {card.levelOfAI.map((level, levelIndex) => (
-                      <Chip
-                        key={levelIndex}
-                        label={level}
-                        variant="outlined"
-                        sx={{
-                          mr: 1,
-                          mb: 1,
-                          borderRadius: 1,
-                          fontSize: "1.2em",
-                          textAlign: "center",
-                        }}
-                      />
-                    ))}
-                  </StyledTableCell>
-                  <StyledTableCell>
-                    {card.whereAIIsUsed.map((use, useIndex) => (
-                      <Chip
-                        key={useIndex}
-                        label={use}
-                        variant="outlined"
-                        sx={{
-                          mr: 1,
-                          mb: 1,
-                          borderRadius: 1,
-                          fontSize: "1.2em",
-                          textAlign: "center",
-                        }}
-                      />
-                    ))}
-                  </StyledTableCell>
-                  <StyledTableCell>
-                    <Chip
-                      label={card.TypeOfAI}
-                      variant="outlined"
-                      sx={{
-                        borderRadius: 1,
-                        fontSize: "1.2em",
-                        textAlign: "center",
-                      }}
-                    />
-                  </StyledTableCell>
-                  <StyledTableCell>
-                    <Chip
-                      label={card.rateAIIntelligence.toString()}
-                      variant="outlined"
-                      sx={{
-                        borderRadius: 1,
-                        fontSize: "1.2em",
-                        textAlign: "center",
-                      }}
-                    />
-                  </StyledTableCell>
-                </StyledTableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
+        <Box
+          key={index}
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "10px",
+            padding: "20px",
+            border: "1px solid black",
+            borderRadius: "5px",
+          }}
+        >
+          <h3>
+            {CHECK_AND_RADIO[0].label}: {card.levelOfAI.join(", ")}
+          </h3>
+          <h3>
+            {CHECK_AND_RADIO[1].label}: {card.whereAIIsUsed.join(", ")}
+          </h3>
+          <h3>
+            {CHECK_AND_RADIO[2].label}: {card.TypeOfAI}
+          </h3>
+          <h3>
+            {RANGE[0].label}: {card.rateAIIntelligence}
+          </h3>
           <Button
             variant="outlined"
             endIcon={<ClearIcon />}
@@ -157,10 +69,10 @@ export default function Cards({ cards, onDelete }: ICardsProps) {
               },
             }}
           >
-            Clear
+            Delete
           </Button>
-        </div>
+        </Box>
       ))}
-    </div>
+    </Box>
   );
 }
