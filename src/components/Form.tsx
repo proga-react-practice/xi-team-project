@@ -191,7 +191,12 @@ const Form = ({ onSubmit }: IFormProps) => {
               },
             }}
           >
-            <InputLabel id="TypeOfAI-select-standard-label">
+            <InputLabel
+              id="TypeOfAI-select-standard-label"
+              sx={{
+                marginLeft: "0.5em",
+              }} //!
+            >
               Type of AI
             </InputLabel>
             <Select
@@ -243,30 +248,6 @@ const Form = ({ onSubmit }: IFormProps) => {
                   sx={{
                     width: "95%",
                     margin: 0,
-                    "& .MuiSlider-thumb": {
-                      height: 20,
-                      width: 20,
-                      backgroundColor: "#747bff",
-                      "&:hover": {
-                        backgroundColor: "#535bf2",
-                      },
-                      "&.Mui-focusVisible": {
-                        boxShadow: "0px 0px 0px 8px rgba(116, 123, 255, 0.16)",
-                      },
-                      "&.Mui-active": {
-                        boxShadow: "0px 0px 0px 14px rgba(116, 123, 255, 0.16)",
-                      },
-                    },
-                    "& .MuiSlider-rail": {
-                      height: 8,
-                      borderRadius: 4,
-                      backgroundColor: "#747bff",
-                    },
-                    "& .MuiSlider-track": {
-                      height: 8,
-                      borderRadius: 4,
-                      backgroundColor: "#747bff",
-                    },
                   }}
                 />
               </Grid>
@@ -306,22 +287,6 @@ const Form = ({ onSubmit }: IFormProps) => {
               variant="contained"
               endIcon={<SendIcon />}
               onClick={handleSubmit}
-              sx={{
-                borderRadius: "8px",
-                border: "1px solid transparent",
-                padding: "0.6em 1.2em",
-                fontSize: "1em",
-                fontWeight: "500",
-                fontFamily: "inherit",
-                cursor: "pointer",
-                transition: "border-color 0.25s",
-                "&:hover": {
-                  borderColor: "#646cff",
-                },
-                "&:focus": {
-                  outline: "4px auto -webkit-focus-ring-color",
-                },
-              }}
             >
               Submit
             </Button>
@@ -329,22 +294,6 @@ const Form = ({ onSubmit }: IFormProps) => {
               variant="outlined"
               startIcon={<ClearIcon />}
               onClick={handleClear}
-              sx={{
-                borderRadius: "8px",
-                border: "1px solid transparent",
-                padding: "0.6em 1.2em",
-                fontSize: "1em",
-                fontWeight: "500",
-                fontFamily: "inherit",
-                cursor: "pointer",
-                transition: "border-color 0.25s",
-                "&:hover": {
-                  borderColor: "#646cff",
-                },
-                "&:focus": {
-                  outline: "4px auto -webkit-focus-ring-color",
-                },
-              }}
             >
               Clear
             </Button>
