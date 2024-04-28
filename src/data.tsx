@@ -22,7 +22,7 @@ export const CHECK_AND_RADIO: CheckboxRadioOptions[] = [
     value: ["Low", "Medium", "High", "Very High"],
   },
   {
-    label: "Where AI is used for?",
+    label: "Where AI is used",
     class_Name: "checkbox-group",
     input_Type: "checkbox",
     name: "occupancy",
