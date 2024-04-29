@@ -20,24 +20,34 @@ function App() {
     <ThemeProvider theme={theme}>
       <Box
         sx={{
-          marginTop: { xs: 0, sm: 1 },
+          marginTop: { xs: 0, sm: 1, md: 1 },
+          marginBottom: 1,
+          marginLeft: { xs: 0, sm: 1, md: 1 },
+          marginRight: { xs: 0, sm: 1, md: 1 },
           border: "5px solid #000",
           display: "flex",
           justifyContent: "space-between",
           flexWrap: "wrap",
           p: 1,
-          m: 1,
           bgcolor: "background.paper",
           borderRadius: 1,
-          minWidth: "calc(100vw - 2em)",
+          width: {
+            xs: "100vw",
+            sm: "calc(100vw - 1.6em)",
+            md: "calc(100vw - 1em)",
+          },
         }}
       >
         <Box
           sx={{
-            minWidth: { xs: "100%", sm: "40%" },
-            maxWidth: { xs: "100%", sm: "40%" },
-            borderRight: { sm: "2px solid #000" },
-            borderBottom: { xs: "1px solid #000", sm: "none" },
+            minWidth: { xs: "100%", sm: "100%", md: "40%" },
+            maxWidth: { xs: "100%", sm: "100%", md: "40%" },
+            borderRight: { md: "2px solid #000" },
+            borderBottom: {
+              xs: "1px solid #000",
+              sm: "1px solid #000",
+              md: "none",
+            },
             borderRadius: 0.3,
             p: 1,
           }}
@@ -46,12 +56,15 @@ function App() {
         </Box>
         <Box
           sx={{
-            minWidth: { xs: "100%", sm: "59%" },
-            maxWidth: { xs: "100%", sm: "59%" },
-            // borderLeft: { sm: "1px solid #000" },
-            borderTop: { xs: "1px solid #000", sm: "none" },
+            minWidth: { xs: "100%", sm: "100%", md: "59%" },
+            maxWidth: { xs: "100%", sm: "100%", md: "59%" },
+            borderTop: {
+              xs: "1px solid #000",
+              sm: "1px solid #000",
+              md: "none",
+            },
             borderRadius: 0.3,
-            marginBottom: { xs: 0, sm: 3 },
+            marginBottom: { xs: 0, sm: 0, md: 3 },
             p: 1,
           }}
         >

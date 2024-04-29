@@ -1,6 +1,11 @@
 import { createTheme, ThemeOptions } from "@mui/material/styles";
 
 const paperColor = "#00bcd4";
+const xs = 0;
+const sm = 380;
+const md = 850;
+const lg = 1280;
+const xl = 1920;
 
 export const theme: ThemeOptions = createTheme({
   palette: {
@@ -95,8 +100,10 @@ export const theme: ThemeOptions = createTheme({
           fontSize: "1.3rem",
           background: "#dfdfdf",
           borderRadius: "5px",
-          padding: "0.7em",
-          "&:hover": { background: "#cacedb" },
+          padding: "0em",
+          [`@media (min-width:${sm}px)`]: {
+            padding: "0.7em",
+          },
         },
       },
     },
@@ -144,6 +151,16 @@ export const theme: ThemeOptions = createTheme({
           backgroundColor: "#747bff",
         },
       },
+    },
+  },
+
+  breakpoints: {
+    values: {
+      xs: xs,
+      sm: sm,
+      md: md,
+      lg: lg,
+      xl: xl,
     },
   },
 });

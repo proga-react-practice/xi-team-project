@@ -38,14 +38,10 @@ export default function Cards({ cards, onDelete }: ICardsProps) {
               content: '""',
               position: "absolute",
               bottom: "10px",
-              left: "40px",
-              right: "20px",
+              left: { xs: "10px", sm: "20px", md: "40px" },
+              right: { xs: "7px", sm: "10px", md: "20px" },
               height: "2px",
               backgroundColor: "#000",
-              "@media (max-width: 600px)": {
-                left: "20px",
-                right: "10px",
-              },
             },
           }}
         >
@@ -69,23 +65,25 @@ export default function Cards({ cards, onDelete }: ICardsProps) {
           <Box sx={{ flexGrow: 1 }}>
             <Chip label={card.rateAIIntelligence.toString()} />
           </Box>
-          <Button
-            variant="contained"
-            endIcon={<ClearIcon />}
-            onClick={() => onDelete(index)}
+          <Box
             sx={{
-              // position: "relative",
-              bottom: "-50px",
-              left: "70%",
-              width: "200px",
-              "@media (max-width: 600px)": {
-                left: "50%",
-                padding: "0.6em 0.8em",
-              },
+              display: "flex",
+              justifyContent: "flex-end",
+              paddingRight: { xs: "5px", sm: "20px", md: "40px" },
+              marginBottom: "-50px",
             }}
           >
-            Delete
-          </Button>
+            <Button
+              variant="contained"
+              endIcon={<ClearIcon />}
+              onClick={() => onDelete(index)}
+              sx={{
+                width: { xs: "132px", sm: "160px", md: "200px" },
+              }}
+            >
+              Delete
+            </Button>
+          </Box>
         </Box>
       ))}
     </Box>
