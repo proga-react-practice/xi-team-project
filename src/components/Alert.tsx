@@ -1,6 +1,5 @@
-import React, { SyntheticEvent } from "react";
-import { Alert, AlertTitle, Snackbar, Stack } from "@mui/material";
-import { SnackbarCloseReason } from "@mui/material/Snackbar";
+import React from "react";
+import { Alert, AlertTitle, Dialog, Stack } from "@mui/material";
 
 export default function Alerts({
   message,
@@ -11,47 +10,28 @@ export default function Alerts({
 }) {
   const [open, setOpen] = React.useState(true);
 
-  const handleSnackbarClose = (
-    _: SyntheticEvent | Event,
-    reason: SnackbarCloseReason
-  ) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setOpen(false);
-    onClose();
-  };
-
-  const handleAlertClose = () => {
+  const handleDialogClose = () => {
     setOpen(false);
     onClose();
   };
 
   return (
     <Stack sx={{ width: "100%" }} spacing={2}>
-      <Snackbar
-        open={open}
-        autoHideDuration={6000}
-        onClose={handleSnackbarClose}
-      >
+      <Dialog open={open} onClose={handleDialogClose}>
         <Alert
           severity="error"
           sx={{
-            position: "fixed",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            backgroundColor: "white",
+            fontSize: "1.2em",
+            boxShadow: "0px 3px 5px 2px rgba(0, 0, 0, 0.3)",
             padding: "20px",
             zIndex: 1000,
           }}
-          onClose={handleAlertClose}
+          onClose={handleDialogClose}
         >
           <AlertTitle>Error</AlertTitle>
           {message}
         </Alert>
-      </Snackbar>
+      </Dialog>
     </Stack>
   );
 }

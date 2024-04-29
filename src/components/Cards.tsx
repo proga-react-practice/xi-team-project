@@ -3,6 +3,8 @@ import Button from "@mui/material/Button";
 import ClearIcon from "@mui/icons-material/Clear";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
+import { useTheme } from "@mui/material/styles";
+
 export interface ICardData {
   levelOfAI: string[];
   whereAIIsUsed: string[];
@@ -16,61 +18,83 @@ interface ICardsProps {
 }
 
 export default function Cards({ cards, onDelete }: ICardsProps) {
+  const theme = useTheme();
   return (
     <Box
       sx={{
         display: "flex",
         flexDirection: "column",
-        gap: "50px",
+        gap: 6,
       }}
     >
       {cards.map((card, index) => (
         <Box
           key={index}
           sx={{
-            // display: "flex",
             flexDirection: "column",
-            padding: "20px",
-            border: "2px solid black",
+            padding: 2,
+            border: `2px solid ${theme.palette.text.primary}`,
             borderRadius: "5px",
             position: "relative",
             "&::after": {
               content: '""',
               position: "absolute",
-              bottom: "10px",
-              left: { xs: "10px", sm: "20px", md: "40px" },
-              right: { xs: "7px", sm: "10px", md: "20px" },
+              bottom: theme.spacing(1),
+              left: {
+                xs: theme.spacing(1),
+                sm: theme.spacing(2),
+                md: theme.spacing(4),
+              },
+              right: {
+                xs: theme.spacing(0.7),
+                sm: theme.spacing(1),
+                md: theme.spacing(2),
+              },
               height: "2px",
-              backgroundColor: "#000",
+              backgroundColor: theme.palette.text.primary,
             },
           }}
         >
-          <h3>{CHECK_AND_RADIO[0].label}:</h3>
-          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-            {card.levelOfAI.map((option, i) => (
-              <Chip key={i} label={option} />
+          <h3>
+            {CHECK_AND_RADIO[0].label}:
+            {card.levelOfAI.map((option, index) => (
+              <Chip
+                key={index}
+                label={option}
+                style={{ margin: theme.spacing(0, 0.5) }}
+              />
             ))}
-          </Box>
-          <h3>{CHECK_AND_RADIO[1].label}:</h3>
-          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-            {card.whereAIIsUsed.map((option, i) => (
-              <Chip key={i} label={option} />
+          </h3>
+
+          <h3>
+            {CHECK_AND_RADIO[1].label}:
+            {card.whereAIIsUsed.map((option, index) => (
+              <Chip
+                key={index}
+                label={option}
+                style={{ margin: theme.spacing(0, 0.5) }}
+              />
             ))}
-          </Box>
-          <h3>{CHECK_AND_RADIO[2].label}:</h3>
-          <Box sx={{ flexGrow: 1 }}>
-            <Chip label={card.TypeOfAI} />
-          </Box>
-          <h3>{RANGE[0].label}:</h3>
-          <Box sx={{ flexGrow: 1 }}>
+          </h3>
+
+          <h3>
+            {CHECK_AND_RADIO[2].label}: <Chip label={card.TypeOfAI} />
+          </h3>
+
+          <h3>
+            {RANGE[0].label}:{" "}
             <Chip label={card.rateAIIntelligence.toString()} />
-          </Box>
+          </h3>
           <Box
             sx={{
               display: "flex",
               justifyContent: "flex-end",
-              paddingRight: { xs: "5px", sm: "20px", md: "40px" },
-              marginBottom: "-50px",
+              paddingRight: {
+                xs: 0.5,
+                sm: 2,
+                md: 4,
+              },
+              marginBottom: -6,
             }}
           >
             <Button
@@ -78,7 +102,11 @@ export default function Cards({ cards, onDelete }: ICardsProps) {
               endIcon={<ClearIcon />}
               onClick={() => onDelete(index)}
               sx={{
-                width: { xs: "132px", sm: "160px", md: "200px" },
+                width: {
+                  xs: theme.spacing(16.5),
+                  sm: theme.spacing(20),
+                  md: theme.spacing(25),
+                },
               }}
             >
               Delete

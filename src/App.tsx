@@ -5,10 +5,8 @@ import { AI } from "./components/Form";
 import { theme } from "./theme";
 import { ThemeProvider } from "@mui/material/styles";
 import { Box } from "@mui/material";
-
 function App() {
   const [formData, setFormData] = useState<AI[]>([]);
-
   const handleDelete = (index: number) => {
     setFormData((prevCards) => prevCards.filter((_, i) => i !== index));
   };
@@ -24,7 +22,7 @@ function App() {
           marginBottom: 1,
           marginLeft: { xs: 0, sm: 1, md: 1 },
           marginRight: { xs: 0, sm: 1, md: 1 },
-          border: "5px solid #000",
+          border: `5px solid ${theme.palette!.text!.primary}`,
           display: "flex",
           justifyContent: "space-between",
           flexWrap: "wrap",
@@ -42,13 +40,12 @@ function App() {
           sx={{
             minWidth: { xs: "100%", sm: "100%", md: "40%" },
             maxWidth: { xs: "100%", sm: "100%", md: "40%" },
-            borderRight: { md: "2px solid #000" },
+            borderRight: { md: `2px solid ${theme.palette!.text!.primary}` },
             borderBottom: {
-              xs: "1px solid #000",
-              sm: "1px solid #000",
+              xs: `1px solid ${theme.palette!.text!.primary}`,
+              sm: `1px solid ${theme.palette!.text!.primary}`,
               md: "none",
             },
-            borderRadius: 0.3,
             p: 1,
           }}
         >
@@ -58,12 +55,6 @@ function App() {
           sx={{
             minWidth: { xs: "100%", sm: "100%", md: "59%" },
             maxWidth: { xs: "100%", sm: "100%", md: "59%" },
-            borderTop: {
-              xs: "1px solid #000",
-              sm: "1px solid #000",
-              md: "none",
-            },
-            borderRadius: 0.3,
             marginBottom: { xs: 0, sm: 0, md: 3 },
             p: 1,
           }}

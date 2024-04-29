@@ -14,6 +14,7 @@ import {
   Chip,
   Button,
   Stack,
+  Typography,
 } from "@mui/material";
 import { SelectChangeEvent } from "@mui/material/Select";
 import ClearIcon from "@mui/icons-material/Clear";
@@ -104,12 +105,10 @@ const Form = ({ onSubmit }: IFormProps) => {
       return;
     }
     onSubmit(Ai);
-    console.log(Ai);
   };
   const handleClear = () => {
     setErrorMessage(null);
     setAI(defaultFormState);
-    console.log(Ai);
     document.querySelectorAll('input[type="checkbox"]').forEach((element) => {
       const checkbox = element as HTMLInputElement;
       checkbox.checked = false;
@@ -175,27 +174,12 @@ const Form = ({ onSubmit }: IFormProps) => {
               ))}
             </Select>
           </FormControl>
-          <FormControl
-            variant="standard"
-            sx={{
-              marginBottom: "2em",
-              "& .MuiSelect-root": {
-                transition: "background 0.3s ease",
-                "&:hover": {
-                  backgroundColor: "#cacedb",
-                },
-                "&.Mui-selected": {
-                  backgroundColor: "#747bff",
-                  color: "white",
-                },
-              },
-            }}
-          >
+          <FormControl variant="standard">
             <InputLabel
               id="TypeOfAI-select-standard-label"
               sx={{
                 marginLeft: "0.5em",
-              }} //!
+              }}
             >
               Type of AI
             </InputLabel>
@@ -218,10 +202,6 @@ const Form = ({ onSubmit }: IFormProps) => {
                   <Chip key={selected} label={selected} />
                 </Box>
               )}
-              sx={{
-                fontSize: "1.1em",
-                fontFamily: "Do Hyeon",
-              }}
             >
               <MenuItem value="">
                 <em>None</em>
@@ -231,9 +211,11 @@ const Form = ({ onSubmit }: IFormProps) => {
               <MenuItem value={"Function"}>Function</MenuItem>
             </Select>
           </FormControl>
-          <label>Rate AI intelligence</label>
 
           <Box sx={{ width: "95%", marginBottom: "1em" }}>
+            <Typography variant="body1" sx={{ marginLeft: "0.35em" }}>
+              Rate AI intelligence
+            </Typography>
             <Grid container spacing={1} alignItems="center">
               <Grid item xs>
                 <Slider
@@ -245,10 +227,6 @@ const Form = ({ onSubmit }: IFormProps) => {
                   }
                   onChange={onRateSliderChange}
                   aria-labelledby="input-slider"
-                  sx={{
-                    width: "95%",
-                    margin: 0,
-                  }}
                 />
               </Grid>
               <Grid item>
@@ -263,20 +241,6 @@ const Form = ({ onSubmit }: IFormProps) => {
                     max: 100,
                     type: "number",
                     "aria-labelledby": "input-slider",
-                  }}
-                  sx={{
-                    mt: -1,
-                    "& .MuiInputBase-input": {
-                      textAlign: "center",
-                      backgroundColor: "#f9f9f9",
-                      borderRadius: "4px",
-                      padding: "0.5em 0em",
-                      border: "1px solid #ddd",
-                      width: "2.7em",
-                      "&:hover": {
-                        borderColor: "#747bff",
-                      },
-                    },
                   }}
                 />
               </Grid>
