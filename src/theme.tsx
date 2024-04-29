@@ -1,11 +1,20 @@
 import { createTheme, ThemeOptions } from "@mui/material/styles";
 
-const paperColor = "#00bcd4";
 const xs = 0;
 const sm = 380;
 const md = 850;
 const lg = 1280;
 const xl = 1920;
+const shape = 8;
+const paperColor = "#00bcd4";
+const black = "#000000";
+const white = "#ffffff";
+const lightBlue = "#747bff";
+const darkBlue = "#324ed4";
+const blue = "#646cff";
+const lightGrey = "#cacedb";
+const grey = "#bcbcbc";
+const purple = "#535bf2";
 
 export const theme: ThemeOptions = createTheme({
   palette: {
@@ -17,11 +26,15 @@ export const theme: ThemeOptions = createTheme({
       main: "#ffc510",
     },
     background: {
-      default: "#0288d1",
+      default: darkBlue,
       paper: paperColor,
     },
     error: {
       main: "#e53935",
+    },
+    text: {
+      primary: black,
+      secondary: black,
     },
   },
   typography: {
@@ -38,11 +51,10 @@ export const theme: ThemeOptions = createTheme({
     body2: {
       fontFamily: "Roboto",
     },
-    fontSize: 14,
+    fontSize: 18,
     button: {
-      fontSize: "1.2rem",
       fontFamily: "inherit",
-      borderRadius: "8px",
+      borderRadius: shape,
     },
   },
 
@@ -51,9 +63,27 @@ export const theme: ThemeOptions = createTheme({
       styleOverrides: {
         root: {
           width: "95%",
+          borderRadius: shape,
           marginBottom: "2em",
-          background: "#324ed4",
-          "&:hover": { borderColor: "#646cff" },
+          background: darkBlue,
+          "&:hover": { borderColor: black },
+        },
+      },
+    },
+    MuiInput: {
+      styleOverrides: {
+        root: {
+          marginTop: "-1em",
+          "& .MuiInputBase-input": {
+            textAlign: "center",
+            backgroundColor: white,
+            borderRadius: "4px",
+            border: "1px solid white",
+            width: "2.7em",
+            "&:hover": {
+              borderColor: lightBlue,
+            },
+          },
         },
       },
     },
@@ -62,31 +92,24 @@ export const theme: ThemeOptions = createTheme({
         root: {
           fontSize: "1.5rem",
           zIndex: 1,
-          color: "#ffffff",
+          color: white,
           "&.MuiInputLabel-shrink": {
             transform: "translate(0.6rem, -2rem) scale(0.85)",
-            color: "#213547",
+            color: black,
+            marginLeft: "0em",
           },
           "&.Mui-focused": {
-            color: "#213547",
+            color: black,
+            marginLeft: "0em",
           },
-        },
-      },
-    },
-    MuiSelect: {
-      styleOverrides: {
-        root: {
-          minWidth: "100%",
-          background: "radial-gradient(circle at center, #3c77f5, #2a31bd)",
-          "&:hover": { borderColor: "#646cff" },
         },
       },
     },
     MuiMenuItem: {
       styleOverrides: {
         root: {
-          background: "#cacedb",
-          "&:hover": { background: "#bcbcbc" },
+          background: lightGrey,
+          "&:hover": { background: grey },
           "&.Mui-selected": {
             fontWeight: "bold",
           },
@@ -98,12 +121,13 @@ export const theme: ThemeOptions = createTheme({
         root: {
           height: "2.5rem",
           fontSize: "1.3rem",
-          background: "#dfdfdf",
+          background: lightGrey,
           borderRadius: "5px",
           padding: "0em",
           [`@media (min-width:${sm}px)`]: {
             padding: "0.7em",
           },
+          "&:hover": { background: grey },
         },
       },
     },
@@ -113,25 +137,28 @@ export const theme: ThemeOptions = createTheme({
           border: "1px solid transparent",
           fontSize: "1em",
           fontFamily: "inherit",
-          borderRadius: "8px",
+          borderRadius: shape,
           padding: "0.6em 1.2em",
           cursor: "pointer",
           transition: "border-color 0.25s",
-          "&:hover": { borderColor: "#646cff" },
+          "&:hover": { borderColor: blue },
           "&:focus": { outline: "4px auto -webkit-focus-ring-color" },
-          "&:hover, &:focus-visible": { borderColor: "#646cff" },
+          "&:hover, &:focus-visible": { borderColor: blue },
           zIndex: 2,
         },
       },
     },
     MuiSlider: {
       styleOverrides: {
+        root: {
+          width: "95%",
+        },
         thumb: {
           height: 20,
           width: 20,
-          backgroundColor: "#747bff",
+          backgroundColor: lightBlue,
           "&:hover": {
-            backgroundColor: "#535bf2",
+            backgroundColor: purple,
           },
           "&.Mui-focusVisible": {
             boxShadow: "0px 0px 0px 8px rgba(116, 123, 255, 0.16)",
@@ -143,12 +170,12 @@ export const theme: ThemeOptions = createTheme({
         rail: {
           height: 8,
           borderRadius: 4,
-          backgroundColor: "#747bff",
+          backgroundColor: lightBlue,
         },
         track: {
           height: 8,
           borderRadius: 4,
-          backgroundColor: "#747bff",
+          backgroundColor: lightBlue,
         },
       },
     },
@@ -162,5 +189,9 @@ export const theme: ThemeOptions = createTheme({
       lg: lg,
       xl: xl,
     },
+  },
+  spacing: 8,
+  shape: {
+    borderRadius: shape,
   },
 });

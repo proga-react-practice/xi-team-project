@@ -1,8 +1,6 @@
 import { CHECK_AND_RADIO, RANGE } from "../data";
-import Button from "@mui/material/Button";
 import ClearIcon from "@mui/icons-material/Clear";
-import Box from "@mui/material/Box";
-import Chip from "@mui/material/Chip";
+import { Box, Button, Chip } from "@mui/material";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { useTheme } from "@mui/material/styles";
 
@@ -38,6 +36,7 @@ export default function Cards({ cards, onDelete }: ICardsProps) {
                 border: `2px solid ${theme.palette.text.primary}`,
                 borderRadius: "5px",
                 position: "relative",
+                marginBottom: 6,
                 "&::after": {
                   content: '""',
                   position: "absolute",

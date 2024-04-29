@@ -5,7 +5,8 @@ import { AI } from "./components/Form";
 import { theme } from "./theme";
 import { ThemeProvider } from "@mui/material/styles";
 import { Box } from "@mui/material";
-function App() {
+
+export default function App() {
   const [formData, setFormData] = useState<AI[]>([]);
   const handleDelete = (index: number) => {
     setFormData((prevCards) => prevCards.filter((_, i) => i !== index));
@@ -65,5 +66,3 @@ function App() {
     </ThemeProvider>
   );
 }
-
-export default App;

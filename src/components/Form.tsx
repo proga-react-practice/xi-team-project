@@ -1,4 +1,4 @@
-import { CHECK_AND_RADIO } from "../data";
+import { CHECK_AND_RADIO, RANGE } from "../data";
 import Alert from "./Alert";
 import React, { useState } from "react";
 import {
@@ -33,7 +33,6 @@ interface IFormProps {
 const Form = ({ onSubmit }: IFormProps) => {
   const [levelOfAI] = React.useState<string[]>([]);
   const [whereAIIsUsed] = React.useState<string[]>([]);
-  const [rateAIIntelligence] = React.useState<number>(0);
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
   const defaultFormState = {
     levelOfAI: [],
@@ -77,9 +76,9 @@ const Form = ({ onSubmit }: IFormProps) => {
   };
 
   const handleBlur = () => {
-    if (rateAIIntelligence < 0) {
+    if (Ai.rateAIIntelligence < 0) {
       setAI((prevAi) => ({ ...prevAi, rateAIIntelligence: 0 }));
-    } else if (rateAIIntelligence > 100) {
+    } else if (Ai.rateAIIntelligence > 100) {
       setAI((prevAi) => ({ ...prevAi, rateAIIntelligence: 100 }));
     }
   };
@@ -90,8 +89,9 @@ const Form = ({ onSubmit }: IFormProps) => {
       !Ai.TypeOfAI ||
       Ai.rateAIIntelligence === 0
     ) {
-      console.log(Ai);
       return "Please fill all the fields";
+    } else if (Ai.rateAIIntelligence > 100) {
+      Ai.rateAIIntelligence = 100;
     }
   };
 
@@ -127,7 +127,9 @@ const Form = ({ onSubmit }: IFormProps) => {
       <form onSubmit={handleSubmit}>
         <section id="examples">
           <FormControl>
-            <InputLabel id="LevelOfAI-chip">Level of AI</InputLabel>
+            <InputLabel id="LevelOfAI-chip">
+              {CHECK_AND_RADIO[0].label}
+            </InputLabel>
             <Select
               labelId="LevelOfAI-chip"
               id="Level of AI"
@@ -151,7 +153,9 @@ const Form = ({ onSubmit }: IFormProps) => {
             </Select>
           </FormControl>
           <FormControl>
-            <InputLabel id="WhereAIIsUsed-chip">Where AI is used</InputLabel>
+            <InputLabel id="WhereAIIsUsed-chip">
+              {CHECK_AND_RADIO[1].label}
+            </InputLabel>
             <Select
               labelId="WhereAIIsUsed-chip"
               id="Where AI Is Used"
@@ -181,7 +185,7 @@ const Form = ({ onSubmit }: IFormProps) => {
                 marginLeft: "0.5em",
               }}
             >
-              Type of AI
+              {CHECK_AND_RADIO[2].label}
             </InputLabel>
             <Select
               labelId="TypeOfAI-select-standard-label"
@@ -214,7 +218,7 @@ const Form = ({ onSubmit }: IFormProps) => {
 
           <Box sx={{ width: "95%", marginBottom: "1em" }}>
             <Typography variant="body1" sx={{ marginLeft: "0.35em" }}>
-              Rate AI intelligence
+              {RANGE[0].label}
             </Typography>
             <Grid container spacing={1} alignItems="center">
               <Grid item xs>
@@ -223,7 +227,7 @@ const Form = ({ onSubmit }: IFormProps) => {
                   value={
                     typeof Ai.rateAIIntelligence === "number"
                       ? Ai.rateAIIntelligence
-                      : 0
+                      : RANGE[0].min
                   }
                   onChange={onRateSliderChange}
                   aria-labelledby="input-slider"
@@ -237,8 +241,8 @@ const Form = ({ onSubmit }: IFormProps) => {
                   onBlur={handleBlur}
                   inputProps={{
                     step: 1,
-                    min: 0,
-                    max: 100,
+                    min: RANGE[0].min,
+                    max: RANGE[0].max,
                     type: "number",
                     "aria-labelledby": "input-slider",
                   }}
