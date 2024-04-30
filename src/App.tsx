@@ -54,8 +54,8 @@ export default function App() {
         </Box>
         <Box
           sx={{
-            minWidth: { xs: "100%", sm: "100%", md: "59%" },
-            maxWidth: { xs: "100%", sm: "100%", md: "59%" },
+            minWidth: { xs: "100%", sm: "100%", md: "60%" },
+            maxWidth: { xs: "100%", sm: "100%", md: "60%" },
             marginBottom: { xs: 0, sm: 0, md: 3 },
             p: 1,
           }}

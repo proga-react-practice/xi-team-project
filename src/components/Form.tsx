@@ -124,150 +124,152 @@ const Form = ({ onSubmit }: IFormProps) => {
       {errorMessage && (
         <Alert message={errorMessage} onClose={() => setErrorMessage(null)} />
       )}
-      <form onSubmit={handleSubmit}>
-        <section id="examples">
-          <FormControl>
-            <InputLabel id="LevelOfAI-chip">
-              {CHECK_AND_RADIO[0].label}
-            </InputLabel>
-            <Select
-              labelId="LevelOfAI-chip"
-              id="Level of AI"
-              multiple
-              value={Ai.levelOfAI}
-              onChange={onLevelChange}
-              input={<OutlinedInput id="Level of AI" label="" />}
-              renderValue={(selected) => (
-                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                  {selected.map((value) => (
-                    <Chip key={value} label={value} />
-                  ))}
-                </Box>
-              )}
-            >
-              {CHECK_AND_RADIO[0].value.map((name) => (
-                <MenuItem key={name} value={name}>
-                  {name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <FormControl>
-            <InputLabel id="WhereAIIsUsed-chip">
-              {CHECK_AND_RADIO[1].label}
-            </InputLabel>
-            <Select
-              labelId="WhereAIIsUsed-chip"
-              id="Where AI Is Used"
-              multiple
-              value={Ai.whereAIIsUsed}
-              onChange={onWhereUsedChange}
-              input={<OutlinedInput id="Where AI Is Used" label="" />}
-              renderValue={(selected) => (
-                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                  {selected.map((value) => (
-                    <Chip key={value} label={value} />
-                  ))}
-                </Box>
-              )}
-            >
-              {CHECK_AND_RADIO[1].value.map((name) => (
-                <MenuItem key={name} value={name}>
-                  {name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <FormControl variant="standard">
-            <InputLabel
-              id="TypeOfAI-select-standard-label"
-              sx={{
-                marginLeft: "0.5em",
-              }}
-            >
-              {CHECK_AND_RADIO[2].label}
-            </InputLabel>
-            <Select
-              labelId="TypeOfAI-select-standard-label"
-              id="TypeOfAI-select-standard"
-              value={Ai.TypeOfAI}
-              onChange={onTypeChange}
-              label="Type of AI"
-              input={<OutlinedInput id="TypeOfAI-select-standard" label="" />}
-              renderValue={(selected) => (
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexWrap: "wrap",
-                    gap: 0.5,
-                    justifyContent: "center",
-                  }}
-                >
-                  <Chip key={selected} label={selected} />
-                </Box>
-              )}
-            >
-              <MenuItem value="">
-                <em>None</em>
+      <Box
+        component="form"
+        onSubmit={handleSubmit}
+        sx={{ margin: "3rem auto" }}
+      >
+        <FormControl>
+          <InputLabel id="LevelOfAI-chip">
+            {CHECK_AND_RADIO[0].label}
+          </InputLabel>
+          <Select
+            labelId="LevelOfAI-chip"
+            id="Level of AI"
+            multiple
+            value={Ai.levelOfAI}
+            onChange={onLevelChange}
+            input={<OutlinedInput id="Level of AI" label="" />}
+            renderValue={(selected) => (
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                {selected.map((value) => (
+                  <Chip key={value} label={value} />
+                ))}
+              </Box>
+            )}
+          >
+            {CHECK_AND_RADIO[0].value.map((name) => (
+              <MenuItem key={name} value={name}>
+                {name}
               </MenuItem>
-              <MenuItem value={"NPC"}>NPC</MenuItem>
-              <MenuItem value={"Neural Network"}>Neural Network</MenuItem>
-              <MenuItem value={"Function"}>Function</MenuItem>
-            </Select>
-          </FormControl>
+            ))}
+          </Select>
+        </FormControl>
+        <FormControl>
+          <InputLabel id="WhereAIIsUsed-chip">
+            {CHECK_AND_RADIO[1].label}
+          </InputLabel>
+          <Select
+            labelId="WhereAIIsUsed-chip"
+            id="Where AI Is Used"
+            multiple
+            value={Ai.whereAIIsUsed}
+            onChange={onWhereUsedChange}
+            input={<OutlinedInput id="Where AI Is Used" label="" />}
+            renderValue={(selected) => (
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                {selected.map((value) => (
+                  <Chip key={value} label={value} />
+                ))}
+              </Box>
+            )}
+          >
+            {CHECK_AND_RADIO[1].value.map((name) => (
+              <MenuItem key={name} value={name}>
+                {name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <FormControl variant="standard">
+          <InputLabel
+            id="TypeOfAI-select-standard-label"
+            sx={{
+              marginLeft: "0.5em",
+            }}
+          >
+            {CHECK_AND_RADIO[2].label}
+          </InputLabel>
+          <Select
+            labelId="TypeOfAI-select-standard-label"
+            id="TypeOfAI-select-standard"
+            value={Ai.TypeOfAI}
+            onChange={onTypeChange}
+            label="Type of AI"
+            input={<OutlinedInput id="TypeOfAI-select-standard" label="" />}
+            renderValue={(selected) => (
+              <Box
+                sx={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: 0.5,
+                  justifyContent: "center",
+                }}
+              >
+                <Chip key={selected} label={selected} />
+              </Box>
+            )}
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            <MenuItem value={"NPC"}>NPC</MenuItem>
+            <MenuItem value={"Neural Network"}>Neural Network</MenuItem>
+            <MenuItem value={"Function"}>Function</MenuItem>
+          </Select>
+        </FormControl>
 
-          <Box sx={{ width: "95%", marginBottom: "1em" }}>
-            <Typography variant="body1" sx={{ marginLeft: "0.35em" }}>
-              {RANGE[0].label}
-            </Typography>
-            <Grid container spacing={1} alignItems="center">
-              <Grid item xs>
-                <Slider
-                  aria-label="Volume"
-                  value={
-                    typeof Ai.rateAIIntelligence === "number"
-                      ? Ai.rateAIIntelligence
-                      : RANGE[0].min
-                  }
-                  onChange={onRateSliderChange}
-                  aria-labelledby="input-slider"
-                />
-              </Grid>
-              <Grid item>
-                <Input
-                  value={Ai.rateAIIntelligence}
-                  size="small"
-                  onChange={onRateInputChange}
-                  onBlur={handleBlur}
-                  inputProps={{
-                    step: 1,
-                    min: RANGE[0].min,
-                    max: RANGE[0].max,
-                    type: "number",
-                    "aria-labelledby": "input-slider",
-                  }}
-                />
-              </Grid>
+        <Box sx={{ width: "95%", marginBottom: "1em" }}>
+          <Typography variant="body1" sx={{ marginLeft: "0.35em" }}>
+            {RANGE[0].label}
+          </Typography>
+          <Grid container spacing={1} alignItems="center">
+            <Grid item xs>
+              <Slider
+                aria-label="Volume"
+                value={
+                  typeof Ai.rateAIIntelligence === "number"
+                    ? Ai.rateAIIntelligence
+                    : RANGE[0].min
+                }
+                onChange={onRateSliderChange}
+                aria-labelledby="input-slider"
+              />
             </Grid>
-          </Box>
-          <Stack direction="row" spacing={2}>
-            <Button
-              variant="contained"
-              endIcon={<SendIcon />}
-              onClick={handleSubmit}
-            >
-              Submit
-            </Button>
-            <Button
-              variant="outlined"
-              startIcon={<ClearIcon />}
-              onClick={handleClear}
-            >
-              Clear
-            </Button>
-          </Stack>
-        </section>
-      </form>
+            <Grid item>
+              <Input
+                value={Ai.rateAIIntelligence}
+                size="small"
+                onChange={onRateInputChange}
+                onBlur={handleBlur}
+                inputProps={{
+                  step: 1,
+                  min: RANGE[0].min,
+                  max: RANGE[0].max,
+                  type: "number",
+                  "aria-labelledby": "input-slider",
+                }}
+              />
+            </Grid>
+          </Grid>
+        </Box>
+        <Stack direction="row" spacing={2}>
+          <Button
+            variant="contained"
+            endIcon={<SendIcon />}
+            onClick={handleSubmit}
+          >
+            Submit
+          </Button>
+          <Button
+            variant="outlined"
+            startIcon={<ClearIcon />}
+            onClick={handleClear}
+          >
+            Clear
+          </Button>
+        </Stack>
+      </Box>
     </div>
   );
 };

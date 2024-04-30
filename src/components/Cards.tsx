@@ -3,16 +3,10 @@ import ClearIcon from "@mui/icons-material/Clear";
 import { Box, Button, Chip } from "@mui/material";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { useTheme } from "@mui/material/styles";
-
-export interface ICardData {
-  levelOfAI: string[];
-  whereAIIsUsed: string[];
-  TypeOfAI: string;
-  rateAIIntelligence: number;
-}
+import { AI } from "./Form";
 
 interface ICardsProps {
-  cards: ICardData[];
+  cards: AI[];
   onDelete: (index: number) => void;
 }
 
@@ -62,7 +56,7 @@ export default function Cards({ cards, onDelete }: ICardsProps) {
                   <Chip
                     key={index}
                     label={option}
-                    style={{ margin: theme.spacing(0, 0.5) }}
+                    sx={{ margin: (theme) => theme.spacing(0, 0.5) }}
                   />
                 ))}
               </h3>
@@ -73,7 +67,7 @@ export default function Cards({ cards, onDelete }: ICardsProps) {
                   <Chip
                     key={index}
                     label={option}
-                    style={{ margin: theme.spacing(0, 0.5) }}
+                    sx={{ margin: (theme) => theme.spacing(0, 0.5) }}
                   />
                 ))}
               </h3>

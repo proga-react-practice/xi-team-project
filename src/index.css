@@ -29,10 +29,6 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
-#examples {
-  margin: 3rem auto;
-}
-
 label {
   display: block;
   margin-bottom: 0.25em;
