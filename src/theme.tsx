@@ -11,23 +11,26 @@ const black = "#000000";
 const white = "#ffffff";
 const lightBlue = "#747bff";
 const darkBlue = "#324ed4";
+
 const blue = "#646cff";
 const lightGrey = "#cacedb";
 const grey = "#bcbcbc";
 const purple = "#535bf2";
+const boxBackground = "#B556FF";
+const background = "#637BED";
 
 export const theme: ThemeOptions = createTheme({
   palette: {
     mode: "light",
     primary: {
-      main: "#ffff00",
+      main: "#4CDCF0",
     },
     secondary: {
       main: "#ffc510",
     },
     background: {
-      default: darkBlue,
-      paper: paperColor,
+      default: background,
+      paper: boxBackground,
     },
     error: {
       main: "#e53935",
@@ -39,7 +42,8 @@ export const theme: ThemeOptions = createTheme({
   },
   typography: {
     body1: {
-      fontFamily: "Roboto",
+      fontFamily: "Chakra Petch, sans-serif",
+      fontWeight: 500,
     },
     fontFamily: "Do Hyeon",
     caption: {
@@ -53,8 +57,23 @@ export const theme: ThemeOptions = createTheme({
     },
     fontSize: 18,
     button: {
-      fontFamily: "inherit",
+      fontFamily: "Chakra Petch, sans-serif",
+      fontWeight: 600,
       borderRadius: shape,
+    },
+    h2: {
+      fontSize: "2rem",
+      fontWeight: 500,
+      fontFamily: "Chakra Petch, sans-serif",
+    },
+    h3: {
+      fontSize: "1.5rem",
+      fontWeight: 600,
+      fontFamily: "Chakra Petch, sans-serif",
+    },
+    h4: {
+      fontSize: "1.2rem",
+      fontWeight: 600,
     },
   },
 
@@ -62,56 +81,66 @@ export const theme: ThemeOptions = createTheme({
     MuiFormControl: {
       styleOverrides: {
         root: {
-          width: "95%",
           borderRadius: shape,
-          marginBottom: "2em",
-          background: darkBlue,
-          "&:hover": { borderColor: black },
+          background: background,
+          borderColor: black,
+          // "&:hover": { borderColor: black },
+          "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+            borderWidth: 2,
+            borderColor: black,
+          },
         },
       },
     },
-    MuiInput: {
+    MuiTextField: {
       styleOverrides: {
         root: {
-          marginTop: "-1em",
           "& .MuiInputBase-input": {
             textAlign: "center",
-            backgroundColor: white,
-            borderRadius: "4px",
-            border: "1px solid white",
-            width: "2.7em",
-            "&:hover": {
-              borderColor: lightBlue,
-            },
+            backgroundColor: background,
+            borderRadius: shape,
+            // "&:hover": {
+            //   borderColor: lightBlue,
+            // },
           },
         },
       },
     },
     MuiInputLabel: {
       styleOverrides: {
-        root: {
-          fontSize: "1.5rem",
-          zIndex: 1,
-          color: white,
-          "&.MuiInputLabel-shrink": {
-            transform: "translate(0.6rem, -2rem) scale(0.85)",
-            color: black,
-            marginLeft: "0em",
-          },
-          "&.Mui-focused": {
-            color: black,
-            marginLeft: "0em",
-          },
+        // root: {
+        //   fontSize: "1.5rem",
+        //   zIndex: 1,
+        //   color: white,
+        //   // "&.MuiInputLabel-shrink": {
+        //   //   transform: "translate(0.6rem, -2rem) scale(0.85)",
+        //   //   color: black,
+        //   //   marginLeft: "0em",
+        //   // },
+        //   // "&.Mui-focused": {
+        //   //   color: black,
+        //   //   marginLeft: "0em",
+        //   // },
+        // },
+      },
+    },
+    MuiSelect: {
+      styleOverrides: {
+        icon: {
+          color: black,
         },
       },
     },
     MuiMenuItem: {
       styleOverrides: {
         root: {
-          background: lightGrey,
-          "&:hover": { background: grey },
+          "&:hover": { background: lightBlue },
           "&.Mui-selected": {
             fontWeight: "bold",
+            background: background,
+            "&:hover": {
+              background: lightBlue,
+            },
           },
         },
       },
@@ -119,9 +148,8 @@ export const theme: ThemeOptions = createTheme({
     MuiChip: {
       styleOverrides: {
         root: {
-          height: "2.5rem",
-          fontSize: "1.3rem",
-          background: lightGrey,
+          // fontSize: "1.3rem",
+          background: white,
           borderRadius: "5px",
           padding: "0em",
           [`@media (min-width:${sm}px)`]: {
@@ -134,9 +162,8 @@ export const theme: ThemeOptions = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          border: "1px solid transparent",
+          border: "2px solid",
           fontSize: "1em",
-          fontFamily: "inherit",
           borderRadius: shape,
           padding: "0.6em 1.2em",
           cursor: "pointer",
@@ -156,7 +183,7 @@ export const theme: ThemeOptions = createTheme({
         thumb: {
           height: 20,
           width: 20,
-          backgroundColor: lightBlue,
+          backgroundColor: "#A93AFF",
           "&:hover": {
             backgroundColor: purple,
           },
@@ -170,7 +197,7 @@ export const theme: ThemeOptions = createTheme({
         rail: {
           height: 8,
           borderRadius: 4,
-          backgroundColor: lightBlue,
+          backgroundColor: background,
         },
         track: {
           height: 8,

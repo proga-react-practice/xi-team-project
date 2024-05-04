@@ -13,9 +13,6 @@ body {
   place-items: center;
   min-height: 100vh;
   padding: 0;
-  font-size: 1.3em;
-  font-family: 'Roboto', sans-serif;
-  background: radial-gradient(circle at center, #3c77f5, #2a31bd);
   background-size: cover;
   background-position: center;
   background-attachment: fixed;

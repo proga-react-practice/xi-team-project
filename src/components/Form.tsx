@@ -5,18 +5,18 @@ import {
   Box,
   Grid,
   Slider,
-  Input,
-  OutlinedInput,
   InputLabel,
   MenuItem,
   FormControl,
   Select,
   Chip,
   Button,
-  Stack,
   Typography,
+  Container,
+  TextField,
 } from "@mui/material";
 import { SelectChangeEvent } from "@mui/material/Select";
+import { useTheme } from "@mui/material/styles";
 import ClearIcon from "@mui/icons-material/Clear";
 import SendIcon from "@mui/icons-material/Send";
 
@@ -40,6 +40,8 @@ const Form = ({ onSubmit }: IFormProps) => {
     TypeOfAI: "",
     rateAIIntelligence: 0,
   };
+
+  const theme = useTheme();
 
   const [Ai, setAI] = useState<AI>(defaultFormState);
 
@@ -120,30 +122,67 @@ const Form = ({ onSubmit }: IFormProps) => {
   };
 
   return (
-    <div>
+    <>
       {errorMessage && (
         <Alert message={errorMessage} onClose={() => setErrorMessage(null)} />
       )}
-      <Box
+      <Container
         component="form"
         onSubmit={handleSubmit}
-        sx={{ margin: "3rem auto" }}
+        sx={{
+          // marginLeft: 0,
+          border: 2,
+          borderRadius: 2,
+          justifyContent: "left",
+          bgcolor: theme.palette.background.paper,
+          // margin: "3rem auto",
+        }}
       >
-        <FormControl>
+        <Typography
+          variant="h3"
+          // color="primary.main"
+          sx={{ my: 2, textAlign: "center" }}
+        >
+          Register the AI
+        </Typography>
+
+        <FormControl
+          fullWidth
+          sx={{
+            // width: "95%",
+            marginBottom: "0.65em",
+          }}
+        >
           <InputLabel id="LevelOfAI-chip">
             {CHECK_AND_RADIO[0].label}
           </InputLabel>
           <Select
             labelId="LevelOfAI-chip"
             id="Level of AI"
+            label="Level of AI"
             multiple
             value={Ai.levelOfAI}
             onChange={onLevelChange}
-            input={<OutlinedInput id="Level of AI" label="" />}
+            sx={{
+              height: "3.1em",
+            }}
+            // input={<OutlinedInput id="Level of AI" label="" />}
             renderValue={(selected) => (
-              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: 0.5,
+                }}
+              >
                 {selected.map((value) => (
-                  <Chip key={value} label={value} />
+                  <Chip
+                    key={value}
+                    label={value}
+                    sx={{
+                      height: "1.86rem",
+                    }}
+                  />
                 ))}
               </Box>
             )}
@@ -155,21 +194,43 @@ const Form = ({ onSubmit }: IFormProps) => {
             ))}
           </Select>
         </FormControl>
-        <FormControl>
+        <FormControl
+          fullWidth
+          sx={{
+            marginBottom: "0.65em",
+            // width: "95%", marginBottom: "2em"
+          }}
+        >
           <InputLabel id="WhereAIIsUsed-chip">
             {CHECK_AND_RADIO[1].label}
           </InputLabel>
           <Select
             labelId="WhereAIIsUsed-chip"
             id="Where AI Is Used"
+            label="Where AI Is Used"
             multiple
             value={Ai.whereAIIsUsed}
             onChange={onWhereUsedChange}
-            input={<OutlinedInput id="Where AI Is Used" label="" />}
+            sx={{
+              height: "3.1em",
+            }}
+            // input={<OutlinedInput id="Where AI Is Used" label="" />}
             renderValue={(selected) => (
-              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: 0.5,
+                }}
+              >
                 {selected.map((value) => (
-                  <Chip key={value} label={value} />
+                  <Chip
+                    key={value}
+                    label={value}
+                    sx={{
+                      height: "1.86rem",
+                    }}
+                  />
                 ))}
               </Box>
             )}
@@ -181,12 +242,20 @@ const Form = ({ onSubmit }: IFormProps) => {
             ))}
           </Select>
         </FormControl>
-        <FormControl variant="standard">
+        <FormControl
+          fullWidth
+          sx={{
+            marginBottom: "0.65em",
+            // width: "95%", marginBottom: "2em"
+          }}
+        >
           <InputLabel
             id="TypeOfAI-select-standard-label"
-            sx={{
-              marginLeft: "0.5em",
-            }}
+            sx={
+              {
+                // marginLeft: "0.5em",
+              }
+            }
           >
             {CHECK_AND_RADIO[2].label}
           </InputLabel>
@@ -196,17 +265,28 @@ const Form = ({ onSubmit }: IFormProps) => {
             value={Ai.TypeOfAI}
             onChange={onTypeChange}
             label="Type of AI"
-            input={<OutlinedInput id="TypeOfAI-select-standard" label="" />}
+            sx={{
+              height: "3.1em",
+            }}
+            // input={<OutlinedInput id="TypeOfAI-select-standard" label="" />}
             renderValue={(selected) => (
               <Box
-                sx={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  gap: 0.5,
-                  justifyContent: "center",
-                }}
+                sx={
+                  {
+                    // display: "flex",
+                    // flexWrap: "wrap",
+                    // gap: 0.5,
+                    // justifyContent: "center",
+                  }
+                }
               >
-                <Chip key={selected} label={selected} />
+                <Chip
+                  key={selected}
+                  label={selected}
+                  sx={{
+                    height: "1.86rem",
+                  }}
+                />
               </Box>
             )}
           >
@@ -218,9 +298,13 @@ const Form = ({ onSubmit }: IFormProps) => {
             <MenuItem value={"Function"}>Function</MenuItem>
           </Select>
         </FormControl>
-
-        <Box sx={{ width: "95%", marginBottom: "1em" }}>
-          <Typography variant="body1" sx={{ marginLeft: "0.35em" }}>
+        <Box
+          sx={{
+            marginBottom: "0.65em",
+            // width: "95%", marginBottom: "1em"
+          }}
+        >
+          <Typography sx={{ marginLeft: "0.35em" }}>
             {RANGE[0].label}
           </Typography>
           <Grid container spacing={1} alignItems="center">
@@ -237,7 +321,11 @@ const Form = ({ onSubmit }: IFormProps) => {
               />
             </Grid>
             <Grid item>
-              <Input
+              <TextField
+                fullWidth
+                sx={{
+                  width: "5em",
+                }}
                 value={Ai.rateAIIntelligence}
                 size="small"
                 onChange={onRateInputChange}
@@ -253,24 +341,34 @@ const Form = ({ onSubmit }: IFormProps) => {
             </Grid>
           </Grid>
         </Box>
-        <Stack direction="row" spacing={2}>
+        <Container
+          disableGutters
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            marginBottom: 2,
+            gap: 1,
+          }}
+        >
           <Button
             variant="contained"
-            endIcon={<SendIcon />}
-            onClick={handleSubmit}
-          >
-            Submit
-          </Button>
-          <Button
-            variant="outlined"
+            sx={{ px: 5 }}
             startIcon={<ClearIcon />}
             onClick={handleClear}
           >
             Clear
           </Button>
-        </Stack>
-      </Box>
-    </div>
+          <Button
+            variant="contained"
+            sx={{ px: 10 }}
+            endIcon={<SendIcon />}
+            onClick={handleSubmit}
+          >
+            Add
+          </Button>
+        </Container>
+      </Container>
+    </>
   );
 };
 
