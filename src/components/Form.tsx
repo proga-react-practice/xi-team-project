@@ -130,26 +130,20 @@ const Form = ({ onSubmit }: IFormProps) => {
         component="form"
         onSubmit={handleSubmit}
         sx={{
-          // marginLeft: 0,
-          border: 2,
+          border: "2px solid",
+          borderColor: theme.palette.text.primary,
           borderRadius: 2,
           justifyContent: "left",
           bgcolor: theme.palette.background.paper,
-          // margin: "3rem auto",
         }}
       >
-        <Typography
-          variant="h3"
-          // color="primary.main"
-          sx={{ my: 2, textAlign: "center" }}
-        >
+        <Typography variant="h3" sx={{ my: 2, textAlign: "center" }}>
           Register the AI
         </Typography>
 
         <FormControl
           fullWidth
           sx={{
-            // width: "95%",
             marginBottom: "0.65em",
           }}
         >
@@ -163,10 +157,6 @@ const Form = ({ onSubmit }: IFormProps) => {
             multiple
             value={Ai.levelOfAI}
             onChange={onLevelChange}
-            sx={{
-              height: "3.1em",
-            }}
-            // input={<OutlinedInput id="Level of AI" label="" />}
             renderValue={(selected) => (
               <Box
                 sx={{
@@ -180,7 +170,8 @@ const Form = ({ onSubmit }: IFormProps) => {
                     key={value}
                     label={value}
                     sx={{
-                      height: "1.86rem",
+                      height: "1.8rem",
+                      padding: { xs: 0.5, sm: 1, md: 1.5 },
                     }}
                   />
                 ))}
@@ -198,7 +189,6 @@ const Form = ({ onSubmit }: IFormProps) => {
           fullWidth
           sx={{
             marginBottom: "0.65em",
-            // width: "95%", marginBottom: "2em"
           }}
         >
           <InputLabel id="WhereAIIsUsed-chip">
@@ -211,10 +201,6 @@ const Form = ({ onSubmit }: IFormProps) => {
             multiple
             value={Ai.whereAIIsUsed}
             onChange={onWhereUsedChange}
-            sx={{
-              height: "3.1em",
-            }}
-            // input={<OutlinedInput id="Where AI Is Used" label="" />}
             renderValue={(selected) => (
               <Box
                 sx={{
@@ -228,7 +214,8 @@ const Form = ({ onSubmit }: IFormProps) => {
                     key={value}
                     label={value}
                     sx={{
-                      height: "1.86rem",
+                      height: "1.8rem",
+                      padding: { xs: 0.5, sm: 1, md: 1.5 },
                     }}
                   />
                 ))}
@@ -246,17 +233,9 @@ const Form = ({ onSubmit }: IFormProps) => {
           fullWidth
           sx={{
             marginBottom: "0.65em",
-            // width: "95%", marginBottom: "2em"
           }}
         >
-          <InputLabel
-            id="TypeOfAI-select-standard-label"
-            sx={
-              {
-                // marginLeft: "0.5em",
-              }
-            }
-          >
+          <InputLabel id="TypeOfAI-select-standard-label">
             {CHECK_AND_RADIO[2].label}
           </InputLabel>
           <Select
@@ -265,26 +244,14 @@ const Form = ({ onSubmit }: IFormProps) => {
             value={Ai.TypeOfAI}
             onChange={onTypeChange}
             label="Type of AI"
-            sx={{
-              height: "3.1em",
-            }}
-            // input={<OutlinedInput id="TypeOfAI-select-standard" label="" />}
             renderValue={(selected) => (
-              <Box
-                sx={
-                  {
-                    // display: "flex",
-                    // flexWrap: "wrap",
-                    // gap: 0.5,
-                    // justifyContent: "center",
-                  }
-                }
-              >
+              <Box>
                 <Chip
                   key={selected}
                   label={selected}
                   sx={{
-                    height: "1.86rem",
+                    height: "1.8rem",
+                    padding: { xs: 0.5, sm: 1, md: 1.5 },
                   }}
                 />
               </Box>
@@ -301,7 +268,6 @@ const Form = ({ onSubmit }: IFormProps) => {
         <Box
           sx={{
             marginBottom: "0.65em",
-            // width: "95%", marginBottom: "1em"
           }}
         >
           <Typography sx={{ marginLeft: "0.35em" }}>
@@ -310,6 +276,10 @@ const Form = ({ onSubmit }: IFormProps) => {
           <Grid container spacing={1} alignItems="center">
             <Grid item xs>
               <Slider
+                sx={{
+                  width: "95%",
+                  height: "8px",
+                }}
                 aria-label="Volume"
                 value={
                   typeof Ai.rateAIIntelligence === "number"

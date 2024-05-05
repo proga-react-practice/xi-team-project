@@ -2,14 +2,16 @@ import Form from "./components/Form";
 import Cards from "./components/Cards";
 import { useState } from "react";
 import { AI } from "./components/Form";
-// import { theme } from "./theme";
-import { useTheme } from "@mui/material/styles";
-import { Container } from "@mui/material";
+import { Container, Box } from "@mui/material";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
 import Title from "./components/Title";
 import StyleIcon from "@mui/icons-material/Style";
+import { lightTheme, darkTheme } from "./theme";
+import { ThemeProvider, useTheme } from "@mui/material/styles";
+import Switch from "@mui/material/Switch";
 
-export default function App() {
+function Content() {
+  const theme = useTheme();
   const [formData, setFormData] = useState<AI[]>([]);
   const handleDelete = (index: number) => {
     setFormData((prevCards) => prevCards.filter((_, i) => i !== index));
@@ -18,63 +20,54 @@ export default function App() {
   const handleFormSubmit = (Ai: AI) => {
     setFormData([...formData, Ai]);
   };
-  const theme = useTheme();
   return (
-    <Container
+    <Box
       sx={{
-        // marginTop: { xs: 0, sm: 1, md: 1 },
-        // marginBottom: 1,
-        // marginLeft: { xs: 0, sm: 1, md: 1 },
-        // // marginRight: { xs: 0, sm: 1, md: 1 },
-
+        flexDirection: { xs: "column", sm: "column", md: "row" },
         display: "flex",
         justifyContent: "space-between",
-        // flexWrap: "wrap",
         bgcolor: theme.palette.background.default,
-        // p: 1,
-        // bgcolor: "background.paper",
-        // borderRadius: 1,
-        width: "100%",
-        // width: {
-        //   xs: "100vw",
-        //   sm: "calc(100vw - 1.6em)",
-        //   md: "calc(100vw - 1em)",
-        // },
-        height: "100vh",
+        width: "100vw",
+        minHeight: "100vh",
       }}
     >
       <Container
-        sx={
-          {
-            //width: 350,
-            // minWidth: { xs: "100%", sm: "100%", md: "40%" },
-            // maxWidth: { xs: "100%", sm: "100%", md: "40%" },
-            // borderRight: { md: `2px solid ${theme.palette!.text!.primary}` },
-            // borderBottom: {
-            //   xs: `1px solid ${theme.palette!.text!.primary}`,
-            //   sm: `1px solid ${theme.palette!.text!.primary}`,
-            //   md: "none",
-            // },
-            // p: 1,
-          }
-        }
+        sx={{
+          width: { sm: "100%", md: "40%" },
+          paddingLeft: { xs: 0, md: 2, lg: 3 },
+          paddingRight: { xs: 0, md: 2, lg: 3 },
+        }}
       >
         <Title icon={SmartToyIcon} title="Registration Form" />
         <Form onSubmit={handleFormSubmit} />
       </Container>
       <Container
-        sx={
-          {
-            // minWidth: { xs: "100%", sm: "100%", md: "60%" },
-            // maxWidth: { xs: "100%", sm: "100%", md: "60%" },
-            // marginBottom: { xs: 0, sm: 0, md: 3 },
-            // p: 1,
-          }
-        }
+        sx={{
+          minWidth: { md: "40%", lg: "59%" },
+          maxWidth: { md: "100%", lg: "70%" },
+          flexGrow: 1,
+          paddingLeft: { xs: 0, md: 2, lg: 3 },
+          paddingRight: { xs: 0, md: 2, lg: 3 },
+        }}
       >
         <Title icon={StyleIcon} title="Submitted Cards" />
         <Cards cards={formData} onDelete={handleDelete} />
       </Container>
-    </Container>
+    </Box>
+  );
+}
+export default function App() {
+  const [currentTheme, setCurrentTheme] = useState(lightTheme);
+  const handleThemeChange = () => {
+    setCurrentTheme(currentTheme === lightTheme ? darkTheme : lightTheme);
+  };
+  return (
+    <ThemeProvider theme={currentTheme}>
+      <Switch
+        checked={currentTheme === darkTheme}
+        onChange={handleThemeChange}
+      />
+      <Content />
+    </ThemeProvider>
   );
 }

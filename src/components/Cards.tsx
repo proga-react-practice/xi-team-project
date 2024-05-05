@@ -1,6 +1,6 @@
 import { CHECK_AND_RADIO, RANGE } from "../data";
 import ClearIcon from "@mui/icons-material/Clear";
-import { Box, Button, Chip } from "@mui/material";
+import { Box, Button, Chip, Container, Typography } from "@mui/material";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { useTheme } from "@mui/material/styles";
 import { AI } from "./Form";
@@ -9,6 +9,66 @@ interface ICardsProps {
   cards: AI[];
   onDelete: (index: number) => void;
 }
+
+interface ICardsInfoProps {
+  title: string;
+  info: string | string[];
+}
+const CardsInfo: React.FC<ICardsInfoProps> = ({ title, info }) => {
+  const theme = useTheme();
+  return (
+    <Container
+      sx={{
+        display: "flex",
+        alignItems: "baseline",
+        gap: 2,
+        flexDirection: "row",
+        marginBottom: 2,
+      }}
+    >
+      <Typography
+        variant="h4"
+        color="text.primary"
+        sx={{
+          width: { xs: "5em", sm: "14.6em", md: "6.7em", lg: "14.6em" },
+          textAlign: "right",
+          flexShrink: 0,
+        }}
+      >
+        {title}
+      </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          gap: 1,
+        }}
+      >
+        {Array.isArray(info) ? (
+          info.map((option, index) => (
+            <Chip
+              key={index}
+              label={option}
+              sx={{
+                margin: theme.spacing(0, 0.5),
+                display: "flex",
+              }}
+            />
+          ))
+        ) : (
+          <Chip
+            label={info}
+            sx={{
+              margin: theme.spacing(0, 0.5),
+              padding: { xs: 0.5, sm: 1, md: 1.5 },
+            }}
+          />
+        )}
+      </Box>
+    </Container>
+  );
+};
 
 export default function Cards({ cards, onDelete }: ICardsProps) {
   const theme = useTheme();
@@ -20,17 +80,24 @@ export default function Cards({ cards, onDelete }: ICardsProps) {
         gap: 6,
       }}
     >
-      <TransitionGroup>
+      <TransitionGroup disableGutters>
         {cards.map((card, index) => (
           <CSSTransition key={index} timeout={500} classNames="card">
             <Box
               sx={{
                 flexDirection: "column",
-                padding: 2,
-                border: `2px solid ${theme.palette.text.primary}`,
-                borderRadius: "5px",
+                paddingTop: 2,
+                paddingBottom: 2,
+                paddingLeft: { md: 0, lg: 2 },
+                paddingRight: { md: 0, lg: 2 },
+                maxWidth: { md: "90%", lg: "80%" },
+                border: "2px solid",
+                borderColor: theme.palette.text.primary,
+                py: 2.5,
+                borderRadius: 2,
                 position: "relative",
-                marginBottom: 6,
+                marginBottom: 5,
+                bgcolor: "background.paper",
                 "&::after": {
                   content: '""',
                   position: "absolute",
@@ -50,44 +117,30 @@ export default function Cards({ cards, onDelete }: ICardsProps) {
                 },
               }}
             >
-              <h3>
-                {CHECK_AND_RADIO[0].label}:
-                {card.levelOfAI.map((option, index) => (
-                  <Chip
-                    key={index}
-                    label={option}
-                    sx={{ margin: (theme) => theme.spacing(0, 0.5) }}
-                  />
-                ))}
-              </h3>
-
-              <h3>
-                {CHECK_AND_RADIO[1].label}:
-                {card.whereAIIsUsed.map((option, index) => (
-                  <Chip
-                    key={index}
-                    label={option}
-                    sx={{ margin: (theme) => theme.spacing(0, 0.5) }}
-                  />
-                ))}
-              </h3>
-
-              <h3>
-                {CHECK_AND_RADIO[2].label}: <Chip label={card.TypeOfAI} />
-              </h3>
-
-              <h3>
-                {RANGE[0].label}:{" "}
-                <Chip label={card.rateAIIntelligence.toString()} />
-              </h3>
+              <CardsInfo
+                title={CHECK_AND_RADIO[0].label}
+                info={card.levelOfAI}
+              />
+              <CardsInfo
+                title={CHECK_AND_RADIO[1].label}
+                info={card.whereAIIsUsed}
+              />
+              <CardsInfo
+                title={CHECK_AND_RADIO[2].label}
+                info={card.TypeOfAI}
+              />
+              <CardsInfo
+                title={RANGE[0].label}
+                info={card.rateAIIntelligence.toString()}
+              />
               <Box
                 sx={{
                   display: "flex",
                   justifyContent: "flex-end",
                   paddingRight: {
-                    xs: 0.5,
-                    sm: 2,
-                    md: 4,
+                    xs: 2,
+                    sm: 4,
+                    md: 6,
                   },
                   marginBottom: -6,
                 }}

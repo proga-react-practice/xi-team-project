@@ -36,7 +36,7 @@ export const CHECK_AND_RADIO: CheckboxRadioOptions[] = [
 
 export const RANGE: RangeOptions[] = [
   {
-    label: "Rate AI Intelligence",
+    label: "AI Intelligence",
     name: "rating",
     min: 0,
     max: 100,
