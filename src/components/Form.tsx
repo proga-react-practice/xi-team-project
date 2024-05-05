@@ -5,11 +5,6 @@ import {
   Box,
   Grid,
   Slider,
-  InputLabel,
-  MenuItem,
-  FormControl,
-  Select,
-  Chip,
   Button,
   Typography,
   Container,
@@ -19,6 +14,7 @@ import { SelectChangeEvent } from "@mui/material/Select";
 import { useTheme } from "@mui/material/styles";
 import ClearIcon from "@mui/icons-material/Clear";
 import SendIcon from "@mui/icons-material/Send";
+import CustomFormControl from "./CustomFormControl";
 
 export interface AI {
   levelOfAI: string[];
@@ -31,8 +27,6 @@ interface IFormProps {
 }
 
 const Form = ({ onSubmit }: IFormProps) => {
-  const [levelOfAI] = React.useState<string[]>([]);
-  const [whereAIIsUsed] = React.useState<string[]>([]);
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
   const defaultFormState = {
     levelOfAI: [],
@@ -45,26 +39,27 @@ const Form = ({ onSubmit }: IFormProps) => {
 
   const [Ai, setAI] = useState<AI>(defaultFormState);
 
-  const onLevelChange = (event: SelectChangeEvent<typeof levelOfAI>) => {
+  const onLevelChange = (event: SelectChangeEvent<string | string[]>) => {
     const {
       target: { value },
     } = event;
-    const newOption = typeof value === "string" ? value.split(",") : value;
+    const newOption = Array.isArray(value) ? value : value.split(",");
     setAI((prevAi) => ({ ...prevAi, levelOfAI: newOption }));
   };
 
-  const onWhereUsedChange = (
-    event: SelectChangeEvent<typeof whereAIIsUsed>
-  ) => {
+  const onWhereUsedChange = (event: SelectChangeEvent<string | string[]>) => {
     const {
       target: { value },
     } = event;
-    const newOption = typeof value === "string" ? value.split(",") : value;
+    const newOption = Array.isArray(value) ? value : value.split(",");
     setAI((prevAi) => ({ ...prevAi, whereAIIsUsed: newOption }));
   };
 
-  const onTypeChange = (e: SelectChangeEvent) => {
-    setAI((prevAi) => ({ ...prevAi, TypeOfAI: e.target.value }));
+  const onTypeChange = (e: SelectChangeEvent<string | string[]>) => {
+    const value = Array.isArray(e.target.value)
+      ? e.target.value[0]
+      : e.target.value;
+    setAI((prevAi) => ({ ...prevAi, TypeOfAI: value || "" }));
   };
 
   const onRateSliderChange = (_: Event, newValue: number | number[]) => {
@@ -141,130 +136,27 @@ const Form = ({ onSubmit }: IFormProps) => {
           Register the AI
         </Typography>
 
-        <FormControl
-          fullWidth
-          sx={{
-            marginBottom: "0.65em",
-          }}
-        >
-          <InputLabel id="LevelOfAI-chip">
-            {CHECK_AND_RADIO[0].label}
-          </InputLabel>
-          <Select
-            labelId="LevelOfAI-chip"
-            id="Level of AI"
-            label="Level of AI"
-            multiple
-            value={Ai.levelOfAI}
-            onChange={onLevelChange}
-            renderValue={(selected) => (
-              <Box
-                sx={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  gap: 0.5,
-                }}
-              >
-                {selected.map((value) => (
-                  <Chip
-                    key={value}
-                    label={value}
-                    sx={{
-                      height: "1.8rem",
-                      padding: { xs: 0.5, sm: 1, md: 1.5 },
-                    }}
-                  />
-                ))}
-              </Box>
-            )}
-          >
-            {CHECK_AND_RADIO[0].value.map((name) => (
-              <MenuItem key={name} value={name}>
-                {name}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <FormControl
-          fullWidth
-          sx={{
-            marginBottom: "0.65em",
-          }}
-        >
-          <InputLabel id="WhereAIIsUsed-chip">
-            {CHECK_AND_RADIO[1].label}
-          </InputLabel>
-          <Select
-            labelId="WhereAIIsUsed-chip"
-            id="Where AI Is Used"
-            label="Where AI Is Used"
-            multiple
-            value={Ai.whereAIIsUsed}
-            onChange={onWhereUsedChange}
-            renderValue={(selected) => (
-              <Box
-                sx={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  gap: 0.5,
-                }}
-              >
-                {selected.map((value) => (
-                  <Chip
-                    key={value}
-                    label={value}
-                    sx={{
-                      height: "1.8rem",
-                      padding: { xs: 0.5, sm: 1, md: 1.5 },
-                    }}
-                  />
-                ))}
-              </Box>
-            )}
-          >
-            {CHECK_AND_RADIO[1].value.map((name) => (
-              <MenuItem key={name} value={name}>
-                {name}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <FormControl
-          fullWidth
-          sx={{
-            marginBottom: "0.65em",
-          }}
-        >
-          <InputLabel id="TypeOfAI-select-standard-label">
-            {CHECK_AND_RADIO[2].label}
-          </InputLabel>
-          <Select
-            labelId="TypeOfAI-select-standard-label"
-            id="TypeOfAI-select-standard"
-            value={Ai.TypeOfAI}
-            onChange={onTypeChange}
-            label="Type of AI"
-            renderValue={(selected) => (
-              <Box>
-                <Chip
-                  key={selected}
-                  label={selected}
-                  sx={{
-                    height: "1.8rem",
-                    padding: { xs: 0.5, sm: 1, md: 1.5 },
-                  }}
-                />
-              </Box>
-            )}
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={"NPC"}>NPC</MenuItem>
-            <MenuItem value={"Neural Network"}>Neural Network</MenuItem>
-            <MenuItem value={"Function"}>Function</MenuItem>
-          </Select>
-        </FormControl>
+        <CustomFormControl
+          label={CHECK_AND_RADIO[0].label}
+          values={CHECK_AND_RADIO[0].value}
+          selectedValues={Ai.levelOfAI}
+          multiple={true}
+          onChange={onLevelChange}
+        />
+        <CustomFormControl
+          label={CHECK_AND_RADIO[1].label}
+          values={CHECK_AND_RADIO[1].value}
+          selectedValues={Ai.whereAIIsUsed}
+          multiple={true}
+          onChange={onWhereUsedChange}
+        />
+        <CustomFormControl
+          label={CHECK_AND_RADIO[2].label}
+          values={CHECK_AND_RADIO[2].value}
+          selectedValues={Ai.TypeOfAI}
+          multiple={false}
+          onChange={onTypeChange}
+        />
         <Box
           sx={{
             marginBottom: "0.65em",
