@@ -1,7 +1,7 @@
-import Form from "./components/Form";
+import Form from "./components/Form/Form";
 import Cards from "./components/Cards";
 import { useState } from "react";
-import { AI } from "./components/Form";
+import { AI } from "./components/Form/Form";
 import { Container, Box } from "@mui/material";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
 import Title from "./components/Title";

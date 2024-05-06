@@ -1,5 +1,5 @@
-import { CHECK_AND_RADIO, RANGE } from "../data";
-import Alert from "./Alert";
+import { CHECK_AND_RADIO, RANGE } from "../../data";
+import Alert from "../Alert";
 import React, { useState } from "react";
 import {
   Box,
