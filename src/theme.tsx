@@ -56,6 +56,17 @@ const lightTheme: ThemeOptions = createTheme({
   },
 
   components: {
+    MuiTab: {
+      styleOverrides: {
+        root: {
+          borderRadius: shape,
+          "&.Mui-selected": {
+            backgroundColor: "#8E00FF",
+            color: "inherit",
+          },
+        },
+      },
+    },
     MuiTypography: {
       styleOverrides: {
         root: {
@@ -206,6 +217,17 @@ const darkTheme: ThemeOptions = createTheme({
   },
 
   components: {
+    MuiTab: {
+      styleOverrides: {
+        root: {
+          borderRadius: shape,
+          "&.Mui-selected": {
+            backgroundColor: "#7712C7",
+            color: "inherit",
+          },
+        },
+      },
+    },
     MuiTypography: {
       styleOverrides: {
         root: {

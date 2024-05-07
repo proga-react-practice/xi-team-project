@@ -1,4 +1,4 @@
-import { CHECK_AND_RADIO, RANGE } from "../data";
+import { CHECK_AND_RADIO, RANGE } from "../../data";
 import ClearIcon from "@mui/icons-material/Clear";
 import { Box, Button, Chip, Container, Typography } from "@mui/material";
 import { TransitionGroup, CSSTransition } from "react-transition-group";

@@ -1,16 +1,14 @@
-import Form from "./components/Form/Form";
-import Cards from "./components/Cards";
+import Form from "../components/AI/Form/Form";
+import Cards from "../components/AI/Cards";
 import { useState } from "react";
-import { AI } from "./components/Form/Form";
+import { AI } from "../components/AI/Form/Form";
 import { Container, Box } from "@mui/material";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
-import Title from "./components/Title";
+import Title from "../components/Title";
 import StyleIcon from "@mui/icons-material/Style";
-import { lightTheme, darkTheme } from "./theme";
-import { ThemeProvider, useTheme } from "@mui/material/styles";
-import Switch from "@mui/material/Switch";
+import { useTheme } from "@mui/material/styles";
 
-function Content() {
+export default function App() {
   const theme = useTheme();
   const [formData, setFormData] = useState<AI[]>([]);
   const handleDelete = (index: number) => {
@@ -54,20 +52,5 @@ function Content() {
         <Cards cards={formData} onDelete={handleDelete} />
       </Container>
     </Box>
-  );
-}
-export default function App() {
-  const [currentTheme, setCurrentTheme] = useState(lightTheme);
-  const handleThemeChange = () => {
-    setCurrentTheme(currentTheme === lightTheme ? darkTheme : lightTheme);
-  };
-  return (
-    <ThemeProvider theme={currentTheme}>
-      <Switch
-        checked={currentTheme === darkTheme}
-        onChange={handleThemeChange}
-      />
-      <Content />
-    </ThemeProvider>
   );
 }
