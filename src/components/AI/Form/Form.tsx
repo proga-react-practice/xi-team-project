@@ -179,7 +179,6 @@ const Form = ({ onSubmit }: IFormProps) => {
                     : RANGE[0].min
                 }
                 onChange={onRateSliderChange}
-                aria-labelledby="input-slider"
               />
             </Grid>
             <Grid item>
@@ -197,7 +196,6 @@ const Form = ({ onSubmit }: IFormProps) => {
                   min: RANGE[0].min,
                   max: RANGE[0].max,
                   type: "number",
-                  "aria-labelledby": "input-slider",
                 }}
               />
             </Grid>

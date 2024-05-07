@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import MainNavigation from "../components/MainNavigation";
+import MainNavigation from "../components/Menu/MainNavigation";
 import { Switch } from "@mui/material";
 import { darkTheme, lightTheme } from "../theme";
 import { useState } from "react";

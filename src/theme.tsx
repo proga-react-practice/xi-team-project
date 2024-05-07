@@ -60,9 +60,11 @@ const lightTheme: ThemeOptions = createTheme({
       styleOverrides: {
         root: {
           borderRadius: shape,
+          transition: "background-color 0.2s ease-in-out",
           "&.Mui-selected": {
             backgroundColor: "#8E00FF",
             color: "inherit",
+            fontWeight: "bold",
           },
         },
       },
