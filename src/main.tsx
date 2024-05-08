@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import Ai from "./pages/AI.tsx";
 import RootLayout from "./pages/Root.tsx";
 import Home from "./pages/Home.tsx";
-import Game from "./pages/Game.tsx";
+import Game from "./pages/Games.tsx";
 
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
