@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card } from "../CardsGames";
+import { Card } from "./Cards";
 import Alert from "../Alert";
 import { TextField, Select, MenuItem, Box } from "@mui/material";
 import { InputLabel, Button, Chip } from "@mui/material";
