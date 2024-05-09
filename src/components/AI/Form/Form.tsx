@@ -10,7 +10,6 @@ import {
   Container,
   TextField,
 } from "@mui/material";
-import { SelectChangeEvent } from "@mui/material/Select";
 import { useTheme } from "@mui/material/styles";
 import ClearIcon from "@mui/icons-material/Clear";
 import SendIcon from "@mui/icons-material/Send";
@@ -28,92 +27,52 @@ interface IFormProps {
 
 const Form = ({ onSubmit }: IFormProps) => {
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
-  const defaultFormState = {
-    levelOfAI: [],
-    whereAIIsUsed: [],
-    TypeOfAI: "",
-    rateAIIntelligence: 0,
-  };
+  const [levelOfAI, setLevelOfAI] = useState<string[]>([]);
+  const [whereAIIsUsed, setWhereAIIsUsed] = useState<string[]>([]);
+  const [TypeOfAI, setTypeOfAI] = useState("");
+  const [rateAIIntelligence, setRateAIIntelligence] = useState<number>(0);
 
   const theme = useTheme();
 
-  const [Ai, setAI] = useState<AI>(defaultFormState);
-
-  const onLevelChange = (event: SelectChangeEvent<string | string[]>) => {
-    const {
-      target: { value },
-    } = event;
-    const newOption = Array.isArray(value) ? value : value.split(",");
-    setAI((prevAi) => ({ ...prevAi, levelOfAI: newOption }));
-  };
-
-  const onWhereUsedChange = (event: SelectChangeEvent<string | string[]>) => {
-    const {
-      target: { value },
-    } = event;
-    const newOption = Array.isArray(value) ? value : value.split(",");
-    setAI((prevAi) => ({ ...prevAi, whereAIIsUsed: newOption }));
-  };
-
-  const onTypeChange = (e: SelectChangeEvent<string | string[]>) => {
-    const value = Array.isArray(e.target.value)
-      ? e.target.value[0]
-      : e.target.value;
-    setAI((prevAi) => ({ ...prevAi, TypeOfAI: value || "" }));
-  };
-
   const onRateSliderChange = (_: Event, newValue: number | number[]) => {
     const value = Array.isArray(newValue) ? newValue[0] : newValue;
-    setAI((prevAi) => ({ ...prevAi, rateAIIntelligence: value }));
+    setRateAIIntelligence(value);
   };
 
   const onRateInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value === "" ? 0 : Number(event.target.value);
-    setAI((prevAi) => ({ ...prevAi, rateAIIntelligence: value }));
+    setRateAIIntelligence(value);
   };
 
   const handleBlur = () => {
-    if (Ai.rateAIIntelligence < 0) {
-      setAI((prevAi) => ({ ...prevAi, rateAIIntelligence: 0 }));
-    } else if (Ai.rateAIIntelligence > 100) {
-      setAI((prevAi) => ({ ...prevAi, rateAIIntelligence: 100 }));
-    }
-  };
-  const validateAI = (Ai: AI) => {
-    if (
-      Ai.levelOfAI.length === 0 ||
-      Ai.whereAIIsUsed.length === 0 ||
-      !Ai.TypeOfAI ||
-      Ai.rateAIIntelligence === 0
-    ) {
-      return "Please fill all the fields";
-    } else if (Ai.rateAIIntelligence > 100) {
-      Ai.rateAIIntelligence = 100;
+    if (rateAIIntelligence < 0) {
+      setRateAIIntelligence(0);
+    } else if (rateAIIntelligence > 100) {
+      setRateAIIntelligence(100);
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
     setErrorMessage("");
 
-    const error = validateAI(Ai);
-    if (error) {
-      setErrorMessage(error);
+    if (
+      levelOfAI.length === 0 ||
+      whereAIIsUsed.length === 0 ||
+      TypeOfAI === "" ||
+      rateAIIntelligence === 0
+    ) {
+      setErrorMessage("Please fill all the fields");
       return;
+    } else {
+      onSubmit({ levelOfAI, whereAIIsUsed, TypeOfAI, rateAIIntelligence });
     }
-    onSubmit(Ai);
   };
   const handleClear = () => {
-    setErrorMessage(null);
-    setAI(defaultFormState);
-    document.querySelectorAll('input[type="checkbox"]').forEach((element) => {
-      const checkbox = element as HTMLInputElement;
-      checkbox.checked = false;
-    });
-    document.querySelectorAll('input[type="radio"]').forEach((element) => {
-      const radio = element as HTMLInputElement;
-      radio.checked = false;
-    });
+    setLevelOfAI([]);
+    setWhereAIIsUsed([]);
+    setTypeOfAI("");
+    setRateAIIntelligence(0);
   };
 
   return (
@@ -139,24 +98,25 @@ const Form = ({ onSubmit }: IFormProps) => {
         <CustomFormControl
           label={CHECK_AND_RADIO[0].label}
           values={CHECK_AND_RADIO[0].value}
-          selectedValues={Ai.levelOfAI}
+          selectedValue={levelOfAI}
           multiple={true}
-          onChange={onLevelChange}
+          onChange={(newOption) => setLevelOfAI(newOption)}
         />
         <CustomFormControl
           label={CHECK_AND_RADIO[1].label}
           values={CHECK_AND_RADIO[1].value}
-          selectedValues={Ai.whereAIIsUsed}
+          selectedValue={whereAIIsUsed}
           multiple={true}
-          onChange={onWhereUsedChange}
+          onChange={(newOption) => setWhereAIIsUsed(newOption)}
         />
         <CustomFormControl
-          label={CHECK_AND_RADIO[2].label}
+          label="Type of AI"
           values={CHECK_AND_RADIO[2].value}
-          selectedValues={Ai.TypeOfAI}
+          selectedValue={TypeOfAI}
           multiple={false}
-          onChange={onTypeChange}
+          onChange={(newOption) => setTypeOfAI(newOption[0])}
         />
+
         <Box
           sx={{
             marginBottom: "0.65em",
@@ -174,8 +134,8 @@ const Form = ({ onSubmit }: IFormProps) => {
                 }}
                 aria-label="Volume"
                 value={
-                  typeof Ai.rateAIIntelligence === "number"
-                    ? Ai.rateAIIntelligence
+                  typeof rateAIIntelligence === "number"
+                    ? rateAIIntelligence
                     : RANGE[0].min
                 }
                 onChange={onRateSliderChange}
@@ -187,7 +147,7 @@ const Form = ({ onSubmit }: IFormProps) => {
                 sx={{
                   width: "5em",
                 }}
-                value={Ai.rateAIIntelligence}
+                value={rateAIIntelligence}
                 size="small"
                 onChange={onRateInputChange}
                 onBlur={handleBlur}

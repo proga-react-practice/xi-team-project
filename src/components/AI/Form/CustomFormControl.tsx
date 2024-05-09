@@ -1,29 +1,37 @@
 import React from "react";
 import {
-  Box,
   Chip,
   FormControl,
   InputLabel,
   MenuItem,
   Select,
+  Box,
 } from "@mui/material";
 import { SelectChangeEvent } from "@mui/material/Select";
 
 interface CustomFormControlProps {
   label: string;
   values: string[];
-  selectedValues: string | string[];
-  multiple?: boolean;
-  onChange: (event: SelectChangeEvent<string | string[]>) => void;
+  selectedValue: string | string[];
+  multiple: boolean;
+  onChange: (newOption: string[]) => void;
 }
 
 const CustomFormControl: React.FC<CustomFormControlProps> = ({
   label,
   values,
-  selectedValues,
+  selectedValue,
   multiple,
   onChange,
 }) => {
+  const handleChange = (event: SelectChangeEvent<string | string[]>) => {
+    const {
+      target: { value },
+    } = event;
+    const newOption = Array.isArray(value) ? value : value.split(",");
+    onChange(newOption);
+  };
+
   return (
     <FormControl
       fullWidth
@@ -35,38 +43,13 @@ const CustomFormControl: React.FC<CustomFormControlProps> = ({
       <Select
         label={label}
         multiple={multiple}
-        value={selectedValues}
-        onChange={onChange}
+        value={selectedValue}
+        onChange={handleChange}
         renderValue={(selected) => (
-          <Box
-            sx={{
-              display: "flex",
-              flexWrap: "wrap",
-              gap: 0.5,
-            }}
-          >
-            {multiple ? (
-              Array.isArray(selected) &&
-              selected.map((value) => (
-                <Chip
-                  key={value}
-                  label={value}
-                  sx={{
-                    height: "1.8rem",
-                    padding: { xs: 0.5, sm: 1, md: 1.5 },
-                  }}
-                />
-              ))
-            ) : (
-              <Chip
-                key={selected as string}
-                label={selected as string}
-                sx={{
-                  height: "1.8rem",
-                  padding: { xs: 0.5, sm: 1, md: 1.5 },
-                }}
-              />
-            )}
+          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+            {(Array.isArray(selected) ? selected : [selected]).map((value) => (
+              <Chip key={value} label={value} />
+            ))}
           </Box>
         )}
       >
