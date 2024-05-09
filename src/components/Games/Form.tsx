@@ -25,7 +25,7 @@ const Form: React.FC<Props> = ({ onSubmit }) => {
     event.preventDefault();
     setErrorMessage("");
 
-    if (name === "" || difficulty === "" || price === "") {
+    if (name === "" || difficulty === "" || price === "" || currency === "") {
       setErrorMessage("Please fill all the fields");
       return;
     } else {
