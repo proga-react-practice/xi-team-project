@@ -1,6 +1,6 @@
 import { CHECK_AND_RADIO, RANGE } from "../../../data";
 import Alert from "../../Alert";
-import React, { useState } from "react";
+import React from "react";
 import {
   Box,
   Grid,
@@ -14,6 +14,7 @@ import { useTheme } from "@mui/material/styles";
 import ClearIcon from "@mui/icons-material/Clear";
 import SendIcon from "@mui/icons-material/Send";
 import CustomFormControl from "./CustomFormControl";
+import { useForm } from "react-hook-form";
 
 export interface AI {
   levelOfAI: string[];
@@ -26,53 +27,40 @@ interface IFormProps {
 }
 
 const Form = ({ onSubmit }: IFormProps) => {
+  const { handleSubmit, reset, watch, setValue, trigger } = useForm<AI>({
+    defaultValues: {
+      levelOfAI: [],
+      whereAIIsUsed: [],
+      TypeOfAI: "",
+      rateAIIntelligence: 0,
+    },
+  });
+
+  const levelOfAI = watch("levelOfAI", []);
+  const whereAIIsUsed = watch("whereAIIsUsed", []);
+  const TypeOfAI = watch("TypeOfAI");
+  const rateAIIntelligence = watch("rateAIIntelligence");
+
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
-  const [levelOfAI, setLevelOfAI] = useState<string[]>([]);
-  const [whereAIIsUsed, setWhereAIIsUsed] = useState<string[]>([]);
-  const [TypeOfAI, setTypeOfAI] = useState("");
-  const [rateAIIntelligence, setRateAIIntelligence] = useState<number>(0);
 
   const theme = useTheme();
 
-  const onRateSliderChange = (_: Event, newValue: number | number[]) => {
-    const value = Array.isArray(newValue) ? newValue[0] : newValue;
-    setRateAIIntelligence(value);
-  };
-
-  const onRateInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value === "" ? 0 : Number(event.target.value);
-    setRateAIIntelligence(value);
-  };
-
-  const handleBlur = () => {
-    if (rateAIIntelligence < 0) {
-      setRateAIIntelligence(0);
-    } else if (rateAIIntelligence > 100) {
-      setRateAIIntelligence(100);
-    }
-  };
-
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    setErrorMessage("");
-
+  const onSubmitForm = handleSubmit((data) => {
     if (
-      levelOfAI.length === 0 ||
-      whereAIIsUsed.length === 0 ||
-      TypeOfAI === "" ||
-      rateAIIntelligence === 0
+      data.levelOfAI.length === 0 ||
+      data.whereAIIsUsed.length === 0 ||
+      data.TypeOfAI === "" ||
+      data.rateAIIntelligence === 0
     ) {
       setErrorMessage("Please fill all the fields");
       return;
     } else {
-      onSubmit({ levelOfAI, whereAIIsUsed, TypeOfAI, rateAIIntelligence });
+      onSubmit(data);
     }
-  };
+  });
   const handleClear = () => {
-    setLevelOfAI([]);
-    setWhereAIIsUsed([]);
-    setTypeOfAI("");
-    setRateAIIntelligence(0);
+    reset();
+    setValue("TypeOfAI", "");
   };
 
   return (
@@ -82,7 +70,7 @@ const Form = ({ onSubmit }: IFormProps) => {
       )}
       <Container
         component="form"
-        onSubmit={handleSubmit}
+        onSubmit={onSubmitForm}
         sx={{
           border: "2px solid",
           borderColor: theme.palette.text.primary,
@@ -100,21 +88,21 @@ const Form = ({ onSubmit }: IFormProps) => {
           values={CHECK_AND_RADIO[0].value}
           selectedValue={levelOfAI}
           multiple={true}
-          onChange={(newOption) => setLevelOfAI(newOption)}
+          onChange={(newOption) => setValue("levelOfAI", newOption)}
         />
         <CustomFormControl
           label={CHECK_AND_RADIO[1].label}
           values={CHECK_AND_RADIO[1].value}
           selectedValue={whereAIIsUsed}
           multiple={true}
-          onChange={(newOption) => setWhereAIIsUsed(newOption)}
+          onChange={(newOption) => setValue("whereAIIsUsed", newOption)}
         />
         <CustomFormControl
           label="Type of AI"
           values={CHECK_AND_RADIO[2].value}
           selectedValue={TypeOfAI}
           multiple={false}
-          onChange={(newOption) => setTypeOfAI(newOption[0])}
+          onChange={(newOption) => setValue("TypeOfAI", newOption[0])}
         />
 
         <Box
@@ -138,7 +126,12 @@ const Form = ({ onSubmit }: IFormProps) => {
                     ? rateAIIntelligence
                     : RANGE[0].min
                 }
-                onChange={onRateSliderChange}
+                onChange={(_, newValue) =>
+                  setValue(
+                    "rateAIIntelligence",
+                    Array.isArray(newValue) ? newValue[0] : newValue
+                  )
+                }
               />
             </Grid>
             <Grid item>
@@ -149,8 +142,10 @@ const Form = ({ onSubmit }: IFormProps) => {
                 }}
                 value={rateAIIntelligence}
                 size="small"
-                onChange={onRateInputChange}
-                onBlur={handleBlur}
+                onChange={(event) =>
+                  setValue("rateAIIntelligence", parseInt(event.target.value))
+                }
+                onBlur={() => trigger("rateAIIntelligence")}
                 inputProps={{
                   step: 1,
                   min: RANGE[0].min,
@@ -182,7 +177,7 @@ const Form = ({ onSubmit }: IFormProps) => {
             variant="contained"
             sx={{ px: 10 }}
             endIcon={<SendIcon />}
-            onClick={handleSubmit}
+            type="submit"
           >
             Add
           </Button>

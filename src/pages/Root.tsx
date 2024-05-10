@@ -10,7 +10,7 @@ export default function RootLayout() {
     setCurrentTheme(currentTheme === lightTheme ? darkTheme : lightTheme);
   };
   return (
-    <div>
+    <>
       <ThemeProvider theme={currentTheme}>
         <MainNavigation
           onThemeChange={handleThemeChange}
@@ -18,6 +18,6 @@ export default function RootLayout() {
         />
         <Outlet />
       </ThemeProvider>
-    </div>
+    </>
   );
 }

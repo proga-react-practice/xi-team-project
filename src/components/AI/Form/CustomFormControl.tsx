@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { SelectChangeEvent } from "@mui/material/Select";
 
-interface CustomFormControlProps {
+interface ICustomFormControlProps {
   label: string;
   values: string[];
   selectedValue: string | string[];
@@ -17,7 +17,7 @@ interface CustomFormControlProps {
   onChange: (newOption: string[]) => void;
 }
 
-const CustomFormControl: React.FC<CustomFormControlProps> = ({
+const CustomFormControl: React.FC<ICustomFormControlProps> = ({
   label,
   values,
   selectedValue,

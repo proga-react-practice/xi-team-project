@@ -80,7 +80,7 @@ export default function Cards({ cards, onDelete }: ICardsProps) {
         gap: 6,
       }}
     >
-      <TransitionGroup disableGutters>
+      <TransitionGroup>
         {cards.map((card, index) => (
           <CSSTransition key={index} timeout={500} classNames="card">
             <Box
