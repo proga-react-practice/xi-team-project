@@ -11,12 +11,36 @@ import { useTheme } from "@mui/material/styles";
 export default function App() {
   const theme = useTheme();
   const [formData, setFormData] = useState<AI[]>([]);
+  const [editingCard, setEditingCard] = useState<number | null>(null);
+
   const handleDelete = (index: number) => {
     setFormData((prevCards) => prevCards.filter((_, i) => i !== index));
+    if (index === editingCard) {
+      setEditingCard(null);
+    }
   };
 
-  const handleFormSubmit = (Ai: AI) => {
-    setFormData([...formData, Ai]);
+  const handleEdit = (ai: AI) => {
+    const index = formData.findIndex((card) => card.id === ai.id);
+    setEditingCard(index);
+    if (index !== -1) {
+      console.log(formData[index]);
+    }
+  };
+
+  const handleFormSubmit = (newData: AI) => {
+    if (editingCard !== null) {
+      setFormData((prevCards) =>
+        prevCards.map((card, i) => (i === editingCard ? newData : card))
+      );
+    } else {
+      setFormData((prevCards) => [
+        ...prevCards,
+        { ...newData, id: Date.now() },
+      ]);
+    }
+
+    setEditingCard(null);
   };
   return (
     <Box
@@ -25,8 +49,8 @@ export default function App() {
         display: "flex",
         justifyContent: "space-between",
         bgcolor: theme.palette.background.default,
-        width: "100vw",
-        minHeight: "100vh",
+        width: "calc(100vw - 16.5px)",
+        minHeight: "91vh",
       }}
     >
       <Container
@@ -37,7 +61,11 @@ export default function App() {
         }}
       >
         <Title icon={SmartToyIcon} title="Registration Form" />
-        <Form onSubmit={handleFormSubmit} />
+        <Form
+          onSubmit={handleFormSubmit}
+          submitButtonText={editingCard !== null ? "Update" : "Add"}
+          initialData={editingCard !== null ? formData[editingCard] : undefined}
+        />
       </Container>
       <Container
         sx={{
@@ -49,7 +77,7 @@ export default function App() {
         }}
       >
         <Title icon={StyleIcon} title="Submitted Cards" />
-        <Cards cards={formData} onDelete={handleDelete} />
+        <Cards cards={formData} onDelete={handleDelete} onEdit={handleEdit} />
       </Container>
     </Box>
   );

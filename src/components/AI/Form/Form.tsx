@@ -1,6 +1,6 @@
 import { CHECK_AND_RADIO, RANGE } from "../../../data";
 import Alert from "../../Alert";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Box,
   Grid,
@@ -21,14 +21,17 @@ export interface AI {
   whereAIIsUsed: string[];
   TypeOfAI: string;
   rateAIIntelligence: number;
+  id?: number;
 }
 interface IFormProps {
   onSubmit: (Ai: AI) => void;
+  submitButtonText: string;
+  initialData?: AI;
 }
 
-const Form = ({ onSubmit }: IFormProps) => {
+const Form = ({ onSubmit, submitButtonText, initialData }: IFormProps) => {
   const { handleSubmit, reset, watch, setValue, trigger } = useForm<AI>({
-    defaultValues: {
+    defaultValues: initialData || {
       levelOfAI: [],
       whereAIIsUsed: [],
       TypeOfAI: "",
@@ -36,8 +39,8 @@ const Form = ({ onSubmit }: IFormProps) => {
     },
   });
 
-  const levelOfAI = watch("levelOfAI", []);
-  const whereAIIsUsed = watch("whereAIIsUsed", []);
+  const levelOfAI = watch("levelOfAI");
+  const whereAIIsUsed = watch("whereAIIsUsed");
   const TypeOfAI = watch("TypeOfAI");
   const rateAIIntelligence = watch("rateAIIntelligence");
 
@@ -62,6 +65,17 @@ const Form = ({ onSubmit }: IFormProps) => {
     reset();
     setValue("TypeOfAI", "");
   };
+
+  useEffect(() => {
+    reset(
+      initialData || {
+        levelOfAI: [],
+        whereAIIsUsed: [],
+        TypeOfAI: "",
+        rateAIIntelligence: 0,
+      }
+    );
+  }, [initialData, reset]);
 
   return (
     <>
@@ -179,7 +193,7 @@ const Form = ({ onSubmit }: IFormProps) => {
             endIcon={<SendIcon />}
             type="submit"
           >
-            Add
+            {submitButtonText}
           </Button>
         </Container>
       </Container>

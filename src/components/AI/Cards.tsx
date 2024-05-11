@@ -1,5 +1,6 @@
 import { CHECK_AND_RADIO, RANGE } from "../../data";
 import ClearIcon from "@mui/icons-material/Clear";
+import EditIcon from "@mui/icons-material/Edit";
 import { Box, Button, Chip, Container, Typography } from "@mui/material";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { useTheme } from "@mui/material/styles";
@@ -8,6 +9,7 @@ import { AI } from "./Form/Form";
 interface ICardsProps {
   cards: AI[];
   onDelete: (index: number) => void;
+  onEdit: (ai: AI) => void;
 }
 
 interface ICardsInfoProps {
@@ -70,8 +72,9 @@ const CardsInfo: React.FC<ICardsInfoProps> = ({ title, info }) => {
   );
 };
 
-export default function Cards({ cards, onDelete }: ICardsProps) {
+export default function Cards({ cards, onDelete, onEdit }: ICardsProps) {
   const theme = useTheme();
+
   return (
     <Box
       sx={{
@@ -101,7 +104,11 @@ export default function Cards({ cards, onDelete }: ICardsProps) {
                 "&::after": {
                   content: '""',
                   position: "absolute",
-                  bottom: theme.spacing(1),
+                  bottom: {
+                    xs: theme.spacing(1),
+                    md: theme.spacing(0.875),
+                    lg: theme.spacing(1),
+                  },
                   left: {
                     xs: theme.spacing(1),
                     sm: theme.spacing(2),
@@ -147,13 +154,28 @@ export default function Cards({ cards, onDelete }: ICardsProps) {
               >
                 <Button
                   variant="contained"
+                  endIcon={<EditIcon />}
+                  onClick={() => onEdit(cards[index])}
+                  sx={{
+                    marginRight: 2.5,
+                    width: {
+                      xs: theme.spacing(13),
+                      sm: theme.spacing(16),
+                      lg: theme.spacing(18),
+                    },
+                  }}
+                >
+                  Edit
+                </Button>
+                <Button
+                  variant="contained"
                   endIcon={<ClearIcon />}
                   onClick={() => onDelete(index)}
                   sx={{
                     width: {
-                      xs: theme.spacing(16.5),
+                      xs: theme.spacing(16),
                       sm: theme.spacing(20),
-                      md: theme.spacing(25),
+                      lg: theme.spacing(24),
                     },
                   }}
                 >
