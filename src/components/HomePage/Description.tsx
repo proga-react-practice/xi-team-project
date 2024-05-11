@@ -1,17 +1,19 @@
-import { Button, Box, Container } from "@mui/material";
-// import { useTheme } from "@mui/material/styles";
+import { Button, Box, Container, Typography } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import Text from "./TextFields";
 
 interface textProps {
+  title: string;
   text1: string;
   text2: string;
   button: string;
 }
 
-function About({ text1, text2, button }: textProps) {
-  // const theme = useTheme();
+function About({ title, text1, text2, button }: textProps) {
+  const theme = useTheme();
   return (
-    <>
+    <Box sx={{ background: "#fff", px: 2, py: 1, borderRadius: 2 }}>
+      <Typography sx={{ pl: 3 }}>{title}</Typography>
       <Box
         sx={{
           display: "flex",
@@ -29,10 +31,17 @@ function About({ text1, text2, button }: textProps) {
           }}
         >
           <Text text={text2} />
-          <Button fullWidth>{button}</Button>
+          <Button
+            fullWidth
+            sx={{
+              background: theme.palette.primary.main,
+            }}
+          >
+            {button}
+          </Button>
         </Container>
       </Box>
-    </>
+    </Box>
   );
 }
 export default About;
