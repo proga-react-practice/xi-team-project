@@ -91,6 +91,24 @@ export default function Cards({
     number | undefined
   >();
 
+  const handleTouchStart = (
+    _event: React.TouchEvent<HTMLDivElement>,
+    index: number
+  ) => {
+    setDragItemIndex(index);
+  };
+
+  const handleTouchMove = (
+    _event: React.TouchEvent<HTMLDivElement>,
+    index: number
+  ) => {
+    setDragOverItemIndex(index);
+  };
+
+  const handleTouchEnd = () => {
+    handleDrop();
+  };
+
   const handleDragStart = (index: number) => {
     setDragItemIndex(index);
   };
@@ -144,6 +162,9 @@ export default function Cards({
           <CSSTransition key={index} timeout={500} classNames="card">
             <Box
               draggable
+              onTouchStart={(event) => handleTouchStart(event, index)}
+              onTouchMove={(event) => handleTouchMove(event, index)}
+              onTouchEnd={handleTouchEnd}
               onDragStart={() => handleDragStart(index)}
               onDragOver={(event) => handleDragOver(event, index)}
               onDrop={handleDrop}
