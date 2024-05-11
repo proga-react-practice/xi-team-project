@@ -1,12 +1,28 @@
 import SadIcon from "@mui/icons-material/SentimentVeryDissatisfied";
+import SadlyIcon from "@mui/icons-material/SentimentDissatisfied";
 import { Typography, Box, Button, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 export default function ErrorPage() {
   const theme = useTheme();
   const navigate = useNavigate();
   const matches = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const [icon, setIcon] = useState(true);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIcon((prevIcon) => !prevIcon);
+    }, 3000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
+
+  const IconComponent = icon ? SadIcon : SadlyIcon;
 
   return (
     <Box
@@ -16,12 +32,12 @@ export default function ErrorPage() {
         display: "flex",
         flexDirection: "column",
         width: "100vw",
-        minHeight: "100vh",
+        minHeight: "91vh",
         alignItems: "center",
       }}
     >
-      <SadIcon
-        style={{
+      <IconComponent
+        sx={{
           fontSize: 100,
           height: matches ? "1.5em" : "2em",
           width: matches ? "1.5em" : "2em",

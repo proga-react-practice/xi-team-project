@@ -27,6 +27,9 @@ export default function App() {
       console.log(formData[index]);
     }
   };
+  const handleReorder = (newOrder: AI[]) => {
+    setFormData(newOrder);
+  };
 
   const handleFormSubmit = (newData: AI) => {
     if (editingCard !== null) {
@@ -49,7 +52,7 @@ export default function App() {
         display: "flex",
         justifyContent: "space-between",
         bgcolor: theme.palette.background.default,
-        width: "calc(100vw - 16.5px)",
+        width: "100vw",
         minHeight: "91vh",
       }}
     >
@@ -77,7 +80,12 @@ export default function App() {
         }}
       >
         <Title icon={StyleIcon} title="Submitted Cards" />
-        <Cards cards={formData} onDelete={handleDelete} onEdit={handleEdit} />
+        <Cards
+          cards={formData}
+          onDelete={handleDelete}
+          onEdit={handleEdit}
+          onReorder={handleReorder}
+        />
       </Container>
     </Box>
   );

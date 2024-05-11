@@ -5,11 +5,13 @@ import { Box, Button, Chip, Container, Typography } from "@mui/material";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { useTheme } from "@mui/material/styles";
 import { AI } from "./Form/Form";
+import { useState, useEffect } from "react";
 
 interface ICardsProps {
   cards: AI[];
   onDelete: (index: number) => void;
   onEdit: (ai: AI) => void;
+  onReorder: (cards: AI[]) => void;
 }
 
 interface ICardsInfoProps {
@@ -72,8 +74,60 @@ const CardsInfo: React.FC<ICardsInfoProps> = ({ title, info }) => {
   );
 };
 
-export default function Cards({ cards, onDelete, onEdit }: ICardsProps) {
+export default function Cards({
+  cards,
+  onDelete,
+  onEdit,
+  onReorder,
+}: ICardsProps) {
   const theme = useTheme();
+
+  const [cardsState, setCards] = useState(cards);
+  useEffect(() => {
+    setCards(cards);
+  }, [cards]);
+  const [dragItemIndex, setDragItemIndex] = useState<number | undefined>();
+  const [dragOverItemIndex, setDragOverItemIndex] = useState<
+    number | undefined
+  >();
+
+  const handleDragStart = (index: number) => {
+    setDragItemIndex(index);
+  };
+
+  const handleDragOver = (
+    event: React.DragEvent<HTMLDivElement>,
+    index: number
+  ) => {
+    event.preventDefault();
+    setDragOverItemIndex(index);
+  };
+
+  const handleDrop = () => {
+    if (
+      typeof dragItemIndex === "number" &&
+      typeof dragOverItemIndex === "number"
+    ) {
+      const _cards = [...cardsState];
+      const dragItem = _cards.splice(dragItemIndex, 1)[0];
+      _cards.splice(dragOverItemIndex, 0, dragItem);
+      setCards(_cards);
+      onReorder(_cards);
+    }
+  };
+
+  const handleDragEnter = (index: number) => {
+    setDragOverItemIndex(index);
+  };
+
+  const handleDragLeave = () => {
+    setDragOverItemIndex(undefined);
+  };
+
+  const handleDragEnd = () => {
+    setDragItemIndex(undefined);
+    setDragOverItemIndex(undefined);
+  };
 
   return (
     <Box
@@ -81,12 +135,21 @@ export default function Cards({ cards, onDelete, onEdit }: ICardsProps) {
         display: "flex",
         flexDirection: "column",
         gap: 6,
+        overflowY: "auto",
+        maxHeight: "75vh",
       }}
     >
       <TransitionGroup>
-        {cards.map((card, index) => (
+        {cardsState.map((card, index) => (
           <CSSTransition key={index} timeout={500} classNames="card">
             <Box
+              draggable
+              onDragStart={() => handleDragStart(index)}
+              onDragOver={(event) => handleDragOver(event, index)}
+              onDrop={handleDrop}
+              onDragEnter={() => handleDragEnter(index)}
+              onDragLeave={handleDragLeave}
+              onDragEnd={handleDragEnd}
               sx={{
                 flexDirection: "column",
                 paddingTop: 2,
@@ -121,6 +184,9 @@ export default function Cards({ cards, onDelete, onEdit }: ICardsProps) {
                   },
                   height: "2px",
                   backgroundColor: theme.palette.text.primary,
+                },
+                "& > *:not(.MuiButton-root)": {
+                  pointerEvents: "auto",
                 },
               }}
             >
