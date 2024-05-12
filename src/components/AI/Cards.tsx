@@ -98,14 +98,11 @@ export default function Cards({
     setDragItemIndex(index);
   };
 
-  const handleTouchMove = (
+  const handleTouchEnd = (
     _event: React.TouchEvent<HTMLDivElement>,
     index: number
   ) => {
     setDragOverItemIndex(index);
-  };
-
-  const handleTouchEnd = () => {
     handleDrop();
   };
 
@@ -127,10 +124,14 @@ export default function Cards({
       typeof dragOverItemIndex === "number"
     ) {
       const _cards = [...cardsState];
-      const dragItem = _cards.splice(dragItemIndex, 1)[0];
-      _cards.splice(dragOverItemIndex, 0, dragItem);
+      const dragItem = _cards[dragItemIndex];
+      const dragOverItem = _cards[dragOverItemIndex];
+      _cards[dragItemIndex] = dragOverItem;
+      _cards[dragOverItemIndex] = dragItem;
       setCards(_cards);
       onReorder(_cards);
+      setDragItemIndex(undefined);
+      setDragOverItemIndex(undefined);
     }
   };
 
@@ -161,16 +162,6 @@ export default function Cards({
         {cardsState.map((card, index) => (
           <CSSTransition key={index} timeout={500} classNames="card">
             <Box
-              draggable
-              onTouchStart={(event) => handleTouchStart(event, index)}
-              onTouchMove={(event) => handleTouchMove(event, index)}
-              onTouchEnd={handleTouchEnd}
-              onDragStart={() => handleDragStart(index)}
-              onDragOver={(event) => handleDragOver(event, index)}
-              onDrop={handleDrop}
-              onDragEnter={() => handleDragEnter(index)}
-              onDragLeave={handleDragLeave}
-              onDragEnd={handleDragEnd}
               sx={{
                 flexDirection: "column",
                 paddingTop: 2,
@@ -211,22 +202,43 @@ export default function Cards({
                 },
               }}
             >
-              <CardsInfo
-                title={CHECK_AND_RADIO[0].label}
-                info={card.levelOfAI}
-              />
-              <CardsInfo
-                title={CHECK_AND_RADIO[1].label}
-                info={card.whereAIIsUsed}
-              />
-              <CardsInfo
-                title={CHECK_AND_RADIO[2].label}
-                info={card.TypeOfAI}
-              />
-              <CardsInfo
-                title={RANGE[0].label}
-                info={card.rateAIIntelligence.toString()}
-              />
+              <Box
+                draggable
+                onTouchStart={(event: React.TouchEvent<HTMLDivElement>) =>
+                  handleTouchStart(event, index)
+                }
+                onTouchEnd={(event: React.TouchEvent<HTMLDivElement>) =>
+                  handleTouchEnd(event, index)
+                }
+                onDragStart={() => handleDragStart(index)}
+                onDragOver={(event: React.DragEvent<HTMLDivElement>) =>
+                  handleDragOver(event, index)
+                }
+                onDrop={handleDrop}
+                onDragEnter={() => handleDragEnter(index)}
+                onDragLeave={handleDragLeave}
+                onDragEnd={handleDragEnd}
+                sx={{
+                  cursor: dragItemIndex === index ? "grabbing" : "grab",
+                }}
+              >
+                <CardsInfo
+                  title={CHECK_AND_RADIO[0].label}
+                  info={card.levelOfAI}
+                />
+                <CardsInfo
+                  title={CHECK_AND_RADIO[1].label}
+                  info={card.whereAIIsUsed}
+                />
+                <CardsInfo
+                  title={CHECK_AND_RADIO[2].label}
+                  info={card.TypeOfAI}
+                />
+                <CardsInfo
+                  title={RANGE[0].label}
+                  info={card.rateAIIntelligence.toString()}
+                />
+              </Box>
               <Box
                 sx={{
                   display: "flex",
