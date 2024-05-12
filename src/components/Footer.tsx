@@ -28,7 +28,7 @@ function Footer() {
         }}
       >
         <Container>
-          <Typography variant="h3" sx={{ pt: 1, pb: 5, textAlign: "center" }}>
+          <Typography variant="h3" sx={{ pt: 1, pb: 2, textAlign: "center" }}>
             Contacts
           </Typography>
           <Container
@@ -39,11 +39,17 @@ function Footer() {
               gap: 5,
             }}
           >
-            <Grid container justifyContent="center">
+            <Grid
+              container
+              justifyContent="center"
+              spacing={2}
+              sx={{ display: { xs: "block", sm: "flex", md: "flex" } }}
+            >
               <Grid item>
                 <Container
                   sx={{
                     display: "flex",
+
                     justifyContent: "center",
                     flexDirection: "column",
                     alignItems: "center",

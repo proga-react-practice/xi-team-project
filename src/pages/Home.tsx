@@ -10,21 +10,23 @@ export default function Home() {
   const theme = useTheme();
   return (
     <>
+      {/* <Container maxWidth="xl" disableGutters> */}
       <Box
-        maxWidth="xl"
+        // maxWidth="xl"
         sx={{
           bgcolor: theme.palette.background.default,
-          px: 10,
+          // px: 10,
           display: "flex",
           flexDirection: "column",
           gap: 3,
           py: 3,
+          px: { xs: 2, sm: 5, md: 10 },
         }}
       >
         <Box
           sx={{
             background: theme.palette.secondary.main,
-            px: 4,
+            px: { xs: 2, sm: 3, md: 4 },
             py: 1,
             borderRadius: 2,
           }}
@@ -32,8 +34,20 @@ export default function Home() {
           <Box
             sx={{
               display: "flex",
-              gap: 5,
-              py: 5,
+              flexDirection: { xs: "column", sm: "column", md: "row" },
+
+              // gap: 5,
+              // py: 5,
+              gap: { xs: 1, sm: 3, md: 5 },
+              py: { xs: 1, sm: 3, md: 5 },
+
+              justifyContent: "center",
+              // alignItems: "center", // Додаємо вирівнювання по центру по вертикалі
+              textAlign: "center", // Додаємо вирівнювання по центру по горизонталі
+              "& img": {
+                maxWidth: "100%", // Додаємо максимальну ширину для зображення
+                height: "auto", // Автоматична висота зображення
+              },
             }}
           >
             <Box
@@ -41,7 +55,9 @@ export default function Home() {
               sx={{
                 height: 220,
                 width: 400,
-
+                alignItems: { sx: "center", sm: "center", md: "left" },
+                marginX: "auto",
+                display: "block",
                 borderRadius: 2,
               }}
               alt="Image"
@@ -73,6 +89,7 @@ they have artificial intelligence."
         />
       </Box>
       <Footer />
+      {/* </Container> */}
     </>
   );
 }

@@ -29,13 +29,15 @@ function About({ link, title, text1, text2, button }: textProps) {
           pb: 5,
           justifyContent: "space-between",
           gap: 3,
+          flexDirection: { xs: "column", sm: "column", md: "row" },
+          px: { xs: 0.1, sm: 1, md: 2 },
         }}
       >
         <Text text={text1} />
         <Container
           disableGutters
           sx={{
-            width: "50%",
+            width: { xs: "100%", sm: "100%", md: "50%" },
           }}
         >
           <Text text={text2} />
