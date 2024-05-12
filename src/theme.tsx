@@ -2,7 +2,8 @@ import { createTheme, ThemeOptions } from "@mui/material/styles";
 const shape = 8;
 const black = "#000000";
 const white = "#ffffff";
-const lightBlue = "#747bff";
+const lightBlue = "#8c92ff";
+const darkPurple = "#7d0fd4";
 
 const blue = "#646cff";
 const grey = "#bcbcbc";
@@ -17,6 +18,9 @@ const lightTheme: ThemeOptions = createTheme({
     mode: "light",
     primary: {
       main: "#4CDCF0",
+    },
+    secondary: {
+      main: lightBlue,
     },
     background: {
       default: lightBackgroundColor,
@@ -180,6 +184,9 @@ const darkTheme: ThemeOptions = createTheme({
     mode: "dark",
     primary: {
       main: "#12B1C7",
+    },
+    secondary: {
+      main: darkPurple,
     },
     background: {
       default: darkBackgroundColor,
