@@ -1,18 +1,27 @@
 import { Button, Box, Container, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import Text from "./TextFields";
+import { Link } from "react-router-dom";
 
 interface textProps {
+  link: string;
   title: string;
   text1: string;
   text2: string;
   button: string;
 }
 
-function About({ title, text1, text2, button }: textProps) {
+function About({ link, title, text1, text2, button }: textProps) {
   const theme = useTheme();
   return (
-    <Box sx={{ background: "#fff", px: 2, py: 1, borderRadius: 2 }}>
+    <Box
+      sx={{
+        background: theme.palette.secondary.main,
+        px: 2,
+        py: 1,
+        borderRadius: 2,
+      }}
+    >
       <Typography sx={{ pl: 3 }}>{title}</Typography>
       <Box
         sx={{
@@ -20,7 +29,6 @@ function About({ title, text1, text2, button }: textProps) {
           pb: 5,
           justifyContent: "space-between",
           gap: 3,
-          // bgColor: theme.palette.
         }}
       >
         <Text text={text1} />
@@ -31,12 +39,7 @@ function About({ title, text1, text2, button }: textProps) {
           }}
         >
           <Text text={text2} />
-          <Button
-            fullWidth
-            sx={{
-              background: theme.palette.primary.main,
-            }}
-          >
+          <Button variant="contained" fullWidth component={Link} to={link}>
             {button}
           </Button>
         </Container>
