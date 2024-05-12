@@ -11,6 +11,8 @@ const lightSecondBackgroundColor = "#B556FF";
 const darkSecondBackgroundColor = "#9035D8";
 const lightBackgroundColor = "#637BED";
 const darkBackgroundColor = "#0A28B6";
+const lighterror = "#672222";
+const darkerror = "#D5FF00";
 
 const lightTheme: ThemeOptions = createTheme({
   palette: {
@@ -25,6 +27,9 @@ const lightTheme: ThemeOptions = createTheme({
     text: {
       primary: black,
       secondary: black,
+    },
+    error: {
+      main: lighterror,
     },
   },
   typography: {
@@ -56,6 +61,13 @@ const lightTheme: ThemeOptions = createTheme({
   },
 
   components: {
+    MuiFormHelperText: {
+      styleOverrides: {
+        root: {
+          color: lighterror,
+        },
+      },
+    },
     MuiTab: {
       styleOverrides: {
         root: {
@@ -189,6 +201,9 @@ const darkTheme: ThemeOptions = createTheme({
       primary: white,
       secondary: white,
     },
+    error: {
+      main: darkerror,
+    },
   },
   typography: {
     body1: {
@@ -219,6 +234,13 @@ const darkTheme: ThemeOptions = createTheme({
   },
 
   components: {
+    MuiFormHelperText: {
+      styleOverrides: {
+        root: {
+          color: darkerror,
+        },
+      },
+    },
     MuiTab: {
       styleOverrides: {
         root: {
