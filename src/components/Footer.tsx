@@ -28,7 +28,7 @@ function Footer() {
         }}
       >
         <Container>
-          <Typography variant="h3" sx={{ pt: 1, pb: 2, textAlign: "center" }}>
+          <Typography variant="h3" sx={{ pt: 1, pb: 3, textAlign: "center" }}>
             Contacts
           </Typography>
           <Container
