@@ -7,6 +7,7 @@ import SmartToyIcon from "@mui/icons-material/SmartToy";
 import Title from "../components/Title";
 import StyleIcon from "@mui/icons-material/Style";
 import { useTheme } from "@mui/material/styles";
+import { nanoid } from "nanoid";
 
 export default function App() {
   const theme = useTheme();
@@ -37,10 +38,7 @@ export default function App() {
         prevCards.map((card, i) => (i === editingCard ? newData : card))
       );
     } else {
-      setFormData((prevCards) => [
-        ...prevCards,
-        { ...newData, id: Date.now() },
-      ]);
+      setFormData((prevCards) => [...prevCards, { ...newData, id: nanoid() }]);
     }
 
     setEditingCard(null);
@@ -53,7 +51,7 @@ export default function App() {
         justifyContent: "space-between",
         bgcolor: theme.palette.background.default,
         width: "100vw",
-        minHeight: "91vh",
+        minHeight: "calc(100vh - 64px)",
       }}
     >
       <Container

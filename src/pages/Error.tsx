@@ -10,8 +10,8 @@ export default function ErrorPage() {
   const navigate = useNavigate();
   const matches = useMediaQuery(theme.breakpoints.down("sm"));
 
+  // TODO update animation
   const [icon, setIcon] = useState(true);
-
   useEffect(() => {
     const timer = setInterval(() => {
       setIcon((prevIcon) => !prevIcon);

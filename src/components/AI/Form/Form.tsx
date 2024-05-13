@@ -1,4 +1,4 @@
-import { CHECK_AND_RADIO, RANGE } from "../../../data";
+import { INPUT_DATA_ASSETS, RANGE_OPTIONS } from "../inputDataAssets";
 import { useEffect } from "react";
 import {
   Box,
@@ -21,7 +21,7 @@ export interface AI {
   whereAIIsUsed: string[];
   TypeOfAI: string;
   rateAIIntelligence: number;
-  id: number;
+  id: string;
 }
 interface IFormProps {
   onSubmit: (Ai: AI) => void;
@@ -88,43 +88,37 @@ const Form = ({ onSubmit, submitButtonText, initialData }: IFormProps) => {
         <Typography variant="h3" sx={{ my: 2, textAlign: "center" }}>
           Register the AI
         </Typography>
-        {errors.levelOfAI && (
-          <FormHelperText>{errors.levelOfAI.message}</FormHelperText>
-        )}
+        <FormHelperText>{errors.levelOfAI?.message ?? " "}</FormHelperText>
         <Controller
           name="levelOfAI"
           control={control}
           rules={{ required: "This field is required" }}
           render={({ field }) => (
             <CustomFormControl
-              label={CHECK_AND_RADIO[0].label}
-              values={CHECK_AND_RADIO[0].value}
+              label={INPUT_DATA_ASSETS[0].label}
+              values={INPUT_DATA_ASSETS[0].value}
               selectedValue={levelOfAI}
               multiple={true}
               onChange={(newOption) => field.onChange(newOption)}
             />
           )}
         />
-        {errors.whereAIIsUsed && (
-          <FormHelperText>{errors.whereAIIsUsed.message}</FormHelperText>
-        )}
+        <FormHelperText>{errors.whereAIIsUsed?.message ?? " "}</FormHelperText>
         <Controller
           name="whereAIIsUsed"
           control={control}
           rules={{ required: "This field is required" }}
           render={({ field }) => (
             <CustomFormControl
-              label={CHECK_AND_RADIO[1].label}
-              values={CHECK_AND_RADIO[1].value}
+              label={INPUT_DATA_ASSETS[1].label}
+              values={INPUT_DATA_ASSETS[1].value}
               selectedValue={whereAIIsUsed}
               multiple={true}
               onChange={(newOption) => field.onChange(newOption)}
             />
           )}
         />
-        {errors.TypeOfAI && (
-          <FormHelperText>{errors.TypeOfAI.message}</FormHelperText>
-        )}
+        <FormHelperText>{errors.TypeOfAI?.message ?? " "}</FormHelperText>
         <Controller
           name="TypeOfAI"
           control={control}
@@ -132,7 +126,7 @@ const Form = ({ onSubmit, submitButtonText, initialData }: IFormProps) => {
           render={({ field }) => (
             <CustomFormControl
               label="Type of AI"
-              values={CHECK_AND_RADIO[2].value}
+              values={INPUT_DATA_ASSETS[2].value}
               selectedValue={TypeOfAI}
               multiple={false}
               onChange={(newOption) => field.onChange(newOption[0])}
@@ -145,11 +139,11 @@ const Form = ({ onSubmit, submitButtonText, initialData }: IFormProps) => {
           }}
         >
           <Typography sx={{ marginLeft: "0.35em" }}>
-            {RANGE[0].label}
+            {RANGE_OPTIONS[0].label}
           </Typography>
-          {errors.rateAIIntelligence && (
-            <FormHelperText>{errors.rateAIIntelligence.message}</FormHelperText>
-          )}
+          <FormHelperText>
+            {errors.rateAIIntelligence?.message ?? " "}
+          </FormHelperText>
           <Grid container spacing={1} alignItems="center">
             <Grid item xs>
               <Slider
@@ -161,7 +155,7 @@ const Form = ({ onSubmit, submitButtonText, initialData }: IFormProps) => {
                 value={
                   typeof rateAIIntelligence === "number"
                     ? rateAIIntelligence
-                    : RANGE[0].min
+                    : RANGE_OPTIONS[0].min
                 }
                 onChange={(_, newValue) => {
                   if (Array.isArray(newValue)) {
@@ -183,7 +177,7 @@ const Form = ({ onSubmit, submitButtonText, initialData }: IFormProps) => {
                 rules={{
                   required: "This field is required",
                   min: {
-                    value: RANGE[0].min + 1,
+                    value: RANGE_OPTIONS[0].min + 1,
                     message: "Value must be greater than 0",
                   },
                 }}
@@ -201,8 +195,8 @@ const Form = ({ onSubmit, submitButtonText, initialData }: IFormProps) => {
                     onBlur={field.onBlur}
                     inputProps={{
                       step: 1,
-                      min: RANGE[0].min,
-                      max: RANGE[0].max,
+                      min: RANGE_OPTIONS[0].min,
+                      max: RANGE_OPTIONS[0].max,
                       type: "number",
                     }}
                   />

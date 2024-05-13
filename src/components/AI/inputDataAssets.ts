@@ -10,7 +10,7 @@ type RangeOptions = {
   max: number;
   value: number;
 };
-export const CHECK_AND_RADIO: CheckboxRadioOptions[] = [
+export const INPUT_DATA_ASSETS: CheckboxRadioOptions[] = [
   {
     label: "Level of AI",
     name: "level",
@@ -34,7 +34,7 @@ export const CHECK_AND_RADIO: CheckboxRadioOptions[] = [
   },
 ];
 
-export const RANGE: RangeOptions[] = [
+export const RANGE_OPTIONS: RangeOptions[] = [
   {
     label: "AI Intelligence",
     name: "rating",

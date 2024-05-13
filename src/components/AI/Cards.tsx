@@ -1,4 +1,4 @@
-import { CHECK_AND_RADIO, RANGE } from "../../data";
+import { INPUT_DATA_ASSETS, RANGE_OPTIONS } from "./inputDataAssets";
 import ClearIcon from "@mui/icons-material/Clear";
 import EditIcon from "@mui/icons-material/Edit";
 import { Box, Button, Chip, Container, Typography } from "@mui/material";
@@ -6,12 +6,6 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { useTheme } from "@mui/material/styles";
 import { AI } from "./Form/Form";
 import { useState, useEffect } from "react";
-import {
-  DragDropContext,
-  Droppable,
-  Draggable,
-  DropResult,
-} from "react-beautiful-dnd";
 
 interface ICardsProps {
   cards: AI[];
@@ -92,152 +86,205 @@ export default function Cards({
   useEffect(() => {
     setCards(cards);
   }, [cards]);
+  const [dragItemIndex, setDragItemIndex] = useState<number | undefined>();
+  const [dragOverItemIndex, setDragOverItemIndex] = useState<
+    number | undefined
+  >();
 
-  const handleDragEnd = (result: DropResult) => {
-    if (!result.destination) {
-      return;
+  const handleTouchStart = (
+    _event: React.TouchEvent<HTMLDivElement>,
+    index: number
+  ) => {
+    setDragItemIndex(index);
+  };
+
+  const handleTouchEnd = (
+    _event: React.TouchEvent<HTMLDivElement>,
+    index: number
+  ) => {
+    setDragOverItemIndex(index);
+    handleDrop();
+  };
+
+  const handleDragStart = (index: number) => {
+    setDragItemIndex(index);
+  };
+
+  const handleDragOver = (
+    event: React.DragEvent<HTMLDivElement>,
+    index: number
+  ) => {
+    event.preventDefault();
+    setDragOverItemIndex(index);
+  };
+
+  const handleDrop = () => {
+    if (
+      typeof dragItemIndex === "number" &&
+      typeof dragOverItemIndex === "number"
+    ) {
+      const _cards = [...cardsState];
+      const dragItem = _cards[dragItemIndex];
+      const dragOverItem = _cards[dragOverItemIndex];
+      _cards[dragItemIndex] = dragOverItem;
+      _cards[dragOverItemIndex] = dragItem;
+      setCards(_cards);
+      onReorder(_cards);
+      setDragItemIndex(undefined);
+      setDragOverItemIndex(undefined);
     }
+  };
 
-    const _cards = [...cardsState];
-    const [removed] = _cards.splice(result.source.index, 1);
-    _cards.splice(result.destination.index, 0, removed);
+  const handleDragEnter = (index: number) => {
+    setDragOverItemIndex(index);
+  };
 
-    setCards(_cards);
-    onReorder(_cards);
+  const handleDragLeave = () => {
+    setDragOverItemIndex(undefined);
+  };
+
+  const handleDragEnd = () => {
+    setDragItemIndex(undefined);
+    setDragOverItemIndex(undefined);
   };
 
   return (
-    <DragDropContext onDragEnd={handleDragEnd}>
-      <Droppable droppableId="card-list" type="card">
-        {(provided) => (
-          <Box
-            ref={provided.innerRef}
-            {...provided.droppableProps}
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              gap: 6,
-              overflowY: "auto",
-              maxHeight: "75vh",
-            }}
-          >
-            {cardsState.map((card, index) => (
-              <Draggable
-                key={card.id}
-                draggableId={card.id.toString()}
-                index={index}
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 6,
+        overflowY: "auto",
+        maxHeight: "75vh",
+      }}
+    >
+      <TransitionGroup>
+        {cardsState.map((card, index) => (
+          <CSSTransition key={index} timeout={500} classNames="card">
+            <Box
+              sx={{
+                flexDirection: "column",
+                paddingTop: 2,
+                paddingBottom: 2,
+                paddingLeft: { md: 0, lg: 2 },
+                paddingRight: { md: 0, lg: 2 },
+                maxWidth: { md: "90%", lg: "80%" },
+                border: "2px solid",
+                borderColor: theme.palette.text.primary,
+                py: 2.5,
+                borderRadius: 2,
+                position: "relative",
+                marginBottom: 5,
+                bgcolor: "background.paper",
+                "&::after": {
+                  content: '""',
+                  position: "absolute",
+                  bottom: {
+                    xs: theme.spacing(1),
+                    md: theme.spacing(0.875),
+                    lg: theme.spacing(1),
+                  },
+                  left: {
+                    xs: theme.spacing(1),
+                    sm: theme.spacing(2),
+                    md: theme.spacing(4),
+                  },
+                  right: {
+                    xs: theme.spacing(0.7),
+                    sm: theme.spacing(1),
+                    md: theme.spacing(2),
+                  },
+                  height: "2px",
+                  backgroundColor: theme.palette.text.primary,
+                },
+                "& > *:not(.MuiButton-root)": {
+                  pointerEvents: "auto",
+                },
+              }}
+            >
+              <Box
+                draggable
+                onTouchStart={(event: React.TouchEvent<HTMLDivElement>) =>
+                  handleTouchStart(event, index)
+                }
+                onTouchEnd={(event: React.TouchEvent<HTMLDivElement>) =>
+                  handleTouchEnd(event, index)
+                }
+                onDragStart={() => handleDragStart(index)}
+                onDragOver={(event: React.DragEvent<HTMLDivElement>) =>
+                  handleDragOver(event, index)
+                }
+                onDrop={handleDrop}
+                onDragEnter={() => handleDragEnter(index)}
+                onDragLeave={handleDragLeave}
+                onDragEnd={handleDragEnd}
+                sx={{
+                  cursor: dragItemIndex === index ? "grabbing" : "grab",
+                }}
               >
-                {(provided) => (
-                  <Box
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                    sx={{
-                      flexDirection: "column",
-                      paddingTop: 2,
-                      paddingBottom: 2,
-                      paddingLeft: { md: 0, lg: 2 },
-                      paddingRight: { md: 0, lg: 2 },
-                      maxWidth: { md: "90%", lg: "80%" },
-                      border: "2px solid",
-                      borderColor: theme.palette.text.primary,
-                      py: 2.5,
-                      borderRadius: 2,
-                      position: "relative",
-                      marginBottom: 5,
-                      bgcolor: "background.paper",
-                      "&::after": {
-                        content: '""',
-                        position: "absolute",
-                        bottom: {
-                          xs: theme.spacing(1),
-                          md: theme.spacing(0.875),
-                          lg: theme.spacing(1),
-                        },
-                        left: {
-                          xs: theme.spacing(1),
-                          sm: theme.spacing(2),
-                          md: theme.spacing(4),
-                        },
-                        right: {
-                          xs: theme.spacing(0.7),
-                          sm: theme.spacing(1),
-                          md: theme.spacing(2),
-                        },
-                        height: "2px",
-                        backgroundColor: theme.palette.text.primary,
-                      },
-                      "& > *:not(.MuiButton-root)": {
-                        pointerEvents: "auto",
-                      },
-                    }}
-                  >
-                    <CardsInfo
-                      title={CHECK_AND_RADIO[0].label}
-                      info={card.levelOfAI}
-                    />
-                    <CardsInfo
-                      title={CHECK_AND_RADIO[1].label}
-                      info={card.whereAIIsUsed}
-                    />
-                    <CardsInfo
-                      title={CHECK_AND_RADIO[2].label}
-                      info={card.TypeOfAI}
-                    />
-                    <CardsInfo
-                      title={RANGE[0].label}
-                      info={card.rateAIIntelligence.toString()}
-                    />
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "flex-end",
-                        paddingRight: {
-                          xs: 2,
-                          sm: 4,
-                          md: 6,
-                        },
-                        marginBottom: -6,
-                      }}
-                    >
-                      <Button
-                        variant="contained"
-                        endIcon={<EditIcon />}
-                        onClick={() => onEdit(cards[index])}
-                        sx={{
-                          marginRight: 2.5,
-                          width: {
-                            xs: theme.spacing(13),
-                            sm: theme.spacing(16),
-                            lg: theme.spacing(18),
-                          },
-                        }}
-                      >
-                        Edit
-                      </Button>
-                      <Button
-                        variant="contained"
-                        endIcon={<ClearIcon />}
-                        onClick={() => onDelete(index)}
-                        sx={{
-                          width: {
-                            xs: theme.spacing(16),
-                            sm: theme.spacing(20),
-                            lg: theme.spacing(24),
-                          },
-                        }}
-                      >
-                        Delete
-                      </Button>
-                    </Box>
-                  </Box>
-                )}
-              </Draggable>
-            ))}
-            {provided.placeholder}
-          </Box>
-        )}
-      </Droppable>
-    </DragDropContext>
+                <CardsInfo
+                  title={INPUT_DATA_ASSETS[0].label}
+                  info={card.levelOfAI}
+                />
+                <CardsInfo
+                  title={INPUT_DATA_ASSETS[1].label}
+                  info={card.whereAIIsUsed}
+                />
+                <CardsInfo
+                  title={INPUT_DATA_ASSETS[2].label}
+                  info={card.TypeOfAI}
+                />
+                <CardsInfo
+                  title={RANGE_OPTIONS[0].label}
+                  info={card.rateAIIntelligence.toString()}
+                />
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  paddingRight: {
+                    xs: 2,
+                    sm: 4,
+                    md: 6,
+                  },
+                  marginBottom: -6,
+                }}
+              >
+                <Button
+                  variant="contained"
+                  endIcon={<EditIcon />}
+                  onClick={() => onEdit(cards[index])}
+                  sx={{
+                    marginRight: 2.5,
+                    width: {
+                      xs: theme.spacing(13),
+                      sm: theme.spacing(16),
+                      lg: theme.spacing(18),
+                    },
+                  }}
+                >
+                  Edit
+                </Button>
+                <Button
+                  variant="contained"
+                  endIcon={<ClearIcon />}
+                  onClick={() => onDelete(index)}
+                  sx={{
+                    width: {
+                      xs: theme.spacing(16),
+                      sm: theme.spacing(20),
+                      lg: theme.spacing(24),
+                    },
+                  }}
+                >
+                  Delete
+                </Button>
+              </Box>
+            </Box>
+          </CSSTransition>
+        ))}
+      </TransitionGroup>
+    </Box>
   );
 }
