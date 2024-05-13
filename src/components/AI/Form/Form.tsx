@@ -21,7 +21,7 @@ export interface AI {
   whereAIIsUsed: string[];
   TypeOfAI: string;
   rateAIIntelligence: number;
-  id?: number;
+  id: number;
 }
 interface IFormProps {
   onSubmit: (Ai: AI) => void;
