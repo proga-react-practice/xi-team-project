@@ -12,9 +12,6 @@ function Links({ icon: Icon, link, title }: iconLinkProp) {
   const theme = useTheme();
   const linkStyles: SxProps = {
     color: theme.palette.text.primary,
-    // fontFamily: theme.typography.fontFamily,
-    // fontWeight: theme.typography.body1.fontWeight,
-    // fontSize: theme.typography.body1.fontSize,
     textAlign: "center",
     display: "flex",
     textDecoration: "none",
