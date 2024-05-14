@@ -15,14 +15,12 @@ export default function App() {
 
   const handleFormSubmit = (newCard: Card) => {
     if (editingCard) {
-      // If editingCard exists, it means we're editing an existing card
       const updatedCards = cards.map((card) =>
         card.id === editingCard.id ? newCard : card
       );
       setCards(updatedCards);
-      setEditingCard(null); // Reset editingCard after editing
+      setEditingCard(null);
     } else {
-      // If editingCard doesn't exist, it means we're adding a new card
       setCards((prevCards) => [...prevCards, newCard]);
     }
   };
@@ -70,7 +68,7 @@ export default function App() {
         <Cards
           cards={cards}
           onDelete={deleteCard}
-          handleEdit={(card) => setEditingCard(card)} // Renamed to handleEdit
+          handleEdit={(card) => setEditingCard(card)}
         />
       </Container>
     </Box>
