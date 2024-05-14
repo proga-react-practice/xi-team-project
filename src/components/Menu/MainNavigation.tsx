@@ -26,7 +26,7 @@ export default function MainNavigation() {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   useEffect(() => {
-    setValue(location.pathname); // Оновлюємо значення вкладки при зміні шляху
+    setValue(location.pathname); // update the value of the tab when the path changes
   }, [location.pathname]);
 
   const handleChange = (_: React.ChangeEvent<unknown>, newValue: string) => {
