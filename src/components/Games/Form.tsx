@@ -7,7 +7,8 @@ import { useTheme } from "@mui/material/styles";
 import ClearIcon from "@mui/icons-material/Clear";
 import SendIcon from "@mui/icons-material/Send";
 import { useForm } from "react-hook-form";
-import { DevTool } from "@hookform/devtools";
+// Uncomment if needed
+// import { DevTool } from "@hookform/devtools";
 
 const size = 17;
 
@@ -34,7 +35,7 @@ const Form: React.FC<Props> = ({ onSubmit, editCard, onCancel }) => {
       currency: "",
     },
   });
-  const { register, control, handleSubmit, formState, reset, setValue } = form;
+  const { register, handleSubmit, formState, reset, setValue } = form;
   const { errors } = formState;
 
   useEffect(() => {
@@ -228,7 +229,7 @@ const Form: React.FC<Props> = ({ onSubmit, editCard, onCancel }) => {
           </Button>
         </Box>
       </Container>
-      <DevTool control={control} />
+      {/* <DevTool control={control} /> */}
     </>
   );
 };
