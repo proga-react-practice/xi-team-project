@@ -6,12 +6,12 @@ import { Link } from "react-router-dom";
 interface textProps {
   link: string;
   title: string;
-  text1: string;
-  text2: string;
+  article: string;
+  aboveButtonText: string;
   button: string;
 }
 
-function About({ link, title, text1, text2, button }: textProps) {
+function About({ link, title, article, aboveButtonText, button }: textProps) {
   const theme = useTheme();
   return (
     <Box
@@ -33,14 +33,14 @@ function About({ link, title, text1, text2, button }: textProps) {
           px: { xs: 0.1, sm: 1, md: 2 },
         }}
       >
-        <Text text={text1} />
+        <Text text={article} />
         <Container
           disableGutters
           sx={{
             width: { xs: "100%", sm: "100%", md: "50%" },
           }}
         >
-          <Text text={text2} />
+          <Text text={aboveButtonText} />
           <Button variant="contained" fullWidth component={Link} to={link}>
             {button}
           </Button>
