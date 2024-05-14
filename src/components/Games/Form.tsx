@@ -9,7 +9,6 @@ import SendIcon from "@mui/icons-material/Send";
 import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
 
-const errorColor = "#ed5d53";
 const size = 17;
 
 export interface Props {
@@ -46,8 +45,10 @@ const Form: React.FC<Props> = ({ onSubmit, editCard, onCancel }) => {
 
   const onSubmitHandler = (data: Card) => {
     if (editCard) {
+      // If editCard exists, it means we're editing an existing card
       onSubmit({ ...data, id: editCard.id });
     } else {
+      // If editCard doesn't exist, it means we're adding a new card
       onSubmit({ ...data, id: crypto.randomUUID() });
     }
   };
@@ -101,8 +102,8 @@ const Form: React.FC<Props> = ({ onSubmit, editCard, onCancel }) => {
             onChange: (e) => setValue("name", e.target.value),
           })}
         />
-        <Typography sx={{ color: errorColor, fontSize: size }}>
-          {errors.name?.message}
+        <Typography sx={{ color: theme.palette.error.main, fontSize: size }}>
+          {errors.name?.message ?? " "}
         </Typography>
 
         <FormControl fullWidth>
@@ -132,8 +133,8 @@ const Form: React.FC<Props> = ({ onSubmit, editCard, onCancel }) => {
             <MenuItem value={"Expert"}>Expert</MenuItem>
           </Select>
         </FormControl>
-        <Typography sx={{ color: errorColor, fontSize: size }}>
-          {errors.difficulty?.message}
+        <Typography sx={{ color: theme.palette.error.main, fontSize: size }}>
+          {errors.difficulty?.message ?? " "}
         </Typography>
 
         <Container
@@ -184,11 +185,11 @@ const Form: React.FC<Props> = ({ onSubmit, editCard, onCancel }) => {
             </Select>
           </FormControl>
         </Container>
-        <Typography sx={{ color: errorColor, fontSize: size }}>
-          {errors.price?.message}
+        <Typography sx={{ color: theme.palette.error.main, fontSize: size }}>
+          {errors.price?.message ?? " "}
         </Typography>
-        <Typography sx={{ color: errorColor, fontSize: size }}>
-          {errors.currency?.message}
+        <Typography sx={{ color: theme.palette.error.main, fontSize: size }}>
+          {errors.currency?.message ?? " "}
         </Typography>
         <Box
           sx={{
