@@ -1,28 +1,36 @@
-import Form from "../components/Games/Form";
-import Cards from "../components/Games/Cards";
 import { useState } from "react";
-
-import { Container, Box } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import Title from "../components/Title";
 import StyleIcon from "@mui/icons-material/Style";
 import { useTheme } from "@mui/material/styles";
 
-import { Card } from "../components/Games/Cards";
+import Form from "../components/Games/Form";
+import Cards, { Card } from "../components/Games/Cards";
 
 export default function App() {
   const theme = useTheme();
   const [cards, setCards] = useState<Card[]>([]);
+  const [editingCard, setEditingCard] = useState<Card | null>(null);
+
   const handleFormSubmit = (newCard: Card) => {
-    setCards((prevCards) => [...prevCards, newCard]);
+    if (editingCard) {
+      // If editingCard exists, it means we're editing an existing card
+      const updatedCards = cards.map((card) =>
+        card.id === editingCard.id ? newCard : card
+      );
+      setCards(updatedCards);
+      setEditingCard(null); // Reset editingCard after editing
+    } else {
+      // If editingCard doesn't exist, it means we're adding a new card
+      setCards((prevCards) => [...prevCards, newCard]);
+    }
   };
 
   const deleteCard = (id: string) => {
-    setCards((prevCards) => {
-      const filteredCards = prevCards.filter((card: Card) => card.id !== id);
-      return filteredCards;
-    });
+    setCards((prevCards) => prevCards.filter((card: Card) => card.id !== id));
   };
+
   return (
     <Box
       sx={{
@@ -30,7 +38,8 @@ export default function App() {
         display: "flex",
         justifyContent: "space-between",
         bgcolor: theme.palette.background.default,
-        width: "100vw",
+        width: "98.9vw",
+        maxWidth: "100%",
         minHeight: "100vh",
       }}
     >
@@ -42,7 +51,11 @@ export default function App() {
         }}
       >
         <Title icon={SportsEsportsIcon} title="Registration Form" />
-        <Form onSubmit={handleFormSubmit} />
+        <Form
+          onSubmit={handleFormSubmit}
+          editCard={editingCard}
+          onCancel={() => setEditingCard(null)}
+        />
       </Container>
       <Container
         sx={{
@@ -54,7 +67,11 @@ export default function App() {
         }}
       >
         <Title icon={StyleIcon} title="Submitted Cards" />
-        <Cards cards={cards} onDelete={deleteCard} />
+        <Cards
+          cards={cards}
+          onDelete={deleteCard}
+          handleEdit={(card) => setEditingCard(card)} // Renamed to handleEdit
+        />
       </Container>
     </Box>
   );

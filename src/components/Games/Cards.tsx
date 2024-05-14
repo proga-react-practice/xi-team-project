@@ -4,6 +4,7 @@ import { Container, Typography, Chip } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import ClearIcon from "@mui/icons-material/Clear";
+import EditIcon from "@mui/icons-material/Edit";
 
 export interface Card {
   id: string;
@@ -16,6 +17,7 @@ export interface Card {
 interface Props {
   cards: Card[];
   onDelete: (id: string) => void;
+  handleEdit: (card: Card) => void;
 }
 
 interface CardsInfoProps {
@@ -79,8 +81,9 @@ const CardsInfo: React.FC<CardsInfoProps> = ({ title, info }) => {
   );
 };
 
-const Cards: React.FC<Props> = ({ cards, onDelete }) => {
+const Cards: React.FC<Props> = ({ cards, onDelete, handleEdit }) => {
   const theme = useTheme();
+
   return (
     <Box
       sx={{
@@ -144,6 +147,21 @@ const Cards: React.FC<Props> = ({ cards, onDelete }) => {
                   marginBottom: -6,
                 }}
               >
+                <Button
+                  variant="contained"
+                  endIcon={<EditIcon />}
+                  onClick={() => handleEdit(card)}
+                  sx={{
+                    width: {
+                      xs: theme.spacing(16.5),
+                      sm: theme.spacing(20),
+                      md: theme.spacing(25),
+                    },
+                    marginRight: 3,
+                  }}
+                >
+                  Edit
+                </Button>
                 <Button
                   variant="contained"
                   endIcon={<ClearIcon />}
