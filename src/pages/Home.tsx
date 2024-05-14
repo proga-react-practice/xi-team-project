@@ -7,6 +7,7 @@ import Footer from "../components/Footer";
 
 export default function Home() {
   const theme = useTheme();
+  // TODO add choose color functionality
   return (
     <>
       <Box

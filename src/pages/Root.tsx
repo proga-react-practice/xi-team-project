@@ -14,10 +14,11 @@ export default function RootLayout() {
       <ThemeProvider theme={currentTheme}>
         <MainNavigation
           onThemeChange={handleThemeChange}
+          // TODO discussion(prop value)
           currentTheme={currentTheme}
         />
         <Outlet />
       </ThemeProvider>
     </>
-  ); // TODO discussion
+  ); 
 }

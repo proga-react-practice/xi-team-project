@@ -36,6 +36,7 @@ export default function App() {
         display: "flex",
         justifyContent: "space-between",
         bgcolor: theme.palette.background.default,
+        // TODO fix layout
         width: "98.9vw",
         maxWidth: "100%",
         minHeight: "100vh",
