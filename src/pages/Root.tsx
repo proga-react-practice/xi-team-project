@@ -19,5 +19,5 @@ export default function RootLayout() {
         <Outlet />
       </ThemeProvider>
     </>
-  );
+  ); // TODO discussion
 }
