@@ -1,4 +1,3 @@
-// import React from "react";
 import { Container, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
@@ -6,7 +5,7 @@ interface TextProps {
   text: string;
 }
 
-function Text({ text }: TextProps) {
+function TextFields({ text }: TextProps) {
   const theme = useTheme();
   return (
     <Container
@@ -19,4 +18,4 @@ function Text({ text }: TextProps) {
   );
 }
 
-export default Text;
+export default TextFields;
