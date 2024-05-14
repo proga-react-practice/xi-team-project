@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import {
   AppBar,
@@ -37,6 +37,10 @@ export default function MainNavigation({
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const open = Boolean(anchorEl);
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
+  useEffect(() => {
+    setValue(location.pathname); // update the value of the tab when the path changes
+  }, [location.pathname]);
 
   const handleChange = (_: React.ChangeEvent<unknown>, newValue: string) => {
     setValue(newValue);
