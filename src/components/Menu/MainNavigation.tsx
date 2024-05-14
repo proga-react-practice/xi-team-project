@@ -14,10 +14,23 @@ import {
 import SportsIcon from "@mui/icons-material/SportsEsports";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
 import MenuIcon from "@mui/icons-material/Menu";
+import LightModeIcon from "@mui/icons-material/LightModeOutlined";
+import DarkModeIcon from "@mui/icons-material/DarkModeOutlined";
 import { useTheme } from "@mui/material/styles";
 import { tabs } from "./Tabs";
+import { darkTheme } from "../../theme";
 
-export default function MainNavigation() {
+type Theme = typeof darkTheme;
+
+type MainNavigationProps = {
+  onThemeChange: () => void;
+  currentTheme: Theme;
+};
+
+export default function MainNavigation({
+  onThemeChange,
+  currentTheme,
+}: MainNavigationProps) {
   const theme = useTheme();
   const location = useLocation();
   const [value, setValue] = useState(location.pathname);
@@ -56,6 +69,13 @@ export default function MainNavigation() {
             </IconButton>
             <SportsIcon />
             <Box sx={{ flexGrow: 1 }} />
+            <IconButton color="inherit" onClick={onThemeChange}>
+              {currentTheme === darkTheme ? (
+                <DarkModeIcon />
+              ) : (
+                <LightModeIcon />
+              )}
+            </IconButton>
             <SmartToyIcon />
             <Menu
               anchorEl={anchorEl}
@@ -86,7 +106,7 @@ export default function MainNavigation() {
               sx={{
                 flexGrow: 1,
                 "& .MuiTab-root": {
-                  mx: { xs: 1, sm: 2, md: 4, lg: 8, xl: 16 },
+                  mx: { sm: 0.5, md: 4, lg: 8, xl: 16 },
                 },
                 "& .MuiTabs-indicator": {
                   display: "none",
@@ -103,6 +123,13 @@ export default function MainNavigation() {
                 />
               ))}
             </Tabs>
+            <IconButton color="inherit" onClick={onThemeChange}>
+              {currentTheme === darkTheme ? (
+                <DarkModeIcon />
+              ) : (
+                <LightModeIcon />
+              )}
+            </IconButton>
             <SmartToyIcon />
           </>
         )}

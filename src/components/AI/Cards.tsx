@@ -1,13 +1,17 @@
-import { CHECK_AND_RADIO, RANGE } from "../../data";
+import { INPUT_DATA_ASSETS, RANGE_OPTIONS } from "./inputDataAssets";
 import ClearIcon from "@mui/icons-material/Clear";
+import EditIcon from "@mui/icons-material/Edit";
 import { Box, Button, Chip, Container, Typography } from "@mui/material";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { useTheme } from "@mui/material/styles";
 import { AI } from "./Form/Form";
+import { useState, useEffect } from "react";
 
 interface ICardsProps {
   cards: AI[];
   onDelete: (index: number) => void;
+  onEdit: (ai: AI) => void;
+  onReorder: (cards: AI[]) => void;
 }
 
 interface ICardsInfoProps {
@@ -70,18 +74,92 @@ const CardsInfo: React.FC<ICardsInfoProps> = ({ title, info }) => {
   );
 };
 
-export default function Cards({ cards, onDelete }: ICardsProps) {
+export default function Cards({
+  cards,
+  onDelete,
+  onEdit,
+  onReorder,
+}: ICardsProps) {
   const theme = useTheme();
+
+  const [cardsState, setCards] = useState(cards);
+  useEffect(() => {
+    setCards(cards);
+  }, [cards]);
+  const [dragItemIndex, setDragItemIndex] = useState<number | undefined>();
+  const [dragOverItemIndex, setDragOverItemIndex] = useState<
+    number | undefined
+  >();
+
+  const handleTouchStart = (
+    _event: React.TouchEvent<HTMLDivElement>,
+    index: number
+  ) => {
+    setDragItemIndex(index);
+  };
+
+  const handleTouchEnd = (
+    _event: React.TouchEvent<HTMLDivElement>,
+    index: number
+  ) => {
+    setDragOverItemIndex(index);
+    handleDrop();
+  };
+
+  const handleDragStart = (index: number) => {
+    setDragItemIndex(index);
+  };
+
+  const handleDragOver = (
+    event: React.DragEvent<HTMLDivElement>,
+    index: number
+  ) => {
+    event.preventDefault();
+    setDragOverItemIndex(index);
+  };
+
+  const handleDrop = () => {
+    if (
+      typeof dragItemIndex === "number" &&
+      typeof dragOverItemIndex === "number"
+    ) {
+      const _cards = [...cardsState];
+      const dragItem = _cards[dragItemIndex];
+      const dragOverItem = _cards[dragOverItemIndex];
+      _cards[dragItemIndex] = dragOverItem;
+      _cards[dragOverItemIndex] = dragItem;
+      setCards(_cards);
+      onReorder(_cards);
+      setDragItemIndex(undefined);
+      setDragOverItemIndex(undefined);
+    }
+  };
+
+  const handleDragEnter = (index: number) => {
+    setDragOverItemIndex(index);
+  };
+
+  const handleDragLeave = () => {
+    setDragOverItemIndex(undefined);
+  };
+
+  const handleDragEnd = () => {
+    setDragItemIndex(undefined);
+    setDragOverItemIndex(undefined);
+  };
+
   return (
     <Box
       sx={{
         display: "flex",
         flexDirection: "column",
         gap: 6,
+        overflowY: "auto",
+        maxHeight: "75vh",
       }}
     >
-      <TransitionGroup disableGutters>
-        {cards.map((card, index) => (
+      <TransitionGroup>
+        {cardsState.map((card, index) => (
           <CSSTransition key={index} timeout={500} classNames="card">
             <Box
               sx={{
@@ -101,7 +179,11 @@ export default function Cards({ cards, onDelete }: ICardsProps) {
                 "&::after": {
                   content: '""',
                   position: "absolute",
-                  bottom: theme.spacing(1),
+                  bottom: {
+                    xs: theme.spacing(1),
+                    md: theme.spacing(0.875),
+                    lg: theme.spacing(1),
+                  },
                   left: {
                     xs: theme.spacing(1),
                     sm: theme.spacing(2),
@@ -115,24 +197,48 @@ export default function Cards({ cards, onDelete }: ICardsProps) {
                   height: "2px",
                   backgroundColor: theme.palette.text.primary,
                 },
+                "& > *:not(.MuiButton-root)": {
+                  pointerEvents: "auto",
+                },
               }}
             >
-              <CardsInfo
-                title={CHECK_AND_RADIO[0].label}
-                info={card.levelOfAI}
-              />
-              <CardsInfo
-                title={CHECK_AND_RADIO[1].label}
-                info={card.whereAIIsUsed}
-              />
-              <CardsInfo
-                title={CHECK_AND_RADIO[2].label}
-                info={card.TypeOfAI}
-              />
-              <CardsInfo
-                title={RANGE[0].label}
-                info={card.rateAIIntelligence.toString()}
-              />
+              <Box
+                draggable
+                onTouchStart={(event: React.TouchEvent<HTMLDivElement>) =>
+                  handleTouchStart(event, index)
+                }
+                onTouchEnd={(event: React.TouchEvent<HTMLDivElement>) =>
+                  handleTouchEnd(event, index)
+                }
+                onDragStart={() => handleDragStart(index)}
+                onDragOver={(event: React.DragEvent<HTMLDivElement>) =>
+                  handleDragOver(event, index)
+                }
+                onDrop={handleDrop}
+                onDragEnter={() => handleDragEnter(index)}
+                onDragLeave={handleDragLeave}
+                onDragEnd={handleDragEnd}
+                sx={{
+                  cursor: dragItemIndex === index ? "grabbing" : "grab",
+                }}
+              >
+                <CardsInfo
+                  title={INPUT_DATA_ASSETS[0].label}
+                  info={card.levelOfAI}
+                />
+                <CardsInfo
+                  title={INPUT_DATA_ASSETS[1].label}
+                  info={card.whereAIIsUsed}
+                />
+                <CardsInfo
+                  title={INPUT_DATA_ASSETS[2].label}
+                  info={card.TypeOfAI}
+                />
+                <CardsInfo
+                  title={RANGE_OPTIONS[0].label}
+                  info={card.rateAIIntelligence.toString()}
+                />
+              </Box>
               <Box
                 sx={{
                   display: "flex",
@@ -147,13 +253,28 @@ export default function Cards({ cards, onDelete }: ICardsProps) {
               >
                 <Button
                   variant="contained"
+                  endIcon={<EditIcon />}
+                  onClick={() => onEdit(cards[index])}
+                  sx={{
+                    marginRight: 2.5,
+                    width: {
+                      xs: theme.spacing(13),
+                      sm: theme.spacing(16),
+                      lg: theme.spacing(18),
+                    },
+                  }}
+                >
+                  Edit
+                </Button>
+                <Button
+                  variant="contained"
                   endIcon={<ClearIcon />}
                   onClick={() => onDelete(index)}
                   sx={{
                     width: {
-                      xs: theme.spacing(16.5),
+                      xs: theme.spacing(16),
                       sm: theme.spacing(20),
-                      md: theme.spacing(25),
+                      lg: theme.spacing(24),
                     },
                   }}
                 >
