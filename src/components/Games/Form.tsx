@@ -103,6 +103,7 @@ const Form: React.FC<Props> = ({ onSubmit, editCard, onCancel }) => {
             onChange: (e) => setValue("name", e.target.value),
           })}
         />
+        {/* TODO fix content moving */}
         <Typography sx={{ color: theme.palette.error.main, fontSize: size }}>
           {errors.name?.message ?? " "}
         </Typography>
