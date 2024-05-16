@@ -8,6 +8,9 @@ import Error from "./pages/Error.tsx";
 
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { PlaygroundRoute } from "./pages/dev/PlaygroundRoute.tsx";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +20,7 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: "/AI", element: <Ai /> },
       { path: "/games", element: <Game /> },
+      { path: "/playground", element: <PlaygroundRoute /> },
       { path: "*", element: <Error /> },
     ],
   },
@@ -24,6 +28,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <DndProvider backend={HTML5Backend}>
+      <RouterProvider router={router} />
+    </DndProvider>
   </React.StrictMode>
 );
