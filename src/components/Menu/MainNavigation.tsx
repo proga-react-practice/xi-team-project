@@ -69,8 +69,13 @@ export default function MainNavigation({
             >
               <MenuIcon />
             </IconButton>
-            <SportsIcon />
+            <IconButton component={NavLink} to={tabs[1].value} color="inherit">
+              <SportsIcon />
+            </IconButton>
             <Box sx={{ flexGrow: 1 }} />
+            <IconButton component={NavLink} to={tabs[2].value} color="inherit">
+              <SmartToyIcon />
+            </IconButton>
             <IconButton color="inherit" onClick={onThemeChange}>
               {currentTheme === darkTheme ? (
                 <DarkModeIcon />
@@ -78,7 +83,6 @@ export default function MainNavigation({
                 <LightModeIcon />
               )}
             </IconButton>
-            <SmartToyIcon />
             <Menu
               anchorEl={anchorEl}
               open={open}
@@ -100,7 +104,9 @@ export default function MainNavigation({
           </>
         ) : (
           <>
-            <SportsIcon />
+            <IconButton component={NavLink} to={tabs[1].value} color="inherit">
+              <SportsIcon />
+            </IconButton>
             <Tabs
               value={value}
               onChange={handleChange}
@@ -125,6 +131,10 @@ export default function MainNavigation({
                 />
               ))}
             </Tabs>
+
+            <IconButton component={NavLink} to={tabs[2].value} color="inherit">
+              <SmartToyIcon />
+            </IconButton>
             <IconButton color="inherit" onClick={onThemeChange}>
               {currentTheme === darkTheme ? (
                 <DarkModeIcon />
@@ -132,7 +142,6 @@ export default function MainNavigation({
                 <LightModeIcon />
               )}
             </IconButton>
-            <SmartToyIcon />
           </>
         )}
       </Toolbar>
