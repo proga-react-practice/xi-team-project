@@ -24,9 +24,6 @@ const lightTheme: ThemeOptions = createTheme({
     secondary: {
       main: lightBlue,
     },
-    error: {
-      main: "#ed5d53",
-    },
     background: {
       default: lightBackgroundColor,
       paper: lightSecondBackgroundColor,
@@ -372,5 +369,5 @@ const darkTheme: ThemeOptions = createTheme({
 });
 
 // theme = responsiveFontSizes(theme);
-// якщо адаптовувати шрифти, то потрібно й адаптовувати розмір Chip на формі
+// if you adapt the fonts, you also need to adapt the size of the Chip on the form
 export { lightTheme, darkTheme };
