@@ -5,20 +5,20 @@ import { useState } from "react";
 import { ThemeProvider } from "@mui/material/styles";
 
 export default function RootLayout() {
-  const [currentTheme, setCurrentTheme] = useState(lightTheme);
+  const [theme, setTheme] = useState("light");
   const handleThemeChange = () => {
-    setCurrentTheme(currentTheme === lightTheme ? darkTheme : lightTheme);
+    setTheme(theme === "light" ? "dark" : "light");
   };
+  const currentTheme = theme === "light" ? lightTheme : darkTheme;
   return (
     <>
       <ThemeProvider theme={currentTheme}>
         <MainNavigation
           onThemeChange={handleThemeChange}
-          // TODO discussion(prop value)
-          currentTheme={currentTheme}
+          currentTheme={theme}
         />
         <Outlet />
       </ThemeProvider>
     </>
-  ); 
+  );
 }

@@ -20,11 +20,9 @@ import { useTheme } from "@mui/material/styles";
 import { tabs } from "./Tabs";
 import { darkTheme } from "../../theme";
 
-type Theme = typeof darkTheme;
-
 type MainNavigationProps = {
   onThemeChange: () => void;
-  currentTheme: Theme;
+  currentTheme: string;
 };
 
 export default function MainNavigation({
