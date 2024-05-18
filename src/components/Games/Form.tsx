@@ -1,6 +1,12 @@
 import React, { useEffect } from "react";
 import { Card } from "./Cards";
-import { TextField, Select, MenuItem, Box } from "@mui/material";
+import {
+  TextField,
+  Select,
+  MenuItem,
+  Box,
+  FormHelperText,
+} from "@mui/material";
 import { InputLabel, Button, Chip } from "@mui/material";
 import { Container, Typography, FormControl } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
@@ -10,7 +16,7 @@ import { useForm } from "react-hook-form";
 // Uncomment if needed
 // import { DevTool } from "@hookform/devtools";
 
-const size = 17;
+// const size = 17;
 
 export interface Props {
   onSubmit: (data: Card) => void;
@@ -82,7 +88,7 @@ const Form: React.FC<Props> = ({ onSubmit, editCard, onCancel }) => {
           bgcolor: theme.palette.background.paper,
           display: "flex",
           flexDirection: "column",
-          gap: "0.65em",
+          // gap: "0.65em",
         }}
       >
         <Typography variant="h3" sx={{ my: 2, textAlign: "center" }}>
@@ -104,9 +110,10 @@ const Form: React.FC<Props> = ({ onSubmit, editCard, onCancel }) => {
           })}
         />
         {/* TODO fix content moving */}
-        <Typography sx={{ color: theme.palette.error.main, fontSize: size }}>
+        {/* <Typography sx={{ color: theme.palette.error.main, fontSize: size }}>
           {errors.name?.message ?? " "}
-        </Typography>
+        </Typography> */}
+        <FormHelperText>{errors.name?.message ?? " "}</FormHelperText>
 
         <FormControl fullWidth>
           <InputLabel id="difficulty-select">Difficulty</InputLabel>
@@ -135,9 +142,10 @@ const Form: React.FC<Props> = ({ onSubmit, editCard, onCancel }) => {
             <MenuItem value={"Expert"}>Expert</MenuItem>
           </Select>
         </FormControl>
-        <Typography sx={{ color: theme.palette.error.main, fontSize: size }}>
+        {/* <Typography sx={{ color: theme.palette.error.main, fontSize: size }}>
           {errors.difficulty?.message ?? " "}
-        </Typography>
+        </Typography> */}
+        <FormHelperText>{errors.difficulty?.message ?? " "}</FormHelperText>
 
         <Container
           disableGutters
@@ -187,12 +195,14 @@ const Form: React.FC<Props> = ({ onSubmit, editCard, onCancel }) => {
             </Select>
           </FormControl>
         </Container>
-        <Typography sx={{ color: theme.palette.error.main, fontSize: size }}>
+        {/* <Typography sx={{ color: theme.palette.error.main, fontSize: size }}>
           {errors.price?.message ?? " "}
         </Typography>
         <Typography sx={{ color: theme.palette.error.main, fontSize: size }}>
           {errors.currency?.message ?? " "}
-        </Typography>
+        </Typography> */}
+        <FormHelperText>{errors.price?.message ?? " "}</FormHelperText>
+        <FormHelperText>{errors.currency?.message ?? " "}</FormHelperText>
         <Box
           sx={{
             display: "flex",
