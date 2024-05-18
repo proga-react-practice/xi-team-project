@@ -8,6 +8,7 @@ import Error from "./pages/Error.tsx";
 
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import MixCards from "./pages/MixCards.tsx";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,7 @@ const router = createBrowserRouter([
       { path: "/AI", element: <Ai /> },
       { path: "/games", element: <Game /> },
       { path: "*", element: <Error /> },
+      { path: "/mix-cards", element: <MixCards /> },
     ],
   },
 ]);
