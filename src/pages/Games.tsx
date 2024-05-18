@@ -7,6 +7,7 @@ import { useTheme } from "@mui/material/styles";
 
 import Form from "../components/Games/Form";
 import Cards, { Card } from "../components/Games/Cards";
+import Footer from "../components/Footer";
 
 export default function App() {
   const theme = useTheme();
@@ -30,48 +31,51 @@ export default function App() {
   };
 
   return (
-    <Box
-      sx={{
-        flexDirection: { xs: "column", sm: "column", md: "row" },
-        display: "flex",
-        justifyContent: "space-between",
-        bgcolor: theme.palette.background.default,
-        // TODO fix layout
-        width: "98.9vw",
-        maxWidth: "100%",
-        minHeight: "100vh",
-      }}
-    >
-      <Container
+    <>
+      <Box
         sx={{
-          width: { sm: "100%", md: "40%" },
-          paddingLeft: { xs: 0, md: 2, lg: 3 },
-          paddingRight: { xs: 0, md: 2, lg: 3 },
+          flexDirection: { xs: "column", sm: "column", md: "row" },
+          display: "flex",
+          justifyContent: "space-between",
+          bgcolor: theme.palette.background.default,
+          // TODO fix layout
+          width: "98.9vw",
+          maxWidth: "100%",
+          minHeight: "100vh",
         }}
       >
-        <Title icon={SportsEsportsIcon} title="Registration Form" />
-        <Form
-          onSubmit={handleFormSubmit}
-          editCard={editingCard}
-          onCancel={() => setEditingCard(null)}
-        />
-      </Container>
-      <Container
-        sx={{
-          minWidth: { md: "40%", lg: "59%" },
-          maxWidth: { md: "100%", lg: "70%" },
-          flexGrow: 1,
-          paddingLeft: { xs: 0, md: 2, lg: 3 },
-          paddingRight: { xs: 0, md: 2, lg: 3 },
-        }}
-      >
-        <Title icon={StyleIcon} title="Submitted Cards" />
-        <Cards
-          cards={cards}
-          onDelete={deleteCard}
-          handleEdit={(card) => setEditingCard(card)}
-        />
-      </Container>
-    </Box>
+        <Container
+          sx={{
+            width: { sm: "100%", md: "40%" },
+            paddingLeft: { xs: 0, md: 2, lg: 3 },
+            paddingRight: { xs: 0, md: 2, lg: 3 },
+          }}
+        >
+          <Title icon={SportsEsportsIcon} title="Registration Form" />
+          <Form
+            onSubmit={handleFormSubmit}
+            editCard={editingCard}
+            onCancel={() => setEditingCard(null)}
+          />
+        </Container>
+        <Container
+          sx={{
+            minWidth: { md: "40%", lg: "59%" },
+            maxWidth: { md: "100%", lg: "70%" },
+            flexGrow: 1,
+            paddingLeft: { xs: 0, md: 2, lg: 3 },
+            paddingRight: { xs: 0, md: 2, lg: 3 },
+          }}
+        >
+          <Title icon={StyleIcon} title="Submitted Cards" />
+          <Cards
+            cards={cards}
+            onDelete={deleteCard}
+            handleEdit={(card) => setEditingCard(card)}
+          />
+        </Container>
+      </Box>
+      <Footer />
+    </>
   );
 }
