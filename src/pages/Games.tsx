@@ -7,7 +7,7 @@ import { useTheme } from "@mui/material/styles";
 
 import Form from "../components/Games/Form";
 import Cards, { Card } from "../components/Games/Cards";
-import Footer from "../components/Footer";
+// import Footer from "../components/Footer";
 
 export default function App() {
   const theme = useTheme();
@@ -75,7 +75,6 @@ export default function App() {
           />
         </Container>
       </Box>
-      <Footer />
     </>
   );
 }
