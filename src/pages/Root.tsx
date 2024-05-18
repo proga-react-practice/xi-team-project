@@ -3,6 +3,7 @@ import MainNavigation from "../components/Menu/MainNavigation";
 import { darkTheme, lightTheme } from "../theme";
 import { useState } from "react";
 import { ThemeProvider } from "@mui/material/styles";
+import Footer from "../components/Footer";
 
 export default function RootLayout() {
   const [currentTheme, setCurrentTheme] = useState(lightTheme);
@@ -18,7 +19,8 @@ export default function RootLayout() {
           currentTheme={currentTheme}
         />
         <Outlet />
+        <Footer />
       </ThemeProvider>
     </>
-  ); 
+  );
 }
