@@ -24,9 +24,6 @@ const lightTheme: ThemeOptions = createTheme({
     secondary: {
       main: lightBlue,
     },
-    error: {
-      main: "#ed5d53",
-    },
     background: {
       default: lightBackgroundColor,
       paper: lightSecondBackgroundColor,
