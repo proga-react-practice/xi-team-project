@@ -5,9 +5,13 @@ import { useState } from "react";
 import { ThemeProvider } from "@mui/material/styles";
 
 export default function RootLayout() {
-  const [theme, setTheme] = useState("light");
+  enum Theme {
+    Light = "light",
+    Dark = "dark",
+  }
+  const [theme, setTheme] = useState<Theme>(Theme.Light);
   const handleThemeChange = () => {
-    setTheme(theme === "light" ? "dark" : "light");
+    setTheme(theme === Theme.Light ? Theme.Dark : Theme.Light);
   };
   const currentTheme = theme === "light" ? lightTheme : darkTheme;
   return (
