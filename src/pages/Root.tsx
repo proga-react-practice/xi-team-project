@@ -19,7 +19,7 @@ export default function RootLayout() {
       <ThemeProvider theme={currentTheme}>
         <MainNavigation
           onThemeChange={handleThemeChange}
-          currentTheme={theme}
+          currentTheme={Theme.Light}
         />
         <Outlet />
       </ThemeProvider>
