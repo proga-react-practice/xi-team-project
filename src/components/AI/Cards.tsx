@@ -161,6 +161,18 @@ export default function Cards({
         gap: 6,
         overflowY: "auto",
         maxHeight: "75vh",
+        "&::-webkit-scrollbar": {
+          width: "0.5em",
+        },
+        "&::-webkit-scrollbar-track": {
+          boxShadow:
+            theme.palette.mode === "dark" ? `inset 0 0 9px` : `inset 0 0 6px`,
+          borderRadius: theme.shape.borderRadius,
+        },
+        "&::-webkit-scrollbar-thumb": {
+          backgroundColor: theme.palette.primary.main,
+          borderRadius: theme.shape.borderRadius,
+        },
       }}
     >
       <TransitionGroup>
