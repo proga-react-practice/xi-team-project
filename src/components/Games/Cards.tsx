@@ -5,6 +5,7 @@ import { useTheme } from "@mui/material/styles";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import ClearIcon from "@mui/icons-material/Clear";
 import EditIcon from "@mui/icons-material/Edit";
+import { useCardsContext } from "../context/contextGames";
 
 export interface Card {
   id: string;
@@ -15,7 +16,6 @@ export interface Card {
 }
 
 interface Props {
-  cards: Card[];
   onDelete: (id: string) => void;
   handleEdit: (card: Card) => void;
 }
@@ -81,8 +81,9 @@ const CardsInfo: React.FC<CardsInfoProps> = ({ title, info }) => {
   );
 };
 
-const Cards: React.FC<Props> = ({ cards, onDelete, handleEdit }) => {
+const Cards: React.FC<Props> = ({ onDelete, handleEdit }) => {
   const theme = useTheme();
+  const cards = useCardsContext();
 
   return (
     <Box
