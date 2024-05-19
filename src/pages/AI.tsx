@@ -28,6 +28,11 @@ export default function App() {
       console.log(formData[index]);
     }
   };
+
+  const handleCancelEdit = () => {
+    setEditingCard(null);
+  };
+
   const handleReorder = (newOrder: AI[]) => {
     setFormData(newOrder);
   };
@@ -80,8 +85,10 @@ export default function App() {
         <Title icon={StyleIcon} title="Submitted Cards" />
         <Cards
           cards={formData}
+          editCard={editingCard}
           onDelete={handleDelete}
           onEdit={handleEdit}
+          onCancel={handleCancelEdit}
           onReorder={handleReorder}
         />
       </Container>

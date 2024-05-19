@@ -1,6 +1,7 @@
 import { INPUT_DATA_ASSETS, RANGE_OPTIONS } from "./inputDataAssets";
 import ClearIcon from "@mui/icons-material/Clear";
 import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { Box, Button, Chip, Container, Typography } from "@mui/material";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { useTheme } from "@mui/material/styles";
@@ -9,8 +10,10 @@ import { useState, useEffect } from "react";
 
 interface ICardsProps {
   cards: AI[];
+  editCard?: number | null;
   onDelete: (index: number) => void;
   onEdit: (ai: AI) => void;
+  onCancel: () => void;
   onReorder: (cards: AI[]) => void;
 }
 
@@ -76,8 +79,10 @@ const CardsInfo: React.FC<ICardsInfoProps> = ({ title, info }) => {
 
 export default function Cards({
   cards,
+  editCard,
   onDelete,
   onEdit,
+  onCancel,
   onReorder,
 }: ICardsProps) {
   const theme = useTheme();
@@ -253,8 +258,10 @@ export default function Cards({
               >
                 <Button
                   variant="contained"
-                  endIcon={<EditIcon />}
-                  onClick={() => onEdit(cards[index])}
+                  endIcon={editCard === index ? <ClearIcon /> : <EditIcon />}
+                  onClick={() => {
+                    editCard === index ? onCancel() : onEdit(cards[index]);
+                  }}
                   sx={{
                     marginRight: 2.5,
                     width: {
@@ -264,11 +271,11 @@ export default function Cards({
                     },
                   }}
                 >
-                  Edit
+                  {editCard === index ? "Cancel" : "Edit"}
                 </Button>
                 <Button
                   variant="contained"
-                  endIcon={<ClearIcon />}
+                  endIcon={<DeleteIcon />}
                   onClick={() => onDelete(index)}
                   sx={{
                     width: {
