@@ -369,5 +369,4 @@ const darkTheme: ThemeOptions = createTheme({
 });
 
 // theme = responsiveFontSizes(theme);
-// if you adapt the fonts, you also need to adapt the size of the Chip on the form
 export { lightTheme, darkTheme };
