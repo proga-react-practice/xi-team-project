@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, Container } from "@mui/material";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import Title from "../components/Title";
@@ -7,12 +7,24 @@ import { useTheme } from "@mui/material/styles";
 
 import Form from "../components/Games/Form";
 import Cards, { Card } from "../components/Games/Cards";
+import { CardsContext } from "../components/context/contextGames";
 // import Footer from "../components/Footer";
+
+const LOCAL_STORAGE_KEY = "cards";
 
 export default function App() {
   const theme = useTheme();
-  const [cards, setCards] = useState<Card[]>([]);
+  const [cards, setCards] = useState<Card[]>(() => {
+    // Load initial state from local storage
+    const savedCards = localStorage.getItem(LOCAL_STORAGE_KEY);
+    return savedCards ? JSON.parse(savedCards) : [];
+  });
   const [editingCard, setEditingCard] = useState<Card | null>(null);
+
+  useEffect(() => {
+    // Save cards to local storage whenever it changes
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(cards));
+  }, [cards]);
 
   const handleFormSubmit = (newCard: Card) => {
     if (editingCard) {
@@ -68,11 +80,13 @@ export default function App() {
           }}
         >
           <Title icon={StyleIcon} title="Submitted Cards" />
-          <Cards
-            cards={cards}
-            onDelete={deleteCard}
-            handleEdit={(card) => setEditingCard(card)}
-          />
+          <CardsContext.Provider value={cards}>
+            <Cards
+              // cards={cards}
+              onDelete={deleteCard}
+              handleEdit={(card) => setEditingCard(card)}
+            />
+          </CardsContext.Provider>
         </Container>
       </Box>
     </>
