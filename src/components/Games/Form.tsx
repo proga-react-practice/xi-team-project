@@ -31,7 +31,7 @@ const Form: React.FC = () => {
     defaultValues: {
       name: "",
       difficulty: "",
-      price: 0,
+      price: 0, // Ensure price is initialized as a number
       currency: "",
     },
   });
@@ -46,10 +46,8 @@ const Form: React.FC = () => {
 
   const onSubmitHandler = (data: Card) => {
     if (editingCard) {
-      // If editingCard exists, it means we're editing an existing card
       updateCard({ ...data, id: editingCard.id });
     } else {
-      // If editingCard doesn't exist, it means we're adding a new card
       addCard({ ...data, id: crypto.randomUUID() });
     }
     clearForm();
@@ -68,7 +66,6 @@ const Form: React.FC = () => {
     clearForm();
     setEditingCard(null);
   };
-
   return (
     <>
       <Container
