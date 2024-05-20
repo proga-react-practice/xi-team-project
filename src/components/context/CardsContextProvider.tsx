@@ -1,7 +1,30 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { Card } from "../Games/Cards";
 
 const LOCAL_STORAGE_KEY = "cards";
+
+export interface Card {
+  name: string;
+  difficulty: string;
+  price: number;
+  currency: string;
+  levelOfAI?: string[];
+  whereAIIsUsed?: string[];
+  TypeOfAI?: string;
+  rateAIIntelligence?: number;
+  id: string;
+}
+
+export interface MixedCard {
+  name: string;
+  difficulty: string;
+  price: number;
+  currency: string;
+  levelOfAI?: string[];
+  whereAIIsUsed?: string[];
+  TypeOfAI?: string;
+  rateAIIntelligence?: number;
+  id: string;
+}
 
 interface CardsContextType {
   cards: Card[];
@@ -10,6 +33,8 @@ interface CardsContextType {
   deleteCard: (id: string) => void;
   editingCard: Card | null;
   setEditingCard: (card: Card | null) => void;
+  mixedCard: MixedCard | null;
+  setMixedCard: React.Dispatch<React.SetStateAction<MixedCard | null>>;
 }
 
 const CardsContext = createContext<CardsContextType | undefined>(undefined);
@@ -30,6 +55,7 @@ export const CardsProvider: React.FC<{ children: React.ReactNode }> = ({
     return savedCards ? JSON.parse(savedCards) : [];
   });
   const [editingCard, setEditingCard] = useState<Card | null>(null);
+  const [mixedCard, setMixedCard] = useState<MixedCard | null>(null);
 
   useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(cards));
@@ -59,6 +85,8 @@ export const CardsProvider: React.FC<{ children: React.ReactNode }> = ({
         deleteCard,
         editingCard,
         setEditingCard,
+        mixedCard,
+        setMixedCard,
       }}
     >
       {children}
