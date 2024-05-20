@@ -3,7 +3,6 @@ import gamesAIImage from "../images/AI-in-Gaming.png";
 import { useTheme } from "@mui/material/styles";
 import TextFields from "../components/HomePage/TextFields";
 import About from "../components/HomePage/Description";
-import Footer from "../components/Footer";
 
 export default function Home() {
   const theme = useTheme();
@@ -87,7 +86,6 @@ export default function Home() {
           button="Add AI"
         />
       </Box>
-      <Footer />
     </>
   );
 }
