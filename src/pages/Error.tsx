@@ -31,8 +31,7 @@ export default function ErrorPage() {
         bgcolor: theme.palette.background.default,
         display: "flex",
         flexDirection: "column",
-        width: "100vw",
-        minHeight: "91vh",
+        minHeight: "calc(100vh - 64px)",
         alignItems: "center",
       }}
     >

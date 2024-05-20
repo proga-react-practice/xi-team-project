@@ -56,6 +56,7 @@ export default function MainNavigation({
       <Toolbar
         sx={{
           bgcolor: theme.palette.background.paper,
+          minHeight: 64,
         }}
       >
         {isMobile ? (
