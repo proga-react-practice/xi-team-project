@@ -18,18 +18,9 @@ export interface Card {
 interface CardsInfoProps {
   title: string;
   info: string;
-  containerStyles?: React.CSSProperties;
-  titleStyles?: React.CSSProperties;
-  chipStyles?: React.CSSProperties;
 }
 
-const CardsInfo: React.FC<CardsInfoProps> = ({
-  title,
-  info,
-  containerStyles,
-  titleStyles,
-  chipStyles,
-}) => {
+export const CardsInfo: React.FC<CardsInfoProps> = ({ title, info }) => {
   const theme = useTheme();
   return (
     <Container
@@ -39,7 +30,6 @@ const CardsInfo: React.FC<CardsInfoProps> = ({
         gap: 2,
         flexDirection: "row",
         marginBottom: 2,
-        ...containerStyles,
       }}
     >
       <Typography
@@ -49,7 +39,6 @@ const CardsInfo: React.FC<CardsInfoProps> = ({
           width: { xs: "5em", sm: "14.6em", md: "6.7em", lg: "14.6em" },
           textAlign: "right",
           flexShrink: 0,
-          ...titleStyles,
         }}
       >
         {title}
@@ -70,7 +59,6 @@ const CardsInfo: React.FC<CardsInfoProps> = ({
               sx={{
                 margin: theme.spacing(0, 0.5),
                 display: "flex",
-                ...chipStyles,
               }}
             />
           ))
@@ -80,7 +68,6 @@ const CardsInfo: React.FC<CardsInfoProps> = ({
             sx={{
               margin: theme.spacing(0, 0.5),
               padding: { xs: 0.5, sm: 1, md: 1.5 },
-              ...chipStyles,
             }}
           />
         )}
