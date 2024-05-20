@@ -13,18 +13,12 @@ import { useTheme } from "@mui/material/styles";
 import ClearIcon from "@mui/icons-material/Clear";
 import SendIcon from "@mui/icons-material/Send";
 import { useForm } from "react-hook-form";
-// Uncomment if needed
-// import { DevTool } from "@hookform/devtools";
+import { useCardsContext } from "../context/CardsContextProvider";
 
-// const size = 17;
+const Form: React.FC = () => {
+  const { addCard, updateCard, editingCard, setEditingCard } =
+    useCardsContext();
 
-export interface Props {
-  onSubmit: (data: Card) => void;
-  editCard?: Card | null;
-  onCancel: () => void;
-}
-
-const Form: React.FC<Props> = ({ onSubmit, editCard, onCancel }) => {
   const placeholders = {
     name: "Name of the Game",
     difficulty: "Difficulty",
@@ -45,19 +39,20 @@ const Form: React.FC<Props> = ({ onSubmit, editCard, onCancel }) => {
   const { errors } = formState;
 
   useEffect(() => {
-    if (editCard) {
-      reset(editCard);
+    if (editingCard) {
+      reset(editingCard);
     }
-  }, [editCard, reset]);
+  }, [editingCard, reset]);
 
   const onSubmitHandler = (data: Card) => {
-    if (editCard) {
-      // If editCard exists, it means we're editing an existing card
-      onSubmit({ ...data, id: editCard.id });
+    if (editingCard) {
+      // If editingCard exists, it means we're editing an existing card
+      updateCard({ ...data, id: editingCard.id });
     } else {
-      // If editCard doesn't exist, it means we're adding a new card
-      onSubmit({ ...data, id: crypto.randomUUID() });
+      // If editingCard doesn't exist, it means we're adding a new card
+      addCard({ ...data, id: crypto.randomUUID() });
     }
+    clearForm();
   };
 
   const clearForm = () => {
@@ -71,7 +66,7 @@ const Form: React.FC<Props> = ({ onSubmit, editCard, onCancel }) => {
 
   const handleCancel = () => {
     clearForm();
-    onCancel();
+    setEditingCard(null);
   };
 
   return (
@@ -88,11 +83,10 @@ const Form: React.FC<Props> = ({ onSubmit, editCard, onCancel }) => {
           bgcolor: theme.palette.background.paper,
           display: "flex",
           flexDirection: "column",
-          // gap: "0.65em",
         }}
       >
         <Typography variant="h3" sx={{ my: 2, textAlign: "center" }}>
-          {editCard ? "Edit the Game" : "Register the Game"}
+          {editingCard ? "Edit the Game" : "Register the Game"}
         </Typography>
 
         <TextField
@@ -109,10 +103,6 @@ const Form: React.FC<Props> = ({ onSubmit, editCard, onCancel }) => {
             onChange: (e) => setValue("name", e.target.value),
           })}
         />
-        {/* TODO fix content moving */}
-        {/* <Typography sx={{ color: theme.palette.error.main, fontSize: size }}>
-          {errors.name?.message ?? " "}
-        </Typography> */}
         <FormHelperText>{errors.name?.message ?? " "}</FormHelperText>
 
         <FormControl fullWidth>
@@ -124,17 +114,15 @@ const Form: React.FC<Props> = ({ onSubmit, editCard, onCancel }) => {
               required: { value: true, message: "Difficulty is required" },
               onChange: (e) => setValue("difficulty", e.target.value),
             })}
-            renderValue={(selected: string) => {
-              return (
-                <Chip
-                  label={selected}
-                  sx={{
-                    height: "1.8rem",
-                    padding: { xs: 0.5, sm: 1, md: 1.5 },
-                  }}
-                />
-              );
-            }}
+            renderValue={(selected: string) => (
+              <Chip
+                label={selected}
+                sx={{
+                  height: "1.8rem",
+                  padding: { xs: 0.5, sm: 1, md: 1.5 },
+                }}
+              />
+            )}
           >
             <MenuItem value={"Easy"}>Easy</MenuItem>
             <MenuItem value={"Medium"}>Medium</MenuItem>
@@ -142,9 +130,6 @@ const Form: React.FC<Props> = ({ onSubmit, editCard, onCancel }) => {
             <MenuItem value={"Expert"}>Expert</MenuItem>
           </Select>
         </FormControl>
-        {/* <Typography sx={{ color: theme.palette.error.main, fontSize: size }}>
-          {errors.difficulty?.message ?? " "}
-        </Typography> */}
         <FormHelperText>{errors.difficulty?.message ?? " "}</FormHelperText>
 
         <Container
@@ -195,12 +180,6 @@ const Form: React.FC<Props> = ({ onSubmit, editCard, onCancel }) => {
             </Select>
           </FormControl>
         </Container>
-        {/* <Typography sx={{ color: theme.palette.error.main, fontSize: size }}>
-          {errors.price?.message ?? " "}
-        </Typography>
-        <Typography sx={{ color: theme.palette.error.main, fontSize: size }}>
-          {errors.currency?.message ?? " "}
-        </Typography> */}
         <FormHelperText>{errors.price?.message ?? " "}</FormHelperText>
         <FormHelperText>{errors.currency?.message ?? " "}</FormHelperText>
         <Box
@@ -211,7 +190,7 @@ const Form: React.FC<Props> = ({ onSubmit, editCard, onCancel }) => {
             gap: 1,
           }}
         >
-          {!editCard ? (
+          {!editingCard ? (
             <Button
               variant="contained"
               sx={{ px: 5 }}
@@ -236,11 +215,10 @@ const Form: React.FC<Props> = ({ onSubmit, editCard, onCancel }) => {
             endIcon={<SendIcon />}
             type="submit"
           >
-            {editCard ? "Save" : "Add"}
+            {editingCard ? "Save" : "Add"}
           </Button>
         </Box>
       </Container>
-      {/* <DevTool control={control} /> */}
     </>
   );
 };

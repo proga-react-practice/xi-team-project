@@ -5,7 +5,7 @@ import { useTheme } from "@mui/material/styles";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import ClearIcon from "@mui/icons-material/Clear";
 import EditIcon from "@mui/icons-material/Edit";
-import { useCardsContext } from "../context/contextGames";
+import { useCardsContext } from "../context/CardsContextProvider";
 
 export interface Card {
   id: string;
@@ -15,17 +15,21 @@ export interface Card {
   currency: string;
 }
 
-interface Props {
-  onDelete: (id: string) => void;
-  handleEdit: (card: Card) => void;
-}
-
 interface CardsInfoProps {
   title: string;
   info: string;
+  containerStyles?: React.CSSProperties;
+  titleStyles?: React.CSSProperties;
+  chipStyles?: React.CSSProperties;
 }
 
-const CardsInfo: React.FC<CardsInfoProps> = ({ title, info }) => {
+const CardsInfo: React.FC<CardsInfoProps> = ({
+  title,
+  info,
+  containerStyles,
+  titleStyles,
+  chipStyles,
+}) => {
   const theme = useTheme();
   return (
     <Container
@@ -35,6 +39,7 @@ const CardsInfo: React.FC<CardsInfoProps> = ({ title, info }) => {
         gap: 2,
         flexDirection: "row",
         marginBottom: 2,
+        ...containerStyles,
       }}
     >
       <Typography
@@ -44,6 +49,7 @@ const CardsInfo: React.FC<CardsInfoProps> = ({ title, info }) => {
           width: { xs: "5em", sm: "14.6em", md: "6.7em", lg: "14.6em" },
           textAlign: "right",
           flexShrink: 0,
+          ...titleStyles,
         }}
       >
         {title}
@@ -64,6 +70,7 @@ const CardsInfo: React.FC<CardsInfoProps> = ({ title, info }) => {
               sx={{
                 margin: theme.spacing(0, 0.5),
                 display: "flex",
+                ...chipStyles,
               }}
             />
           ))
@@ -73,6 +80,7 @@ const CardsInfo: React.FC<CardsInfoProps> = ({ title, info }) => {
             sx={{
               margin: theme.spacing(0, 0.5),
               padding: { xs: 0.5, sm: 1, md: 1.5 },
+              ...chipStyles,
             }}
           />
         )}
@@ -81,9 +89,9 @@ const CardsInfo: React.FC<CardsInfoProps> = ({ title, info }) => {
   );
 };
 
-const Cards: React.FC<Props> = ({ onDelete, handleEdit }) => {
+const Cards: React.FC = () => {
   const theme = useTheme();
-  const cards = useCardsContext();
+  const { cards, deleteCard, setEditingCard } = useCardsContext();
 
   return (
     <Box
@@ -91,11 +99,13 @@ const Cards: React.FC<Props> = ({ onDelete, handleEdit }) => {
         display: "flex",
         flexDirection: "column",
         gap: 6,
+        overflowY: "auto",
+        maxHeight: "75vh",
       }}
     >
-      <TransitionGroup disableGutters>
-        {cards.map((card, index) => (
-          <CSSTransition key={index} timeout={500} classNames="card">
+      <TransitionGroup>
+        {cards.map((card) => (
+          <CSSTransition key={card.id} timeout={500} classNames="card">
             <Box
               sx={{
                 flexDirection: "column",
@@ -151,7 +161,7 @@ const Cards: React.FC<Props> = ({ onDelete, handleEdit }) => {
                 <Button
                   variant="contained"
                   endIcon={<EditIcon />}
-                  onClick={() => handleEdit(card)}
+                  onClick={() => setEditingCard(card)}
                   sx={{
                     width: {
                       xs: theme.spacing(16.5),
@@ -166,7 +176,7 @@ const Cards: React.FC<Props> = ({ onDelete, handleEdit }) => {
                 <Button
                   variant="contained"
                   endIcon={<ClearIcon />}
-                  onClick={() => onDelete(card.id)}
+                  onClick={() => deleteCard(card.id)}
                   sx={{
                     width: {
                       xs: theme.spacing(16.5),
@@ -186,4 +196,4 @@ const Cards: React.FC<Props> = ({ onDelete, handleEdit }) => {
   );
 };
 
-export default Cards;
+export { Cards };
