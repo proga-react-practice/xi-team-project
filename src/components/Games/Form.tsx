@@ -132,7 +132,8 @@ const Form: React.FC = () => {
         <Container
           disableGutters
           sx={{
-            display: "flex",
+            // display: "flex",
+            display: { xs: "block", sm: "flex", md: "flex" },
             justifyContent: "space-between",
             marginBottom: 1,
             gap: 1,
