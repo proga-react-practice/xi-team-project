@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { CardsInfo as CardsInfoGames } from "../components/Games/Cards";
-import { MixedCard } from "./context/CardsContextProvider";
+import { MixedCard } from "./context/GamesCardsContextProvider";
 
 const FinalCard: React.FC<{ mixedCard: MixedCard }> = ({ mixedCard }) => {
   const theme = useTheme();
@@ -18,6 +18,7 @@ const FinalCard: React.FC<{ mixedCard: MixedCard }> = ({ mixedCard }) => {
         maxHeight: "75vh",
       }}
     >
+      // TODO update card style
       {mixedCard && (
         <TransitionGroup>
           <CSSTransition key={mixedCard.id} timeout={500} classNames="card">
