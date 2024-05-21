@@ -6,6 +6,7 @@ import { Box, Button, Chip, Container, Typography } from "@mui/material";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { useTheme } from "@mui/material/styles";
 import { AI } from "./Form/Form";
+import CustomSlider from "../CustomSlider";
 import { useState, useEffect } from "react";
 
 interface ICardsProps {
@@ -154,25 +155,13 @@ export default function Cards({
   };
 
   return (
-    <Box
+    <CustomSlider
       sx={{
         display: "flex",
         flexDirection: "column",
         gap: 6,
         overflowY: "auto",
         maxHeight: "75vh",
-        "&::-webkit-scrollbar": {
-          width: "0.5em",
-        },
-        "&::-webkit-scrollbar-track": {
-          boxShadow:
-            theme.palette.mode === "dark" ? `inset 0 0 9px` : `inset 0 0 6px`,
-          borderRadius: theme.shape.borderRadius,
-        },
-        "&::-webkit-scrollbar-thumb": {
-          backgroundColor: theme.palette.primary.main,
-          borderRadius: theme.shape.borderRadius,
-        },
       }}
     >
       <TransitionGroup>
@@ -304,6 +293,6 @@ export default function Cards({
           </CSSTransition>
         ))}
       </TransitionGroup>
-    </Box>
+    </CustomSlider>
   );
 }
