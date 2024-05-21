@@ -138,47 +138,53 @@ const Form: React.FC = () => {
             gap: 1,
           }}
         >
-          <FormControl fullWidth>
-            <TextField
-              label={placeholders.price}
-              type="number"
-              variant="outlined"
-              value={form.watch("price")}
-              {...register("price", {
-                required: { value: true, message: "Price is required" },
-                min: { value: 0, message: "Price must be a positive number" },
-                onChange: (e) => setValue("price", e.target.value),
-              })}
-            />
-          </FormControl>
+          <Box sx={{ flex: 1 }}>
+            <FormControl fullWidth>
+              <TextField
+                label={placeholders.price}
+                type="number"
+                variant="outlined"
+                value={form.watch("price")}
+                {...register("price", {
+                  required: { value: true, message: "Price is required" },
+                  min: { value: 0, message: "Price must be a positive number" },
+                  onChange: (e) => setValue("price", e.target.value),
+                })}
+              />
+            </FormControl>
+            <FormHelperText>{errors.price?.message ?? " "} </FormHelperText>
+          </Box>
 
-          <FormControl fullWidth>
-            <InputLabel id="currency-select">Currency</InputLabel>
-            <Select
-              label={placeholders.currency}
-              value={form.watch("currency")}
-              {...register("currency", {
-                required: { value: true, message: "Currency is required" },
-                onChange: (e) => setValue("currency", e.target.value),
-              })}
-              renderValue={(selected: string) => (
-                <Chip
-                  label={selected}
-                  sx={{
-                    height: "1.8rem",
-                    padding: { xs: 0.5, sm: 1, md: 1.5 },
-                  }}
-                />
-              )}
-            >
-              <MenuItem value={"₴"}>₴</MenuItem>
-              <MenuItem value={"$"}>$</MenuItem>
-              <MenuItem value={"€"}>€</MenuItem>
-            </Select>
-          </FormControl>
+          <Box sx={{ flex: 1 }}>
+            <FormControl fullWidth>
+              <InputLabel id="currency-select">Currency</InputLabel>
+              <Select
+                label={placeholders.currency}
+                value={form.watch("currency")}
+                {...register("currency", {
+                  required: { value: true, message: "Currency is required" },
+                  onChange: (e) => setValue("currency", e.target.value),
+                })}
+                renderValue={(selected: string) => (
+                  <Chip
+                    label={selected}
+                    sx={{
+                      height: "1.8rem",
+                      padding: { xs: 0.5, sm: 1, md: 1.5 },
+                    }}
+                  />
+                )}
+              >
+                <MenuItem value={"₴"}>₴</MenuItem>
+                <MenuItem value={"$"}>$</MenuItem>
+                <MenuItem value={"€"}>€</MenuItem>
+              </Select>
+            </FormControl>
+            <FormHelperText>{errors.currency?.message ?? " "}</FormHelperText>
+          </Box>
         </Container>
-        <FormHelperText>{errors.price?.message ?? " "}</FormHelperText>
-        <FormHelperText>{errors.currency?.message ?? " "}</FormHelperText>
+        {/* <FormHelperText>{errors.price?.message ?? " "} </FormHelperText> */}
+        {/* <FormHelperText>{errors.currency?.message ?? " "}</FormHelperText> */}
         <Box
           sx={{
             display: "flex",
