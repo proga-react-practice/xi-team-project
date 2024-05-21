@@ -5,7 +5,7 @@ import { useTheme } from "@mui/material/styles";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import ClearIcon from "@mui/icons-material/Clear";
 import EditIcon from "@mui/icons-material/Edit";
-import { useCardsContext } from "../context/CardsContextProvider";
+import { useCardsContext } from "../context/GamesCardsContextProvider";
 
 export interface Card {
   id: string;
