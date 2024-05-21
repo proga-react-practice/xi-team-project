@@ -189,8 +189,8 @@ const Form: React.FC = () => {
         >
           {!editingCard ? (
             <Button
+              fullWidth
               variant="contained"
-              sx={{ px: 5 }}
               startIcon={<ClearIcon />}
               onClick={clearForm}
             >
@@ -198,8 +198,8 @@ const Form: React.FC = () => {
             </Button>
           ) : (
             <Button
+              fullWidth
               variant="contained"
-              sx={{ px: 5 }}
               startIcon={<ClearIcon />}
               onClick={handleCancel}
             >
@@ -207,8 +207,8 @@ const Form: React.FC = () => {
             </Button>
           )}
           <Button
+            fullWidth
             variant="contained"
-            sx={{ px: 10 }}
             endIcon={<SendIcon />}
             type="submit"
           >
