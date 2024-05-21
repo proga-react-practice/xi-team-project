@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import {
   AppBar,
@@ -19,27 +19,36 @@ import DarkModeIcon from "@mui/icons-material/DarkModeOutlined";
 import { useTheme } from "@mui/material/styles";
 import { tabs } from "./Tabs";
 import { darkTheme } from "../../theme";
+import ColorLensIcon from "@mui/icons-material/ColorLens";
+import { SketchPicker, ColorResult } from "react-color";
 
 type Theme = typeof darkTheme;
 
 type MainNavigationProps = {
   onThemeChange: () => void;
   currentTheme: Theme;
+  showColorPicker: boolean;
+  toggleColorPicker: () => void;
+  handleColorChange: (newColor: ColorResult) => void;
 };
 
 export default function MainNavigation({
   onThemeChange,
   currentTheme,
-}: MainNavigationProps) {
+  showColorPicker,
+  toggleColorPicker,
+}: // handleColorChange,
+MainNavigationProps) {
   const theme = useTheme();
   const location = useLocation();
   const [value, setValue] = useState(location.pathname);
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const open = Boolean(anchorEl);
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const [selectedColor, setSelectedColor] = useState("#ffffff"); // Change 'color' to 'selectedColor'
 
   useEffect(() => {
-    setValue(location.pathname); // update the value of the tab when the path changes
+    setValue(location.pathname);
   }, [location.pathname]);
 
   const handleChange = (_: React.ChangeEvent<unknown>, newValue: string) => {
@@ -127,6 +136,15 @@ export default function MainNavigation({
                 />
               ))}
             </Tabs>
+            <ColorLensIcon onClick={toggleColorPicker} />
+            {showColorPicker && (
+              <SketchPicker
+                color={selectedColor} // Change this to selectedColor
+                onChangeComplete={(color: ColorResult) =>
+                  setSelectedColor(color.hex)
+                }
+              />
+            )}
             <IconButton color="inherit" onClick={onThemeChange}>
               {currentTheme === darkTheme ? (
                 <DarkModeIcon />
