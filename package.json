@@ -17,6 +17,7 @@
     "nanoid": "^5.0.7",
     "react": "^18.2.0",
     "react-beautiful-dnd": "^13.1.1",
+    "react-color": "^2.19.3",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.4",
     "react-router-dom": "^6.23.0"
@@ -25,6 +26,7 @@
     "@hookform/devtools": "^4.3.1",
     "@types/react": "^18.2.66",
     "@types/react-beautiful-dnd": "^13.1.8",
+    "@types/react-color": "^3.0.12",
     "@types/react-dom": "^18.2.22",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
