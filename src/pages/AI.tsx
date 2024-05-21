@@ -50,7 +50,6 @@ export default function App() {
         display: "flex",
         justifyContent: "space-between",
         bgcolor: theme.palette.background.default,
-        width: "100vw",
         minHeight: "calc(100vh - 64px)",
       }}
     >
