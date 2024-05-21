@@ -8,6 +8,7 @@ import Title from "../components/Title";
 import StyleIcon from "@mui/icons-material/Style";
 import { useTheme } from "@mui/material/styles";
 import { nanoid } from "nanoid";
+import { HEADER_HEIGHT } from "../constants";
 
 export default function App() {
   const theme = useTheme();
@@ -50,7 +51,7 @@ export default function App() {
         display: "flex",
         justifyContent: "space-between",
         bgcolor: theme.palette.background.default,
-        minHeight: "calc(100vh - 64px)",
+        minHeight: `calc(100vh - ${HEADER_HEIGHT}px)`,
       }}
     >
       <Container
