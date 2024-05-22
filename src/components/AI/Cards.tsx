@@ -160,8 +160,8 @@ export default function Cards({
         display: "flex",
         flexDirection: "column",
         gap: 6,
-        overflowY: "auto",
-        maxHeight: "75vh",
+        overflowY: { sm: "none", md: "auto" },
+        maxHeight: { sm: "auto", md: "75vh" },
       }}
     >
       <TransitionGroup>
