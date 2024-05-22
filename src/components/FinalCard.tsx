@@ -18,7 +18,7 @@ const FinalCard: React.FC<{ mixedCard: MixedCard }> = ({ mixedCard }) => {
         maxHeight: "75vh",
       }}
     >
-      // TODO update card style
+      {/* TODO update card style */}
       {mixedCard && (
         <TransitionGroup>
           <CSSTransition key={mixedCard.id} timeout={500} classNames="card">

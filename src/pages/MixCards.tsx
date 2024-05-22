@@ -4,17 +4,19 @@ import {
   Button,
   Container,
   FormControlLabel,
+  Grid,
   Modal,
   Radio,
   RadioGroup,
   Typography,
+  // useMediaQuery,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import {
   CardsProvider,
   MixedCard,
   useCardsContext,
-} from "../components/context/CardsContextProvider";
+} from "../components/context/GamesCardsContextProvider";
 import Cards from "../components/AI/Cards";
 import { AI } from "../components/AI/Form/Form";
 import FinalCard from "../components/FinalCard";
@@ -24,17 +26,19 @@ const modalStyle = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 1300,
+  width: { xs: "80%", sm: "80%", md: "80%" },
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
-  maxHeight: "90vh",
+  height: { xs: "70vh", sm: "70vh", md: "80vh" },
+  // maxHeight: "90vh",
   overflowY: "auto",
 };
 
 function MixCardsContent() {
   const theme = useTheme();
+  // const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const { cards } = useCardsContext();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -147,59 +151,69 @@ function MixCardsContent() {
           aria-describedby="modal-modal-description"
         >
           <Box sx={modalStyle}>
-            <Container
-              sx={{ display: "flex", justifyContent: "space-between" }}
-            >
-              <Container>
-                <RadioGroup
-                  aria-label="games-cards"
-                  name="games-cards"
-                  value={selectedCardGames}
-                  onChange={handleRadioChangeGames}
-                >
-                  {cards.map((card) => (
-                    <FormControlLabel
-                      key={card.id}
-                      value={card.id}
-                      control={<Radio />}
-                      label={card.name}
-                    />
-                  ))}
-                </RadioGroup>
-              </Container>
-              <Container>
-                <RadioGroup
-                  aria-label="ai-cards"
-                  name="ai-cards"
-                  value={selectedCard}
-                  onChange={handleRadioChangeAI}
-                >
-                  {dummyFormData.map((card, index) => (
-                    <FormControlLabel
-                      key={card.id}
-                      value={card.id}
-                      control={<Radio />}
-                      label={
-                        <Cards
-                          cards={[card]}
-                          onDelete={() => handleDummyDelete(index)}
-                          onEdit={() => handleDummyEdit(card)}
-                          onReorder={handleDummyReorder}
-                        />
-                      }
-                    />
-                  ))}
-                </RadioGroup>
-              </Container>
+            <Container>
+              <Grid container spacing={2}>
+                <Grid item xs={12} md={6}>
+                  <RadioGroup
+                    aria-label="games-cards"
+                    name="games-cards"
+                    value={selectedCardGames}
+                    onChange={handleRadioChangeGames}
+                  >
+                    {cards.map((card) => (
+                      <FormControlLabel
+                        key={card.id}
+                        value={card.id}
+                        control={<Radio />}
+                        label={card.name}
+                      />
+                    ))}
+                  </RadioGroup>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <RadioGroup
+                    aria-label="ai-cards"
+                    name="ai-cards"
+                    value={selectedCard}
+                    onChange={handleRadioChangeAI}
+                  >
+                    {dummyFormData.map((card, index) => (
+                      <FormControlLabel
+                        key={card.id}
+                        value={card.id}
+                        control={<Radio />}
+                        label={
+                          <Cards
+                            cards={[card]}
+                            onDelete={() => handleDummyDelete(index)}
+                            onEdit={() => handleDummyEdit(card)}
+                            onReorder={handleDummyReorder}
+                          />
+                        }
+                      />
+                    ))}
+                  </RadioGroup>
+                </Grid>
+              </Grid>
             </Container>
-            <Button onClick={mix}>Mix Selected Cards</Button>
+            <Box display="flex" justifyContent="center" mt={2}>
+              <Button onClick={mix} variant="contained" color="primary">
+                Mix Selected Cards
+              </Button>
+            </Box>
           </Box>
         </Modal>
-        <Typography>Final Cards</Typography>
+        <Typography variant="h6" mt={2}>
+          Final Cards
+        </Typography>
       </Box>
-      {mixedCards.map((card, index) => (
-        <FinalCard key={index} mixedCard={card} />
-      ))}
+      <Grid container spacing={2}>
+        {mixedCards.map((card, index) => (
+          <Grid item xs={12} sm={12} md={12} key={index}>
+            <FinalCard mixedCard={card} />
+          </Grid>
+        ))}
+      </Grid>
     </Box>
   );
 }
