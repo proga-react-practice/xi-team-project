@@ -154,6 +154,7 @@ function MixCardsContent() {
             <Container>
               <Grid container spacing={2}>
                 <Grid item xs={12} md={6}>
+                  <Typography variant="h6">Games Cards</Typography>
                   <RadioGroup
                     aria-label="games-cards"
                     name="games-cards"
@@ -171,6 +172,7 @@ function MixCardsContent() {
                   </RadioGroup>
                 </Grid>
                 <Grid item xs={12} md={6}>
+                  <Typography variant="h6">AI Cards</Typography>
                   <RadioGroup
                     aria-label="ai-cards"
                     name="ai-cards"
