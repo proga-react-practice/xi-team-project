@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import {
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
   Box,
   Button,
   Container,
@@ -20,13 +23,14 @@ import {
 import Cards from "../components/AI/Cards";
 import { AI } from "../components/AI/Form/Form";
 import FinalCard from "../components/FinalCard";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 const modalStyle = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: { xs: "80%", sm: "80%", md: "80%" },
+  width: { xs: "80%", sm: "90%", md: "90%" },
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -162,12 +166,23 @@ function MixCardsContent() {
                     onChange={handleRadioChangeGames}
                   >
                     {cards.map((card) => (
-                      <FormControlLabel
-                        key={card.id}
-                        value={card.id}
-                        control={<Radio />}
-                        label={card.name}
-                      />
+                      <Accordion>
+                        <AccordionSummary
+                          expandIcon={<ArrowDropDownIcon />}
+                          aria-controls="panel1-content"
+                          id="panel1-header"
+                        >
+                          <Typography>{card.name}</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                          <FormControlLabel
+                            key={card.id}
+                            value={card.id}
+                            control={<Radio />}
+                            label={card.name}
+                          />
+                        </AccordionDetails>
+                      </Accordion>
                     ))}
                   </RadioGroup>
                 </Grid>
@@ -180,19 +195,30 @@ function MixCardsContent() {
                     onChange={handleRadioChangeAI}
                   >
                     {dummyFormData.map((card, index) => (
-                      <FormControlLabel
-                        key={card.id}
-                        value={card.id}
-                        control={<Radio />}
-                        label={
-                          <Cards
-                            cards={[card]}
-                            onDelete={() => handleDummyDelete(index)}
-                            onEdit={() => handleDummyEdit(card)}
-                            onReorder={handleDummyReorder}
+                      <Accordion>
+                        <AccordionSummary
+                          expandIcon={<ArrowDropDownIcon />}
+                          aria-controls="panel2-content"
+                          id="panel2-header"
+                        >
+                          <Typography>{`Card ${index + 1}`}</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                          <FormControlLabel
+                            key={card.id}
+                            value={card.id}
+                            control={<Radio />}
+                            label={
+                              <Cards
+                                cards={[card]}
+                                onDelete={() => handleDummyDelete(index)}
+                                onEdit={() => handleDummyEdit(card)}
+                                onReorder={handleDummyReorder}
+                              />
+                            }
                           />
-                        }
-                      />
+                        </AccordionDetails>
+                      </Accordion>
                     ))}
                   </RadioGroup>
                 </Grid>
