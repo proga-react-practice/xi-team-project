@@ -4,6 +4,7 @@ import { Typography, Box, Button, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { HEADER_HEIGHT } from "../constants";
 
 export default function ErrorPage() {
   const theme = useTheme();
@@ -31,8 +32,7 @@ export default function ErrorPage() {
         bgcolor: theme.palette.background.default,
         display: "flex",
         flexDirection: "column",
-        width: "100vw",
-        minHeight: "91vh",
+        minHeight: `calc(100vh - ${HEADER_HEIGHT}px)`,
         alignItems: "center",
       }}
     >

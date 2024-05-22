@@ -19,6 +19,7 @@ import DarkModeIcon from "@mui/icons-material/DarkModeOutlined";
 import { useTheme } from "@mui/material/styles";
 import { tabs } from "./Tabs";
 import { darkTheme } from "../../theme";
+import { HEADER_HEIGHT } from "../../constants";
 
 type MainNavigationProps = {
   onThemeChange: () => void;
@@ -56,6 +57,7 @@ export default function MainNavigation({
       <Toolbar
         sx={{
           bgcolor: theme.palette.background.paper,
+          minHeight: HEADER_HEIGHT,
         }}
       >
         {isMobile ? (
