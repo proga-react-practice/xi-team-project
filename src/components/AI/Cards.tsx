@@ -6,7 +6,7 @@ import { Box, Button, Chip, Container, Typography } from "@mui/material";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { useTheme } from "@mui/material/styles";
 import { AI } from "./Form/Form";
-import CustomSlider from "../CustomSlider";
+import CustomSlider from "../ScrollContainer";
 import { useState, useEffect } from "react";
 
 interface ICardsProps {

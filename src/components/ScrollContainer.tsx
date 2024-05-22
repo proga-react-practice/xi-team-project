@@ -2,12 +2,12 @@ import { Box } from "@mui/material";
 import { SxProps } from "@mui/system";
 import { Theme } from "@mui/material/styles";
 
-interface ICustomSliderProps {
+interface IScrollContainerProps {
   sx?: SxProps<Theme>;
   children: React.ReactNode;
 }
 
-const CustomSlider: React.FC<ICustomSliderProps> = ({ sx, children }) => {
+const ScrollContainer: React.FC<IScrollContainerProps> = ({ sx, children }) => {
   return (
     <Box
       sx={{
@@ -31,4 +31,4 @@ const CustomSlider: React.FC<ICustomSliderProps> = ({ sx, children }) => {
   );
 };
 
-export default CustomSlider;
+export default ScrollContainer;
