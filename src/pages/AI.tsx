@@ -25,9 +25,6 @@ export default function App() {
   const handleEdit = (ai: AI) => {
     const index = formData.findIndex((card) => card.id === ai.id);
     setEditingCard(index);
-    if (index !== -1) {
-      console.log(formData[index]);
-    }
   };
 
   const handleCancelEdit = () => {
