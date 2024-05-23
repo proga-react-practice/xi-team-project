@@ -37,10 +37,12 @@ interface CardsContextType {
   setMixedCard: React.Dispatch<React.SetStateAction<MixedCard | null>>;
 }
 
-const CardsContext = createContext<CardsContextType | undefined>(undefined);
+const GamesCardsContext = createContext<CardsContextType | undefined>(
+  undefined
+);
 
 export const useCardsContext = () => {
-  const context = useContext(CardsContext);
+  const context = useContext(GamesCardsContext);
   if (context === undefined) {
     throw new Error("useCardsContext must be used within a CardsProvider");
   }
@@ -77,7 +79,7 @@ export const CardsProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   return (
-    <CardsContext.Provider
+    <GamesCardsContext.Provider
       value={{
         cards,
         addCard,
@@ -90,6 +92,6 @@ export const CardsProvider: React.FC<{ children: React.ReactNode }> = ({
       }}
     >
       {children}
-    </CardsContext.Provider>
+    </GamesCardsContext.Provider>
   );
 };
