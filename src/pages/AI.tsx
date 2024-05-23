@@ -98,7 +98,7 @@ export default function App() {
             justifyContent: "flex-start",
             gap: { xs: 0, sm: 0, md: 2 },
             alignItems: "center",
-            marginBottom: { xs: 2, sm: 0 },
+            marginBottom: { xs: 2, sm: 2, md: 0 },
           }}
         >
           <Title icon={StyleIcon} title="Submitted Cards" />
