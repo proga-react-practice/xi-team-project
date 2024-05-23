@@ -200,13 +200,12 @@ export const CardComponentMix: React.FC<{ card: Card }> = ({ card }) => {
         flexDirection: "column",
         paddingTop: 2,
         paddingBottom: 2,
-        // paddingLeft: { md: 0, lg: 2 },
+        paddingLeft: { md: 1, lg: 2 },
         paddingRight: { md: 0, lg: 8 },
         maxWidth: { md: "90%", lg: "80%" },
         border: "2px solid",
         borderColor: theme.palette.text.primary,
         py: 2.5,
-        // px: 2,
         borderRadius: 2,
         position: "relative",
         marginBottom: 5,
@@ -236,18 +235,6 @@ export const CardComponentMix: React.FC<{ card: Card }> = ({ card }) => {
         title="Price"
         info={card.price.toString() + " " + card.currency}
       />
-      {/* <Box
-        sx={{
-          display: "flex",
-          justifyContent: "flex-end",
-          paddingRight: {
-            xs: 2,
-            sm: 4,
-            md: 6,
-            lg: 10,
-          },
-        }}
-      ></Box> */}
     </Box>
   );
 };

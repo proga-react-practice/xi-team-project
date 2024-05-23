@@ -34,7 +34,7 @@ const modalStyle = {
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
-  p: 4,
+  p: { xs: 1, sm: 2, md: 3, lg: 4 },
   height: { xs: "70vh", sm: "70vh", md: "80vh" },
   // maxHeight: "90vh",
   overflowY: "auto",
@@ -144,6 +144,7 @@ function MixCardsContent() {
         bgcolor: theme.palette.background.default,
         display: "flex",
         flexDirection: "column",
+        alignItems: "center",
         gap: 3,
         py: 3,
         px: { xs: 2, sm: 5, md: 10 },
@@ -158,9 +159,17 @@ function MixCardsContent() {
           aria-describedby="modal-modal-description"
         >
           <Box sx={modalStyle}>
-            <Container>
-              <Grid container spacing={2}>
-                <Grid item xs={12} md={6}>
+            <Container
+              sx={{
+                mx: 0,
+              }}
+            >
+              <Grid
+                container
+                spacing={2}
+                sx={{ flexDirection: { xs: "column", md: "row", lg: "row" } }}
+              >
+                <Grid item xs={12} sm={8} md={8} lg={8.5}>
                   <Typography variant="h6">Games Cards</Typography>
                   <RadioGroup
                     aria-label="games-cards"
@@ -169,7 +178,7 @@ function MixCardsContent() {
                     onChange={handleRadioChangeGames}
                   >
                     {cards.map((card) => (
-                      <Accordion>
+                      <Accordion sx={{ width: { xs: "100%", lg: "80%" } }}>
                         <AccordionSummary
                           expandIcon={<ArrowDropDownIcon />}
                           aria-controls="panel1-content"
@@ -189,7 +198,7 @@ function MixCardsContent() {
                     ))}
                   </RadioGroup>
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} sm={8} md={8} lg={8.5}>
                   <Typography variant="h6">AI Cards</Typography>
                   <RadioGroup
                     aria-label="ai-cards"
@@ -198,7 +207,7 @@ function MixCardsContent() {
                     onChange={handleRadioChangeAI}
                   >
                     {dummyFormData.map((card, index) => (
-                      <Accordion>
+                      <Accordion sx={{ width: { xs: "100%", lg: "80%" } }}>
                         <AccordionSummary
                           expandIcon={<ArrowDropDownIcon />}
                           aria-controls="panel2-content"
