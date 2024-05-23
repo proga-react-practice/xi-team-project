@@ -1,3 +1,4 @@
+// Cards.tsx
 import React from "react";
 import { Box, Button } from "@mui/material";
 import { Container, Typography, Chip } from "@mui/material";
@@ -76,9 +77,99 @@ export const CardsInfo: React.FC<CardsInfoProps> = ({ title, info }) => {
   );
 };
 
-const Cards: React.FC = () => {
+export const CardComponent: React.FC<{ card: Card }> = ({ card }) => {
   const theme = useTheme();
-  const { cards, deleteCard, setEditingCard } = useCardsContext();
+  const { deleteCard, setEditingCard } = useCardsContext();
+
+  return (
+    <Box
+      sx={{
+        flexDirection: "column",
+        paddingTop: 2,
+        paddingBottom: 2,
+        paddingLeft: { md: 0, lg: 2 },
+        paddingRight: { md: 0, lg: 2 },
+        maxWidth: { md: "90%", lg: "80%" },
+        border: "2px solid",
+        borderColor: theme.palette.text.primary,
+        py: 2.5,
+        borderRadius: 2,
+        position: "relative",
+        marginBottom: 5,
+        bgcolor: "background.paper",
+        "&::after": {
+          content: '""',
+          position: "absolute",
+          bottom: theme.spacing(1),
+          left: {
+            xs: theme.spacing(1),
+            sm: theme.spacing(2),
+            md: theme.spacing(4),
+          },
+          right: {
+            xs: theme.spacing(0.7),
+            sm: theme.spacing(1),
+            md: theme.spacing(2),
+          },
+          height: "2px",
+          backgroundColor: theme.palette.text.primary,
+        },
+      }}
+    >
+      <CardsInfo title="Name of the Game" info={card.name} />
+      <CardsInfo title="Difficulty" info={card.difficulty} />
+      <CardsInfo
+        title="Price"
+        info={card.price.toString() + " " + card.currency}
+      />
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "flex-end",
+          paddingRight: {
+            xs: 2,
+            sm: 4,
+            md: 6,
+          },
+          marginBottom: -6,
+        }}
+      >
+        <Button
+          variant="contained"
+          endIcon={<EditIcon />}
+          onClick={() => setEditingCard(card)}
+          sx={{
+            width: {
+              xs: theme.spacing(16.5),
+              sm: theme.spacing(20),
+              md: theme.spacing(25),
+            },
+            marginRight: 3,
+          }}
+        >
+          Edit
+        </Button>
+        <Button
+          variant="contained"
+          endIcon={<ClearIcon />}
+          onClick={() => deleteCard(card.id)}
+          sx={{
+            width: {
+              xs: theme.spacing(16.5),
+              sm: theme.spacing(20),
+              md: theme.spacing(25),
+            },
+          }}
+        >
+          Delete
+        </Button>
+      </Box>
+    </Box>
+  );
+};
+
+const CardsList: React.FC = () => {
+  const { cards } = useCardsContext();
 
   return (
     <Box
@@ -93,89 +184,7 @@ const Cards: React.FC = () => {
       <TransitionGroup>
         {cards.map((card) => (
           <CSSTransition key={card.id} timeout={500} classNames="card">
-            <Box
-              sx={{
-                flexDirection: "column",
-                paddingTop: 2,
-                paddingBottom: 2,
-                paddingLeft: { md: 0, lg: 2 },
-                paddingRight: { md: 0, lg: 2 },
-                maxWidth: { md: "90%", lg: "80%" },
-                border: "2px solid",
-                borderColor: theme.palette.text.primary,
-                py: 2.5,
-                borderRadius: 2,
-                position: "relative",
-                marginBottom: 5,
-                bgcolor: "background.paper",
-                "&::after": {
-                  content: '""',
-                  position: "absolute",
-                  bottom: theme.spacing(1),
-                  left: {
-                    xs: theme.spacing(1),
-                    sm: theme.spacing(2),
-                    md: theme.spacing(4),
-                  },
-                  right: {
-                    xs: theme.spacing(0.7),
-                    sm: theme.spacing(1),
-                    md: theme.spacing(2),
-                  },
-                  height: "2px",
-                  backgroundColor: theme.palette.text.primary,
-                },
-              }}
-            >
-              <CardsInfo title="Name of the Game" info={card.name} />
-              <CardsInfo title="Difficulty" info={card.difficulty} />
-              <CardsInfo
-                title="Price"
-                info={card.price.toString() + " " + card.currency}
-              />
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "flex-end",
-                  paddingRight: {
-                    xs: 2,
-                    sm: 4,
-                    md: 6,
-                  },
-                  marginBottom: -6,
-                }}
-              >
-                <Button
-                  variant="contained"
-                  endIcon={<EditIcon />}
-                  onClick={() => setEditingCard(card)}
-                  sx={{
-                    width: {
-                      xs: theme.spacing(16.5),
-                      sm: theme.spacing(20),
-                      md: theme.spacing(25),
-                    },
-                    marginRight: 3,
-                  }}
-                >
-                  Edit
-                </Button>
-                <Button
-                  variant="contained"
-                  endIcon={<ClearIcon />}
-                  onClick={() => deleteCard(card.id)}
-                  sx={{
-                    width: {
-                      xs: theme.spacing(16.5),
-                      sm: theme.spacing(20),
-                      md: theme.spacing(25),
-                    },
-                  }}
-                >
-                  Delete
-                </Button>
-              </Box>
-            </Box>
+            <CardComponent card={card} />
           </CSSTransition>
         ))}
       </TransitionGroup>
@@ -183,4 +192,4 @@ const Cards: React.FC = () => {
   );
 };
 
-export { Cards };
+export { CardsList as Cards };
