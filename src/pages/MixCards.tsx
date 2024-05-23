@@ -23,6 +23,7 @@ import Cards from "../components/AI/Cards";
 import { AI } from "../components/AI/Form/Form";
 import FinalCard from "../components/FinalCard";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import { CardComponent } from "../components/Games/Cards";
 
 const modalStyle = {
   position: "absolute",
@@ -178,7 +179,7 @@ function MixCardsContent() {
                             key={card.id}
                             value={card.id}
                             control={<Radio />}
-                            label={card.name}
+                            label={<CardComponent card={card} />}
                           />
                         </AccordionDetails>
                       </Accordion>
