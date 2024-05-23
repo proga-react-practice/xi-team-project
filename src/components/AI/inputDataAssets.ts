@@ -14,7 +14,7 @@ export const INPUT_DATA_ASSETS: CheckboxRadioOptions[] = [
   {
     label: "Level of AI",
     name: "level",
-    value: ["Low", "Medium", "High", "Very High"],
+    value: ["Low", "Medium", "High", "Extreme"],
   },
   {
     label: "Where AI is used",
