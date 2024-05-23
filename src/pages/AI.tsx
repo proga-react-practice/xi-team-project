@@ -2,7 +2,7 @@ import Form from "../components/AI/Form/Form";
 import Cards from "../components/AI/Cards";
 import { useState } from "react";
 import { AI } from "../components/AI/Form/Form";
-import { Container, Box } from "@mui/material";
+import { Container, Box, TextField } from "@mui/material";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
 import Title from "../components/Title";
 import StyleIcon from "@mui/icons-material/Style";
@@ -46,6 +46,18 @@ export default function App() {
 
     setEditingCard(null);
   };
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchTerms, setSearchTerms] = useState<string[]>([]);
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const query = event.target.value;
+    setSearchQuery(query);
+
+    // Split the query into words and phrases
+    const terms = query.split(";");
+    setSearchTerms(terms ? terms.map((term) => term.trim()) : []);
+  };
   return (
     <Box
       sx={{
@@ -80,9 +92,27 @@ export default function App() {
           paddingRight: { xs: 0, md: 2, lg: 3 },
         }}
       >
-        <Title icon={StyleIcon} title="Submitted Cards" />
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", sm: "column", md: "row" },
+            justifyContent: "flex-start",
+            gap: { xs: 0, sm: 0, md: 2 },
+            alignItems: "center",
+            marginBottom: { xs: 2, sm: 2, md: 0 },
+          }}
+        >
+          <Title icon={StyleIcon} title="Submitted Cards" />
+          <TextField
+            label="Search Card"
+            value={searchQuery}
+            onChange={handleSearchChange}
+            sx={{ width: { xs: "90%", sm: "90%", md: "auto" } }}
+          />
+        </Box>
         <Cards
           cards={formData}
+          searchTerms={searchTerms}
           editCard={editingCard}
           onDelete={handleDelete}
           onEdit={handleEdit}
