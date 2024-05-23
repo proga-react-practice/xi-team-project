@@ -12,7 +12,6 @@ import {
   Radio,
   RadioGroup,
   Typography,
-  // useMediaQuery,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import {
@@ -42,7 +41,6 @@ const modalStyle = {
 
 function MixCardsContent() {
   const theme = useTheme();
-  // const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const { cards } = useCardsContext();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
