@@ -6,6 +6,7 @@ import { useTheme } from "@mui/material/styles";
 import Form from "../components/Games/Form";
 import { Cards } from "../components/Games/Cards";
 import { CardsProvider } from "../components/context/GamesCardsContextProvider";
+import { HEADER_HEIGHT } from "../constants";
 
 export default function Games() {
   const theme = useTheme();
@@ -18,7 +19,7 @@ export default function Games() {
           flexDirection: { xs: "column", sm: "column", md: "row" },
           justifyContent: "space-between",
           backgroundColor: theme.palette.background.default,
-          minHeight: "100vh",
+          minHeight: `calc(100vh - ${HEADER_HEIGHT}px)`,
         }}
       >
         <Container
