@@ -369,5 +369,4 @@ const darkTheme: ThemeOptions = createTheme({
 });
 
 // theme = responsiveFontSizes(theme);
-// якщо адаптовувати шрифти, то потрібно й адаптовувати розмір Chip на формі
 export { lightTheme, darkTheme };

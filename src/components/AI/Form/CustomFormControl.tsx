@@ -45,8 +45,15 @@ const CustomFormControl: React.FC<ICustomFormControlProps> = ({
         multiple={multiple}
         value={selectedValue}
         onChange={handleChange}
+        sx={{ minHeight: 65 }}
         renderValue={(selected) => (
-          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexWrap: "wrap",
+              gap: 0.5,
+            }}
+          >
             {(Array.isArray(selected) ? selected : [selected]).map((value) => (
               <Chip key={value} label={value} />
             ))}

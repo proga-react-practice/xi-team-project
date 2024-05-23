@@ -8,6 +8,7 @@ import Title from "../components/Title";
 import StyleIcon from "@mui/icons-material/Style";
 import { useTheme } from "@mui/material/styles";
 import { nanoid } from "nanoid";
+import { HEADER_HEIGHT } from "../constants";
 
 export default function App() {
   const theme = useTheme();
@@ -24,10 +25,12 @@ export default function App() {
   const handleEdit = (ai: AI) => {
     const index = formData.findIndex((card) => card.id === ai.id);
     setEditingCard(index);
-    if (index !== -1) {
-      console.log(formData[index]);
-    }
   };
+
+  const handleCancelEdit = () => {
+    setEditingCard(null);
+  };
+
   const handleReorder = (newOrder: AI[]) => {
     setFormData(newOrder);
   };
@@ -50,7 +53,8 @@ export default function App() {
         display: "flex",
         justifyContent: "space-between",
         bgcolor: theme.palette.background.default,
-        minHeight: "calc(100vh - 64px)",
+
+        minHeight: `calc(100vh - ${HEADER_HEIGHT}px)`,
       }}
     >
       <Container
@@ -63,7 +67,7 @@ export default function App() {
         <Title icon={SmartToyIcon} title="Registration Form" />
         <Form
           onSubmit={handleFormSubmit}
-          submitButtonText={editingCard !== null ? "Update" : "Add"}
+          editCard={editingCard}
           initialData={editingCard !== null ? formData[editingCard] : undefined}
         />
       </Container>
@@ -79,8 +83,10 @@ export default function App() {
         <Title icon={StyleIcon} title="Submitted Cards" />
         <Cards
           cards={formData}
+          editCard={editingCard}
           onDelete={handleDelete}
           onEdit={handleEdit}
+          onCancel={handleCancelEdit}
           onReorder={handleReorder}
         />
       </Container>
