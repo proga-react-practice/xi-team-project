@@ -17,23 +17,10 @@ export default function Games() {
           display: "flex",
           flexDirection: { xs: "column", sm: "column", md: "row" },
           justifyContent: "space-between",
-          // alignItems: "flex-start",
           backgroundColor: theme.palette.background.default,
           minHeight: "100vh",
         }}
       >
-        {/* <Box
-      sx={{
-        flexDirection: { xs: "column", sm: "column", md: "row" },
-        display: "flex",
-        justifyContent: "space-between",
-        bgcolor: theme.palette.background.default,
-        // TODO fix layout
-        width: "98.9vw",
-        maxWidth: "100%",
-        minHeight: "100vh",
-      }}
-    ></Box> */}
         <Container
           sx={{
             width: { xs: "100%", md: "35%" },

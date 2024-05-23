@@ -54,6 +54,7 @@ function MixCardsContent() {
   );
   const [selectedCard, setSelectedCard] = useState<string | null>(null);
 
+  // TODO drop dummy values
   const dummyFormData: AI[] = [
     {
       id: "1",
@@ -209,6 +210,7 @@ function MixCardsContent() {
                             value={card.id}
                             control={<Radio />}
                             label={
+                              // TODO add new card for this
                               <Cards
                                 cards={[card]}
                                 onDelete={() => handleDummyDelete(index)}

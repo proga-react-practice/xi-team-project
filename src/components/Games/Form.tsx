@@ -183,8 +183,6 @@ const Form: React.FC = () => {
             <FormHelperText>{errors.currency?.message ?? " "}</FormHelperText>
           </Box>
         </Container>
-        {/* <FormHelperText>{errors.price?.message ?? " "} </FormHelperText> */}
-        {/* <FormHelperText>{errors.currency?.message ?? " "}</FormHelperText> */}
         <Box
           sx={{
             display: "flex",
