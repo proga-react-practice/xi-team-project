@@ -36,7 +36,6 @@ const modalStyle = {
   boxShadow: 24,
   p: { xs: 1, sm: 2, md: 3, lg: 4 },
   height: { xs: "70vh", sm: "70vh", md: "80vh" },
-  // maxHeight: "90vh",
   overflowY: "auto",
 };
 
