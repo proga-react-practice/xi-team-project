@@ -84,20 +84,20 @@ function MixCardsContent() {
     },
   ];
 
-  const handleDummyDelete = (index: number) => {
-    console.log("Delete card with index:", index);
-  };
+  // const handleDummyDelete = (index: number) => {
+  //   console.log("Delete card with index:", index);
+  // };
 
-  const handleDummyEdit = (ai: AI) => {
-    console.log("Edit card:", ai);
-  };
+  // const handleDummyEdit = (ai: AI) => {
+  //   console.log("Edit card:", ai);
+  // };
 
-  const handleDummyReorder = (newOrder: AI[]) => {
-    console.log("Reorder cards:", newOrder);
-  };
-  const handleDummyCancel = () => {
-    console.log("Cancel cards");
-  };
+  // const handleDummyReorder = (newOrder: AI[]) => {
+  //   console.log("Reorder cards:", newOrder);
+  // };
+  // const handleDummyCancel = () => {
+  //   console.log("Cancel cards");
+  // };
 
   const handleRadioChangeGames = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -222,11 +222,12 @@ function MixCardsContent() {
                             label={
                               // TODO add new card for this
                               <Cards
-                                cards={[card]}
-                                onDelete={() => handleDummyDelete(index)}
-                                onEdit={() => handleDummyEdit(card)}
-                                onReorder={handleDummyReorder}
-                                onCancel={handleDummyCancel}
+                                // cards={[card]}
+                                searchTerms={[]}
+                                // onDelete={() => handleDummyDelete(index)}
+                                // onEdit={() => handleDummyEdit(card)}
+                                // onReorder={handleDummyReorder}
+                                // onCancel={handleDummyCancel}
                               />
                             }
                           />

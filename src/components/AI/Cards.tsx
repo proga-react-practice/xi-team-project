@@ -5,19 +5,9 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { Box, Button, Chip, Container, Typography } from "@mui/material";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { useTheme } from "@mui/material/styles";
-import { AI } from "./Form/Form";
 import CustomSlider from "../ScrollContainer";
 import { useState, useEffect } from "react";
-
-interface ICardsProps {
-  cards: AI[];
-  searchTerms: string[];
-  editCard?: number | null;
-  onDelete: (index: number) => void;
-  onEdit: (ai: AI) => void;
-  onCancel: () => void;
-  onReorder: (cards: AI[]) => void;
-}
+import { useAICardsContext } from "../context/AICardsContextProvider";
 
 interface ICardsInfoProps {
   title: string;
@@ -79,16 +69,14 @@ const CardsInfo: React.FC<ICardsInfoProps> = ({ title, info }) => {
   );
 };
 
-export default function Cards({
-  cards,
-  searchTerms,
-  editCard,
-  onDelete,
-  onEdit,
-  onCancel,
-  onReorder,
-}: ICardsProps) {
+interface ICardsProps {
+  searchTerms: string[];
+}
+
+export default function Cards({ searchTerms }: ICardsProps) {
   const theme = useTheme();
+  const { cards, deleteCard, setEditingCard, reorderCards, editingCard } =
+    useAICardsContext();
 
   const [cardsState, setCards] = useState(cards);
   useEffect(() => {
@@ -137,7 +125,7 @@ export default function Cards({
       _cards[dragItemIndex] = dragOverItem;
       _cards[dragOverItemIndex] = dragItem;
       setCards(_cards);
-      onReorder(_cards);
+      reorderCards(_cards);
       setDragItemIndex(undefined);
       setDragOverItemIndex(undefined);
     }
@@ -265,9 +253,17 @@ export default function Cards({
                 >
                   <Button
                     variant="contained"
-                    endIcon={editCard === index ? <ClearIcon /> : <EditIcon />}
+                    endIcon={
+                      editingCard?.id === cards[index].id ? (
+                        <ClearIcon />
+                      ) : (
+                        <EditIcon />
+                      )
+                    }
                     onClick={() => {
-                      editCard === index ? onCancel() : onEdit(cards[index]);
+                      editingCard?.id === cards[index].id
+                        ? setEditingCard(null)
+                        : setEditingCard(cards[index]);
                     }}
                     sx={{
                       marginRight: 2.5,
@@ -278,12 +274,12 @@ export default function Cards({
                       },
                     }}
                   >
-                    {editCard === index ? "Cancel" : "Edit"}
+                    {editingCard?.id === cards[index].id ? "Cancel" : "Edit"}
                   </Button>
                   <Button
                     variant="contained"
                     endIcon={<DeleteIcon />}
-                    onClick={() => onDelete(index)}
+                    onClick={() => deleteCard(card.id)}
                     sx={{
                       width: {
                         xs: theme.spacing(16),

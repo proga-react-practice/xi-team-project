@@ -1,6 +1,5 @@
 import Form from "../components/AI/Form/Form";
 import Cards from "../components/AI/Cards";
-import { useState } from "react";
 import { AI } from "../components/AI/Form/Form";
 import { Container, Box, TextField } from "@mui/material";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
@@ -9,46 +8,29 @@ import StyleIcon from "@mui/icons-material/Style";
 import { useTheme } from "@mui/material/styles";
 import { nanoid } from "nanoid";
 import { HEADER_HEIGHT } from "../constants";
+import { useAICardsContext } from "../components/context/AICardsContextProvider";
 
 export default function App() {
   const theme = useTheme();
-  const [formData, setFormData] = useState<AI[]>([]);
-  const [editingCard, setEditingCard] = useState<number | null>(null);
-
-  const handleDelete = (index: number) => {
-    setFormData((prevCards) => prevCards.filter((_, i) => i !== index));
-    if (index === editingCard) {
-      setEditingCard(null);
-    }
-  };
-
-  const handleEdit = (ai: AI) => {
-    const index = formData.findIndex((card) => card.id === ai.id);
-    setEditingCard(index);
-  };
-
-  const handleCancelEdit = () => {
-    setEditingCard(null);
-  };
-
-  const handleReorder = (newOrder: AI[]) => {
-    setFormData(newOrder);
-  };
-
+  const {
+    addCard,
+    updateCard,
+    editingCard,
+    setEditingCard,
+    searchQuery,
+    setSearchQuery,
+    searchTerms,
+    setSearchTerms,
+  } = useAICardsContext();
   const handleFormSubmit = (newData: AI) => {
-    if (editingCard !== null) {
-      setFormData((prevCards) =>
-        prevCards.map((card, i) => (i === editingCard ? newData : card))
-      );
+    if (editingCard) {
+      updateCard({ ...newData, id: editingCard.id });
     } else {
-      setFormData((prevCards) => [...prevCards, { ...newData, id: nanoid() }]);
+      addCard({ ...newData, id: nanoid() });
     }
 
     setEditingCard(null);
   };
-
-  const [searchQuery, setSearchQuery] = useState("");
-  const [searchTerms, setSearchTerms] = useState<string[]>([]);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const query = event.target.value;
@@ -79,8 +61,8 @@ export default function App() {
         <Title icon={SmartToyIcon} title="Registration Form" />
         <Form
           onSubmit={handleFormSubmit}
-          editCard={editingCard}
-          initialData={editingCard !== null ? formData[editingCard] : undefined}
+          editCard={editingCard ? editingCard.id : null}
+          initialData={editingCard || undefined}
         />
       </Container>
       <Container
@@ -110,15 +92,7 @@ export default function App() {
             sx={{ width: { xs: "90%", sm: "90%", md: "auto" } }}
           />
         </Box>
-        <Cards
-          cards={formData}
-          searchTerms={searchTerms}
-          editCard={editingCard}
-          onDelete={handleDelete}
-          onEdit={handleEdit}
-          onCancel={handleCancelEdit}
-          onReorder={handleReorder}
-        />
+        <Cards searchTerms={searchTerms} />
       </Container>
     </Box>
   );

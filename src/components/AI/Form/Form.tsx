@@ -25,7 +25,7 @@ export interface AI {
 }
 interface IFormProps {
   onSubmit: (Ai: AI) => void;
-  editCard?: number | null;
+  editCard?: string | null;
   initialData?: AI;
 }
 
