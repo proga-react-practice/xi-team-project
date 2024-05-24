@@ -25,7 +25,7 @@ export const CardsInfo: React.FC<ICardsInfoProps> = ({ title, info }) => {
         variant="h4"
         color="text.primary"
         sx={{
-          width: { xs: "5em", sm: "5em", md: "5em", lg: "5em" },
+          width: { xs: "5em", sm: "5em", md: "5em", lg: "4.5em" },
           textAlign: "right",
           flexShrink: 0,
         }}
@@ -78,8 +78,8 @@ export const AICardComponent: React.FC<AICardComponentProps> = ({ card }) => {
         paddingTop: 2,
         paddingBottom: 2,
         paddingLeft: { md: 1, lg: 2 },
-        paddingRight: { md: 0, lg: 6 },
-        maxWidth: { md: "90%", lg: "80%" },
+        paddingRight: { md: 4, lg: 6 },
+        maxWidth: { md: "90%", lg: "90%" },
         border: "2px solid",
         borderColor: theme.palette.text.primary,
         py: 2.5,

@@ -5,13 +5,11 @@ import {
   AccordionDetails,
   Box,
   Button,
-  Container,
-  FormControlLabel,
   Grid,
   Modal,
-  Radio,
   RadioGroup,
   Typography,
+  FormHelperText,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import {
@@ -26,6 +24,8 @@ import { CardComponentMix } from "../components/Games/Cards";
 import { useAICardsContext } from "../components/context/AICardsContextProvider";
 import CustomSlider from "../components/ScrollContainer";
 import { HEADER_HEIGHT } from "../constants";
+import Title from "../components/Title";
+import DashboardIcon from "@mui/icons-material/Dashboard";
 
 const modalStyle = {
   position: "absolute",
@@ -36,9 +36,10 @@ const modalStyle = {
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
-  p: { xs: 1, sm: 2, md: 3, lg: 4 },
+  p: { xs: 1, sm: 2, md: 4, lg: 4 },
   height: { xs: "70vh", sm: "70vh", md: "80vh" },
   overflowY: "auto",
+  borderRadius: 2,
 };
 
 function MixCardsContent() {
@@ -65,9 +66,11 @@ function MixCardsContent() {
     setSelectedCard(event.target.value);
   };
 
+  const [error, setError] = useState("");
+
   const mix = () => {
     if (!selectedCardGames || !selectedCard) {
-      console.log("Please select at least one card to mix.");
+      setError("Please select at least one game and one AI.");
       return;
     }
 
@@ -89,6 +92,7 @@ function MixCardsContent() {
 
       setMixedCards((prevMixedCards) => [...prevMixedCards, mixedCardData]);
     }
+    setError("");
   };
 
   return (
@@ -105,7 +109,17 @@ function MixCardsContent() {
       }}
     >
       <Box>
-        <Button onClick={handleOpen}>Add Cards</Button>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 2,
+          }}
+        >
+          <Title icon={DashboardIcon} title="Final Cards" />
+          <Button onClick={handleOpen}>Add Cards</Button>
+        </Box>
+
         <Modal
           open={open}
           onClose={handleClose}
@@ -113,10 +127,16 @@ function MixCardsContent() {
           aria-describedby="modal-modal-description"
         >
           <Box sx={modalStyle}>
-            <Container
+            <Box
               sx={{
-                width: "90%",
+                marginLeft: { xs: 0, sm: 0, md: 0, lg: 0 },
+                marginRight: { xs: 0, sm: 0, md: 0, lg: 0 },
+                width: { xs: "100%", sm: "100%", md: "100%", lg: "100%" },
                 // mx: 0,
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                height: "100%",
               }}
             >
               <Grid
@@ -124,7 +144,13 @@ function MixCardsContent() {
                 spacing={2}
                 sx={{ flexDirection: { xs: "column", md: "row", lg: "row" } }}
               >
-                <Grid item xs={12} sm={8} md={8} lg={5}>
+                <Grid
+                  item
+                  sx={{
+                    width: { xs: "100%", md: "50%", lg: "50%", xl: "45%" },
+                  }}
+                >
+                  {/* <Grid item xs={12} sm={8} md={8} lg={5}> */}
                   <Typography variant="h6">Games Cards</Typography>
                   <RadioGroup
                     aria-label="games-cards"
@@ -135,7 +161,15 @@ function MixCardsContent() {
                     {cards.map((card) => (
                       <Accordion
                         key={card.id}
-                        sx={{ width: { xs: "100%", lg: "100%" } }}
+                        sx={{
+                          width: { xs: "100%", md: "100%", lg: "100%" },
+                          border:
+                            card.id === selectedCardGames
+                              ? "3px solid"
+                              : "none",
+                          borderColor: theme.palette.primary.main,
+                        }}
+                        onClick={() => setSelectedCardGames(card.id)}
                       >
                         <AccordionSummary
                           expandIcon={<ArrowDropDownIcon />}
@@ -145,18 +179,18 @@ function MixCardsContent() {
                           <Typography>{card.name}</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
-                          <FormControlLabel
-                            key={card.id}
-                            value={card.id}
-                            control={<Radio />}
-                            label={<CardComponentMix card={card} />}
-                          />
+                          <CardComponentMix card={card} />
                         </AccordionDetails>
                       </Accordion>
                     ))}
                   </RadioGroup>
                 </Grid>
-                <Grid item xs={12} sm={8} md={8} lg={6}>
+                <Grid
+                  item
+                  sx={{
+                    width: { xs: "100%", md: "50%", lg: "50%" },
+                  }}
+                >
                   <Typography variant="h6">AI Cards</Typography>
                   <RadioGroup
                     aria-label="ai-cards"
@@ -167,7 +201,15 @@ function MixCardsContent() {
                     {AICards.map((card, index) => (
                       <Accordion
                         key={card.id}
-                        sx={{ width: { xs: "100%", lg: "100%" } }}
+                        sx={{
+                          // width: { xs: "100%", md: "100%", lg: "100%" },
+                          border:
+                            card.id === selectedCardGames
+                              ? "3px solid"
+                              : "none",
+                          borderColor: theme.palette.primary.main,
+                        }}
+                        onClick={() => setSelectedCardGames(card.id)}
                       >
                         <AccordionSummary
                           expandIcon={<ArrowDropDownIcon />}
@@ -177,29 +219,29 @@ function MixCardsContent() {
                           <Typography>{`Card ${index + 1}`}</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
-                          <FormControlLabel
-                            key={card.id}
-                            value={card.id}
-                            control={<Radio />}
-                            label={<AICardComponent card={card} />}
-                          />
+                          <AICardComponent card={card} />
                         </AccordionDetails>
                       </Accordion>
                     ))}
                   </RadioGroup>
                 </Grid>
               </Grid>
-            </Container>
-            <Box display="flex" justifyContent="center" mt={2}>
-              <Button onClick={mix} variant="contained" color="primary">
-                Mix Selected Cards
-              </Button>
+
+              <Box
+                display="flex"
+                justifyContent="center"
+                flexDirection="column"
+                alignItems="center"
+                mt={2}
+              >
+                <FormHelperText>{error || " "}</FormHelperText>
+                <Button onClick={mix} variant="contained" color="primary">
+                  Mix Selected Cards
+                </Button>
+              </Box>
             </Box>
           </Box>
         </Modal>
-        <Typography variant="h6" mt={2}>
-          Final Cards
-        </Typography>
       </Box>
       <Grid container spacing={2}>
         <CustomSlider
