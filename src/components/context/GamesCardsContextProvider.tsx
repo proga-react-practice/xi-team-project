@@ -35,6 +35,10 @@ interface CardsContextType {
   setEditingCard: (card: Card | null) => void;
   mixedCard: MixedCard | null;
   setMixedCard: React.Dispatch<React.SetStateAction<MixedCard | null>>;
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
+  searchTerms: string[];
+  setSearchTerms: (terms: string[]) => void;
 }
 
 const GamesCardsContext = createContext<CardsContextType | undefined>(
@@ -58,6 +62,8 @@ export const CardsProvider: React.FC<{ children: React.ReactNode }> = ({
   });
   const [editingCard, setEditingCard] = useState<Card | null>(null);
   const [mixedCard, setMixedCard] = useState<MixedCard | null>(null);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [searchTerms, setSearchTerms] = useState<string[]>([]);
 
   useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(cards));
@@ -89,6 +95,10 @@ export const CardsProvider: React.FC<{ children: React.ReactNode }> = ({
         setEditingCard,
         mixedCard,
         setMixedCard,
+        searchQuery,
+        setSearchQuery,
+        searchTerms,
+        setSearchTerms,
       }}
     >
       {children}

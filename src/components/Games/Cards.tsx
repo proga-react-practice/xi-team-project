@@ -168,7 +168,11 @@ export const CardComponent: React.FC<{ card: Card }> = ({ card }) => {
   );
 };
 
-const CardsList: React.FC = () => {
+interface ICardsProps {
+  searchTerms: string[];
+}
+
+export default function CardsList({ searchTerms }: ICardsProps) {
   const { cards } = useCardsContext();
 
   return (
@@ -182,15 +186,19 @@ const CardsList: React.FC = () => {
       }}
     >
       <TransitionGroup>
-        {cards.map((card) => (
-          <CSSTransition key={card.id} timeout={500} classNames="card">
-            <CardComponent card={card} />
-          </CSSTransition>
-        ))}
+        {cards
+          .filter((card) =>
+            searchTerms.every((term) => JSON.stringify(card).includes(term))
+          )
+          .map((card) => (
+            <CSSTransition key={card.id} timeout={500} classNames="card">
+              <CardComponent card={card} />
+            </CSSTransition>
+          ))}
       </TransitionGroup>
     </CustomSlider>
   );
-};
+}
 
 export const CardComponentMix: React.FC<{ card: Card }> = ({ card }) => {
   const theme = useTheme();
@@ -239,5 +247,3 @@ export const CardComponentMix: React.FC<{ card: Card }> = ({ card }) => {
     </Box>
   );
 };
-
-export { CardsList as Cards };
