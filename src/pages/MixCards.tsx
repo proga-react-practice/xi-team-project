@@ -54,7 +54,7 @@ function MixCardsContent() {
   const [selectedCardGames, setSelectedCardGames] = useState<string | null>(
     null
   );
-  const [selectedCard, setSelectedCard] = useState<string | null>(null);
+  const [selectedCardAI, setSelectedCardAI] = useState<string | null>(null);
 
   const handleRadioChangeGames = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -63,13 +63,13 @@ function MixCardsContent() {
   };
 
   const handleRadioChangeAI = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedCard(event.target.value);
+    setSelectedCardAI(event.target.value);
   };
 
   const [error, setError] = useState("");
 
   const mix = () => {
-    if (!selectedCardGames || !selectedCard) {
+    if (!selectedCardGames || !selectedCardAI) {
       setError("Please select at least one game and one AI.");
       return;
     }
@@ -77,7 +77,7 @@ function MixCardsContent() {
     const selectedGameCard = cards.find(
       (card) => card.id === selectedCardGames
     );
-    const selectedAICard = AICards.find((card) => card.id === selectedCard);
+    const selectedAICard = AICards.find((card) => card.id === selectedCardAI);
 
     if (selectedGameCard && selectedAICard) {
       console.log("Mixing:", selectedGameCard.id, "with", selectedAICard.id);
@@ -165,9 +165,12 @@ function MixCardsContent() {
                           width: { xs: "100%", md: "100%", lg: "100%" },
                           border:
                             card.id === selectedCardGames
-                              ? "3px solid"
+                              ? "2px solid"
                               : "none",
-                          borderColor: theme.palette.primary.main,
+                          backgroundColor:
+                            card.id === selectedCardGames
+                              ? theme.palette.background.default
+                              : "none",
                         }}
                         onClick={() => setSelectedCardGames(card.id)}
                       >
@@ -195,7 +198,7 @@ function MixCardsContent() {
                   <RadioGroup
                     aria-label="ai-cards"
                     name="ai-cards"
-                    value={selectedCard}
+                    value={selectedCardAI}
                     onChange={handleRadioChangeAI}
                   >
                     {AICards.map((card, index) => (
@@ -204,12 +207,13 @@ function MixCardsContent() {
                         sx={{
                           // width: { xs: "100%", md: "100%", lg: "100%" },
                           border:
-                            card.id === selectedCardGames
-                              ? "3px solid"
+                            card.id === selectedCardAI ? "2px solid" : "none",
+                          backgroundColor:
+                            card.id === selectedCardAI
+                              ? theme.palette.background.default
                               : "none",
-                          borderColor: theme.palette.primary.main,
                         }}
-                        onClick={() => setSelectedCardGames(card.id)}
+                        onClick={() => setSelectedCardAI(card.id)}
                       >
                         <AccordionSummary
                           expandIcon={<ArrowDropDownIcon />}
