@@ -42,7 +42,7 @@ const modalStyle = {
   border: "2px solid #000",
   boxShadow: 24,
   p: { xs: 1, sm: 2, md: 4, lg: 4 },
-  height: { xs: "70vh", sm: "70vh", md: "80vh" },
+  height: { xs: "70vh", sm: "75vh", md: "80vh" },
   overflowY: "auto",
   borderRadius: 2,
 };
@@ -92,8 +92,6 @@ function MixCardsContent() {
     const selectedAICard = AICards.find((card) => card.id === selectedCardAI);
 
     if (selectedGameCard && selectedAICard) {
-      console.log("Mixing:", selectedGameCard.id, "with", selectedAICard.id);
-
       const mixedCardData = {
         ...selectedGameCard,
         id: nanoid(),
@@ -237,7 +235,6 @@ function MixCardsContent() {
                 marginLeft: { xs: 0, sm: 0, md: 0, lg: 0 },
                 marginRight: { xs: 0, sm: 0, md: 0, lg: 0 },
                 width: { xs: "100%", sm: "100%", md: "100%", lg: "100%" },
-                // mx: 0,
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
@@ -255,7 +252,6 @@ function MixCardsContent() {
                     width: { xs: "100%", md: "50%", lg: "50%", xl: "45%" },
                   }}
                 >
-                  {/* <Grid item xs={12} sm={8} md={8} lg={5}> */}
                   <Title icon={SportsEsportsIcon} title="Games Cards"></Title>
                   <RadioGroup
                     aria-label="games-cards"
@@ -267,7 +263,6 @@ function MixCardsContent() {
                       <Accordion
                         key={card.id}
                         sx={{
-                          // marginLeft: { xs: 0, sm: 0, md: -1, lg: 2 },
                           width: { xs: "100%", md: "100%", lg: "100%" },
                           border:
                             card.id === selectedCardGames
@@ -290,7 +285,6 @@ function MixCardsContent() {
                         </AccordionSummary>
                         <AccordionDetails
                           sx={{
-                            // marginLeft: { xs: 0, sm: 0, md: -1, lg: 2 },
                             paddingRight: { xs: 2, sm: 2, md: 0, lg: 2 },
                             paddingLeft: { xs: 2, sm: 2, md: 1, lg: 2 },
                           }}
@@ -377,7 +371,6 @@ function MixCardsContent() {
                 )
               )
               .map((card, index) => (
-                // <Grid item xs={12} sm={12} md={12} key={index}>
                 <CSSTransition key={index} timeout={500} classNames="card">
                   <Grid key={`${card.id}-${index}`}>
                     <FinalCard
