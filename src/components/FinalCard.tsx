@@ -1,9 +1,10 @@
 import React from "react";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Button } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { CardsInfo as CardsInfoGames } from "../components/AI/Cards/Cards";
 import { MixedCard } from "./context/GamesCardsContextProvider";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const FinalCard: React.FC<{
   mixedCard: MixedCard;
@@ -26,6 +27,7 @@ const FinalCard: React.FC<{
   handleDragLeave: () => void;
   handleDragEnd: () => void;
   dragItemIndex: number | undefined;
+  deleteCard: (id: string) => void;
 }> = ({
   mixedCard,
   index,
@@ -38,6 +40,7 @@ const FinalCard: React.FC<{
   handleDragLeave,
   handleDragEnd,
   dragItemIndex,
+  deleteCard,
 }) => {
   const theme = useTheme();
 
@@ -134,6 +137,33 @@ const FinalCard: React.FC<{
                   />
                 </Grid>
               </Grid>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  paddingRight: {
+                    xs: 3,
+                    sm: 5,
+                    md: 7,
+                  },
+                  marginBottom: -6,
+                }}
+              >
+                <Button
+                  variant="contained"
+                  endIcon={<DeleteIcon />}
+                  onClick={() => deleteCard(mixedCard.id)}
+                  sx={{
+                    width: {
+                      xs: theme.spacing(20),
+                      sm: theme.spacing(25),
+                      lg: theme.spacing(30),
+                    },
+                  }}
+                >
+                  Delete
+                </Button>
+              </Box>
             </Box>
           </CSSTransition>
         </TransitionGroup>

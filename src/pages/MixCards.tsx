@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Accordion,
   AccordionSummary,
@@ -51,7 +51,14 @@ function MixCardsContent() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [mixedCards, setMixedCards] = useState<MixedCard[]>([]); // State to store the list of mixed cards
+  const LOCAL_STORAGE_KEY_MIXED = "mixedCards";
+  const [mixedCards, setMixedCards] = useState<MixedCard[]>(() => {
+    const savedCards = localStorage.getItem(LOCAL_STORAGE_KEY_MIXED);
+    return savedCards ? JSON.parse(savedCards) : [];
+  });
+  useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_KEY_MIXED, JSON.stringify(mixedCards));
+  }, [mixedCards]);
 
   const [selectedCardGames, setSelectedCardGames] = useState<string | null>(
     null
@@ -140,7 +147,6 @@ function MixCardsContent() {
       _cards[dragItemIndex] = dragOverItem;
       _cards[dragOverItemIndex] = dragItem;
       setMixedCards(_cards);
-      // reorderCards(_cards);
       setDragItemIndex(undefined);
       setDragOverItemIndex(undefined);
     }
@@ -157,6 +163,10 @@ function MixCardsContent() {
   const handleDragEnd = () => {
     setDragItemIndex(undefined);
     setDragOverItemIndex(undefined);
+  };
+
+  const deleteCard = (id: string) => {
+    setMixedCards((prevCards) => prevCards.filter((card) => card.id !== id));
   };
 
   return (
@@ -345,6 +355,7 @@ function MixCardsContent() {
                 handleDragLeave={handleDragLeave}
                 handleDragEnd={handleDragEnd}
                 dragItemIndex={dragItemIndex}
+                deleteCard={deleteCard}
               />
             </Grid>
           ))}
