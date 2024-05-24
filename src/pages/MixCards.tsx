@@ -179,7 +179,7 @@ function MixCardsContent() {
     const query = event.target.value;
     setSearchQuery(query);
 
-    const terms = query.split(";");
+    const terms = query.toLowerCase().split(";");
     setSearchTerms(terms ? terms.map((term) => term.trim()) : []);
   };
   return (
@@ -372,7 +372,9 @@ function MixCardsContent() {
           <TransitionGroup component={null}>
             {mixedCards
               .filter((card) =>
-                searchTerms.every((term) => JSON.stringify(card).includes(term))
+                searchTerms.every((term) =>
+                  JSON.stringify(card).toLowerCase().includes(term)
+                )
               )
               .map((card, index) => (
                 // <Grid item xs={12} sm={12} md={12} key={index}>
