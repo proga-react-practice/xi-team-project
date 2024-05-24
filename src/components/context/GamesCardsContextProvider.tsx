@@ -33,6 +33,7 @@ interface CardsContextType {
   deleteCard: (id: string) => void;
   editingCard: Card | null;
   setEditingCard: (card: Card | null) => void;
+  reorderCards: (newOrder: Card[]) => void;
   mixedCard: MixedCard | null;
   setMixedCard: React.Dispatch<React.SetStateAction<MixedCard | null>>;
   searchQuery: string;
@@ -84,6 +85,10 @@ export const CardsProvider: React.FC<{ children: React.ReactNode }> = ({
     setCards((prevCards) => prevCards.filter((card) => card.id !== id));
   };
 
+  const reorderCards = (newOrder: Card[]) => {
+    setCards(newOrder);
+  };
+
   return (
     <GamesCardsContext.Provider
       value={{
@@ -95,6 +100,7 @@ export const CardsProvider: React.FC<{ children: React.ReactNode }> = ({
         setEditingCard,
         mixedCard,
         setMixedCard,
+        reorderCards,
         searchQuery,
         setSearchQuery,
         searchTerms,
