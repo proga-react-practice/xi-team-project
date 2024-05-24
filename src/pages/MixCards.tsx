@@ -26,13 +26,15 @@ import CustomSlider from "../components/ScrollContainer";
 import { HEADER_HEIGHT } from "../constants";
 import Title from "../components/Title";
 import DashboardIcon from "@mui/icons-material/Dashboard";
+import SmartToyIcon from "@mui/icons-material/SmartToy";
+import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 
 const modalStyle = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: { xs: "80%", sm: "90%", md: "90%" },
+  width: { xs: "95%", sm: "90%", md: "90%" },
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -129,6 +131,7 @@ function MixCardsContent() {
           <Box sx={modalStyle}>
             <Box
               sx={{
+                marginTop: { xs: -3, sm: -3, md: -5, lg: -5 },
                 marginLeft: { xs: 0, sm: 0, md: 0, lg: 0 },
                 marginRight: { xs: 0, sm: 0, md: 0, lg: 0 },
                 width: { xs: "100%", sm: "100%", md: "100%", lg: "100%" },
@@ -151,7 +154,7 @@ function MixCardsContent() {
                   }}
                 >
                   {/* <Grid item xs={12} sm={8} md={8} lg={5}> */}
-                  <Typography variant="h6">Games Cards</Typography>
+                  <Title icon={SportsEsportsIcon} title="Games Cards"></Title>
                   <RadioGroup
                     aria-label="games-cards"
                     name="games-cards"
@@ -162,6 +165,7 @@ function MixCardsContent() {
                       <Accordion
                         key={card.id}
                         sx={{
+                          // marginLeft: { xs: 0, sm: 0, md: -1, lg: 2 },
                           width: { xs: "100%", md: "100%", lg: "100%" },
                           border:
                             card.id === selectedCardGames
@@ -178,10 +182,17 @@ function MixCardsContent() {
                           expandIcon={<ArrowDropDownIcon />}
                           aria-controls="panel1-content"
                           id="panel1-header"
+                          sx={{ marginLeft: { xs: 0, sm: 0, md: 0, lg: 2 } }}
                         >
                           <Typography>{card.name}</Typography>
                         </AccordionSummary>
-                        <AccordionDetails>
+                        <AccordionDetails
+                          sx={{
+                            // marginLeft: { xs: 0, sm: 0, md: -1, lg: 2 },
+                            paddingRight: { xs: 2, sm: 2, md: 0, lg: 2 },
+                            paddingLeft: { xs: 2, sm: 2, md: 1, lg: 2 },
+                          }}
+                        >
                           <CardComponentMix card={card} />
                         </AccordionDetails>
                       </Accordion>
@@ -194,7 +205,7 @@ function MixCardsContent() {
                     width: { xs: "100%", md: "50%", lg: "50%" },
                   }}
                 >
-                  <Typography variant="h6">AI Cards</Typography>
+                  <Title icon={SmartToyIcon} title="AI Cards"></Title>
                   <RadioGroup
                     aria-label="ai-cards"
                     name="ai-cards"
@@ -205,7 +216,7 @@ function MixCardsContent() {
                       <Accordion
                         key={card.id}
                         sx={{
-                          // width: { xs: "100%", md: "100%", lg: "100%" },
+                          width: { xs: "100%", md: "100%", lg: "100%" },
                           border:
                             card.id === selectedCardAI ? "2px solid" : "none",
                           backgroundColor:

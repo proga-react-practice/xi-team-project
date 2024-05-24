@@ -61,6 +61,7 @@ export const CardsInfo: React.FC<ICardsInfoProps> = ({ title, info }) => {
             sx={{
               margin: theme.spacing(0, 0.5),
               padding: { xs: 0.5, sm: 1, md: 1.5 },
+              //TODO: Add hyphenation
             }}
           />
         )}
