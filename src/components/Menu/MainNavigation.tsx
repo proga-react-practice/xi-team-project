@@ -19,6 +19,7 @@ import DarkModeIcon from "@mui/icons-material/DarkModeOutlined";
 import { useTheme } from "@mui/material/styles";
 import { tabs } from "./Tabs";
 import { darkTheme } from "../../theme";
+import MergeIcon from "@mui/icons-material/Merge";
 import { HEADER_HEIGHT } from "../../constants";
 
 type MainNavigationProps = {
@@ -33,7 +34,7 @@ export default function MainNavigation({
   const theme = useTheme();
   const location = useLocation();
   const [value, setValue] = useState(location.pathname);
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   useEffect(() => {
@@ -70,8 +71,12 @@ export default function MainNavigation({
             >
               <MenuIcon />
             </IconButton>
+
             <IconButton component={NavLink} to={tabs[1].value} color="inherit">
               <SportsIcon />
+            </IconButton>
+            <IconButton component={NavLink} to={tabs[3].value} color="inherit">
+              <MergeIcon />
             </IconButton>
             <Box sx={{ flexGrow: 1 }} />
             <IconButton component={NavLink} to={tabs[2].value} color="inherit">
@@ -119,6 +124,10 @@ export default function MainNavigation({
             <IconButton component={NavLink} to={tabs[1].value} color="inherit">
               <SportsIcon />
             </IconButton>
+
+            <IconButton component={NavLink} to={tabs[3].value} color="inherit">
+              <MergeIcon />
+            </IconButton>
             <Tabs
               value={value}
               onChange={handleChange}
@@ -126,7 +135,7 @@ export default function MainNavigation({
               sx={{
                 flexGrow: 1,
                 "& .MuiTab-root": {
-                  mx: { sm: 0.5, md: 4, lg: 8, xl: 16 },
+                  mx: { sm: 0.5, md: 3, lg: 8, xl: 14 },
                 },
                 "& .MuiTabs-indicator": {
                   display: "none",
@@ -147,6 +156,7 @@ export default function MainNavigation({
             <IconButton component={NavLink} to={tabs[2].value} color="inherit">
               <SmartToyIcon />
             </IconButton>
+
             <IconButton color="inherit" onClick={onThemeChange}>
               {currentTheme === darkTheme ? (
                 <DarkModeIcon />

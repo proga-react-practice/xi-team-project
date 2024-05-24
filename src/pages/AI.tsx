@@ -65,6 +65,7 @@ export default function App() {
         display: "flex",
         justifyContent: "space-between",
         bgcolor: theme.palette.background.default,
+
         minHeight: `calc(100vh - ${HEADER_HEIGHT}px)`,
       }}
     >

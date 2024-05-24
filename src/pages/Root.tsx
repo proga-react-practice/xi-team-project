@@ -3,6 +3,7 @@ import MainNavigation from "../components/Menu/MainNavigation";
 import { darkTheme, lightTheme } from "../theme";
 import { useState } from "react";
 import { ThemeProvider } from "@mui/material/styles";
+import Footer from "../components/Footer";
 
 export default function RootLayout() {
   enum Theme {
@@ -22,6 +23,7 @@ export default function RootLayout() {
           currentTheme={Theme.Light}
         />
         <Outlet />
+        <Footer />
       </ThemeProvider>
     </>
   );
