@@ -1,5 +1,5 @@
 import Form from "../components/AI/Form/Form";
-import Cards from "../components/AI/Cards";
+import Cards from "../components/AI/Cards/Cards";
 import { AI } from "../components/AI/Form/Form";
 import { Container, Box, TextField } from "@mui/material";
 import SmartToyIcon from "@mui/icons-material/SmartToy";

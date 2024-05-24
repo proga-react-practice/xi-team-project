@@ -27,7 +27,7 @@ export interface AICard {
 // }
 
 interface AICardsContextType {
-  cards: AICard[];
+  AICards: AICard[];
   addCard: (card: AICard) => void;
   updateCard: (updatedCard: AICard) => void;
   deleteCard: (id: string) => void;
@@ -55,7 +55,7 @@ export const useAICardsContext = () => {
 export const AICardsProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [cards, setCards] = useState<AICard[]>(() => {
+  const [AICards, setCards] = useState<AICard[]>(() => {
     const savedCards = localStorage.getItem(LOCAL_STORAGE_KEY);
     return savedCards ? JSON.parse(savedCards) : [];
   });
@@ -65,8 +65,8 @@ export const AICardsProvider: React.FC<{ children: React.ReactNode }> = ({
   // const [mixedCard, setMixedCard] = useState<MixedCard | null>(null);
 
   useEffect(() => {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(cards));
-  }, [cards]);
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(AICards));
+  }, [AICards]);
 
   const addCard = (card: AICard) => {
     setCards((prevCards) => [...prevCards, card]);
@@ -90,7 +90,7 @@ export const AICardsProvider: React.FC<{ children: React.ReactNode }> = ({
   return (
     <AICardsContext.Provider
       value={{
-        cards,
+        AICards,
         addCard,
         updateCard,
         deleteCard,

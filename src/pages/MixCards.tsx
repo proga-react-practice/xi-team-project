@@ -19,11 +19,13 @@ import {
   MixedCard,
   useCardsContext,
 } from "../components/context/GamesCardsContextProvider";
-import Cards from "../components/AI/Cards";
+// import Cards from "../components/AI/Cards/Cards";
+import { AICardComponent } from "../components/AI/Cards/AICardComponent";
 import { AI } from "../components/AI/Form/Form";
 import FinalCard from "../components/FinalCard";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { CardComponentMix } from "../components/Games/Cards";
+import { useAICardsContext } from "../components/context/AICardsContextProvider";
 
 const modalStyle = {
   position: "absolute",
@@ -42,6 +44,7 @@ const modalStyle = {
 function MixCardsContent() {
   const theme = useTheme();
   const { cards } = useCardsContext();
+  const { AICards } = useAICardsContext();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -205,7 +208,7 @@ function MixCardsContent() {
                     value={selectedCard}
                     onChange={handleRadioChangeAI}
                   >
-                    {dummyFormData.map((card, index) => (
+                    {AICards.map((card, index) => (
                       <Accordion sx={{ width: { xs: "100%", lg: "80%" } }}>
                         <AccordionSummary
                           expandIcon={<ArrowDropDownIcon />}
@@ -221,9 +224,9 @@ function MixCardsContent() {
                             control={<Radio />}
                             label={
                               // TODO add new card for this
-                              <Cards
-                                // cards={[card]}
-                                searchTerms={[]}
+                              <AICardComponent
+                                card={card}
+                                // searchTerms={[]}
                                 // onDelete={() => handleDummyDelete(index)}
                                 // onEdit={() => handleDummyEdit(card)}
                                 // onReorder={handleDummyReorder}
