@@ -159,7 +159,19 @@ const Form: React.FC = () => {
                 {...register("price", {
                   required: { value: true, message: "Price is required" },
                   min: { value: 0, message: "Price must be a positive number" },
-                  onChange: (e) => setValue("price", e.target.value),
+                  validate: (value) => {
+                    const stringValue = value.toString();
+                    return stringValue.startsWith("0") && stringValue !== "0"
+                      ? "Price cannot start with zero"
+                      : true;
+                  },
+                  onChange: (e) => {
+                    let value = e.target.value;
+                    if (value.startsWith("0") && value !== "0") {
+                      value = value.slice(1);
+                    }
+                    setValue("price", value, { shouldValidate: true });
+                  },
                 })}
               />
             </FormControl>
