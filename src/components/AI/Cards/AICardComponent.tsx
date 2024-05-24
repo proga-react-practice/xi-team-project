@@ -1,9 +1,69 @@
 import React from "react";
 import { AICard } from "../../context/AICardsContextProvider";
-import { Box } from "@mui/material";
+import { Box, Chip, Container, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { CardsInfo } from "./Cards";
+
 import { INPUT_DATA_ASSETS, RANGE_OPTIONS } from "../inputDataAssets";
+
+interface ICardsInfoProps {
+  title: string;
+  info: string | string[];
+}
+export const CardsInfo: React.FC<ICardsInfoProps> = ({ title, info }) => {
+  const theme = useTheme();
+  return (
+    <Container
+      sx={{
+        display: "flex",
+        alignItems: "baseline",
+        gap: 2,
+        flexDirection: "row",
+        marginBottom: 2,
+      }}
+    >
+      <Typography
+        variant="h4"
+        color="text.primary"
+        sx={{
+          width: { xs: "5em", sm: "5em", md: "5em", lg: "5em" },
+          textAlign: "right",
+          flexShrink: 0,
+        }}
+      >
+        {title}
+      </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          gap: 1,
+        }}
+      >
+        {Array.isArray(info) ? (
+          info.map((option, index) => (
+            <Chip
+              key={index}
+              label={option}
+              sx={{
+                margin: theme.spacing(0, 0.5),
+                display: "flex",
+              }}
+            />
+          ))
+        ) : (
+          <Chip
+            label={info}
+            sx={{
+              margin: theme.spacing(0, 0.5),
+              padding: { xs: 0.5, sm: 1, md: 1.5 },
+            }}
+          />
+        )}
+      </Box>
+    </Container>
+  );
+};
 
 interface AICardComponentProps {
   card: AICard;
@@ -18,7 +78,7 @@ export const AICardComponent: React.FC<AICardComponentProps> = ({ card }) => {
         paddingTop: 2,
         paddingBottom: 2,
         paddingLeft: { md: 1, lg: 2 },
-        paddingRight: { md: 0, lg: 8 },
+        paddingRight: { md: 0, lg: 6 },
         maxWidth: { md: "90%", lg: "80%" },
         border: "2px solid",
         borderColor: theme.palette.text.primary,

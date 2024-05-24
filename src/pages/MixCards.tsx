@@ -19,13 +19,13 @@ import {
   MixedCard,
   useCardsContext,
 } from "../components/context/GamesCardsContextProvider";
-// import Cards from "../components/AI/Cards/Cards";
 import { AICardComponent } from "../components/AI/Cards/AICardComponent";
-import { AI } from "../components/AI/Form/Form";
 import FinalCard from "../components/FinalCard";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { CardComponentMix } from "../components/Games/Cards";
 import { useAICardsContext } from "../components/context/AICardsContextProvider";
+import CustomSlider from "../components/ScrollContainer";
+import { HEADER_HEIGHT } from "../constants";
 
 const modalStyle = {
   position: "absolute",
@@ -55,53 +55,6 @@ function MixCardsContent() {
   );
   const [selectedCard, setSelectedCard] = useState<string | null>(null);
 
-  // TODO drop dummy values
-  const dummyFormData: AI[] = [
-    {
-      id: "1",
-      levelOfAI: ["Card 1"],
-      whereAIIsUsed: ["some1"],
-      TypeOfAI: "type1",
-      rateAIIntelligence: 1,
-    },
-    {
-      id: "2",
-      levelOfAI: ["Card 2"],
-      whereAIIsUsed: ["some2dhwuidhuiqwhduiqwhui"],
-      TypeOfAI: "type2",
-      rateAIIntelligence: 2,
-    },
-    {
-      id: "3",
-      levelOfAI: ["Card 3", "Card 4", "Card 4"],
-      whereAIIsUsed: ["some3", "Card 4", "Card 4"],
-      TypeOfAI: "type3",
-      rateAIIntelligence: 3,
-    },
-    {
-      id: "4",
-      levelOfAI: ["Card 4", "Card 4", "Card 4", "Card 4"],
-      whereAIIsUsed: ["some4"],
-      TypeOfAI: "type4",
-      rateAIIntelligence: 4,
-    },
-  ];
-
-  // const handleDummyDelete = (index: number) => {
-  //   console.log("Delete card with index:", index);
-  // };
-
-  // const handleDummyEdit = (ai: AI) => {
-  //   console.log("Edit card:", ai);
-  // };
-
-  // const handleDummyReorder = (newOrder: AI[]) => {
-  //   console.log("Reorder cards:", newOrder);
-  // };
-  // const handleDummyCancel = () => {
-  //   console.log("Cancel cards");
-  // };
-
   const handleRadioChangeGames = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -121,9 +74,7 @@ function MixCardsContent() {
     const selectedGameCard = cards.find(
       (card) => card.id === selectedCardGames
     );
-    const selectedAICard = dummyFormData.find(
-      (card) => card.id === selectedCard
-    );
+    const selectedAICard = AICards.find((card) => card.id === selectedCard);
 
     if (selectedGameCard && selectedAICard) {
       console.log("Mixing:", selectedGameCard.id, "with", selectedAICard.id);
@@ -150,6 +101,7 @@ function MixCardsContent() {
         gap: 3,
         py: 3,
         px: { xs: 2, sm: 5, md: 10 },
+        minHeight: `calc(100vh - ${HEADER_HEIGHT}px)`,
       }}
     >
       <Box>
@@ -163,7 +115,8 @@ function MixCardsContent() {
           <Box sx={modalStyle}>
             <Container
               sx={{
-                mx: 0,
+                width: "90%",
+                // mx: 0,
               }}
             >
               <Grid
@@ -171,7 +124,7 @@ function MixCardsContent() {
                 spacing={2}
                 sx={{ flexDirection: { xs: "column", md: "row", lg: "row" } }}
               >
-                <Grid item xs={12} sm={8} md={8} lg={8.5}>
+                <Grid item xs={12} sm={8} md={8} lg={5}>
                   <Typography variant="h6">Games Cards</Typography>
                   <RadioGroup
                     aria-label="games-cards"
@@ -180,7 +133,10 @@ function MixCardsContent() {
                     onChange={handleRadioChangeGames}
                   >
                     {cards.map((card) => (
-                      <Accordion sx={{ width: { xs: "100%", lg: "80%" } }}>
+                      <Accordion
+                        key={card.id}
+                        sx={{ width: { xs: "100%", lg: "100%" } }}
+                      >
                         <AccordionSummary
                           expandIcon={<ArrowDropDownIcon />}
                           aria-controls="panel1-content"
@@ -200,7 +156,7 @@ function MixCardsContent() {
                     ))}
                   </RadioGroup>
                 </Grid>
-                <Grid item xs={12} sm={8} md={8} lg={8.5}>
+                <Grid item xs={12} sm={8} md={8} lg={6}>
                   <Typography variant="h6">AI Cards</Typography>
                   <RadioGroup
                     aria-label="ai-cards"
@@ -209,7 +165,10 @@ function MixCardsContent() {
                     onChange={handleRadioChangeAI}
                   >
                     {AICards.map((card, index) => (
-                      <Accordion sx={{ width: { xs: "100%", lg: "80%" } }}>
+                      <Accordion
+                        key={card.id}
+                        sx={{ width: { xs: "100%", lg: "100%" } }}
+                      >
                         <AccordionSummary
                           expandIcon={<ArrowDropDownIcon />}
                           aria-controls="panel2-content"
@@ -222,17 +181,7 @@ function MixCardsContent() {
                             key={card.id}
                             value={card.id}
                             control={<Radio />}
-                            label={
-                              // TODO add new card for this
-                              <AICardComponent
-                                card={card}
-                                // searchTerms={[]}
-                                // onDelete={() => handleDummyDelete(index)}
-                                // onEdit={() => handleDummyEdit(card)}
-                                // onReorder={handleDummyReorder}
-                                // onCancel={handleDummyCancel}
-                              />
-                            }
+                            label={<AICardComponent card={card} />}
                           />
                         </AccordionDetails>
                       </Accordion>
@@ -253,11 +202,22 @@ function MixCardsContent() {
         </Typography>
       </Box>
       <Grid container spacing={2}>
-        {mixedCards.map((card, index) => (
-          <Grid item xs={12} sm={12} md={12} key={index}>
-            <FinalCard mixedCard={card} />
-          </Grid>
-        ))}
+        <CustomSlider
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            gap: 6,
+            overflowX: "auto",
+          }}
+        >
+          {mixedCards.map((card) => (
+            // <Grid item xs={12} sm={12} md={12} key={index}>
+
+            <Grid key={card.id}>
+              <FinalCard mixedCard={card} />
+            </Grid>
+          ))}
+        </CustomSlider>
       </Grid>
     </Box>
   );
