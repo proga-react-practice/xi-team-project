@@ -5,11 +5,63 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { CardsInfo as CardsInfoGames } from "../components/AI/Cards/Cards";
 import { MixedCard } from "./context/GamesCardsContextProvider";
 
-const FinalCard: React.FC<{ mixedCard: MixedCard }> = ({ mixedCard }) => {
+const FinalCard: React.FC<{
+  mixedCard: MixedCard;
+  index: number;
+  handleTouchStart: (
+    event: React.TouchEvent<HTMLDivElement>,
+    index: number
+  ) => void;
+  handleTouchEnd: (
+    event: React.TouchEvent<HTMLDivElement>,
+    index: number
+  ) => void;
+  handleDragStart: (index: number) => void;
+  handleDragOver: (
+    event: React.DragEvent<HTMLDivElement>,
+    index: number
+  ) => void;
+  handleDrop: () => void;
+  handleDragEnter: (index: number) => void;
+  handleDragLeave: () => void;
+  handleDragEnd: () => void;
+  dragItemIndex: number | undefined;
+}> = ({
+  mixedCard,
+  index,
+  handleTouchStart,
+  handleTouchEnd,
+  handleDragStart,
+  handleDragOver,
+  handleDrop,
+  handleDragEnter,
+  handleDragLeave,
+  handleDragEnd,
+  dragItemIndex,
+}) => {
   const theme = useTheme();
 
   return (
-    <Box>
+    <Box
+      draggable
+      onTouchStart={(event: React.TouchEvent<HTMLDivElement>) =>
+        handleTouchStart(event, index)
+      }
+      onTouchEnd={(event: React.TouchEvent<HTMLDivElement>) =>
+        handleTouchEnd(event, index)
+      }
+      onDragStart={() => handleDragStart(index)}
+      onDragOver={(event: React.DragEvent<HTMLDivElement>) =>
+        handleDragOver(event, index)
+      }
+      onDrop={handleDrop}
+      onDragEnter={() => handleDragEnter(index)}
+      onDragLeave={handleDragLeave}
+      onDragEnd={handleDragEnd}
+      sx={{
+        cursor: dragItemIndex === index ? "grabbing" : "grab",
+      }}
+    >
       {/* TODO update card style */}
       {mixedCard && (
         <TransitionGroup>

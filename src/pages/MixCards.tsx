@@ -97,6 +97,68 @@ function MixCardsContent() {
     setError("");
   };
 
+  const [dragItemIndex, setDragItemIndex] = useState<number | undefined>();
+  const [dragOverItemIndex, setDragOverItemIndex] = useState<
+    number | undefined
+  >();
+
+  const handleTouchStart = (
+    _event: React.TouchEvent<HTMLDivElement>,
+    index: number
+  ) => {
+    setDragItemIndex(index);
+  };
+
+  const handleTouchEnd = (
+    _event: React.TouchEvent<HTMLDivElement>,
+    index: number
+  ) => {
+    setDragOverItemIndex(index);
+    handleDrop();
+  };
+
+  const handleDragStart = (index: number) => {
+    setDragItemIndex(index);
+  };
+
+  const handleDragOver = (
+    event: React.DragEvent<HTMLDivElement>,
+    index: number
+  ) => {
+    event.preventDefault();
+    setDragOverItemIndex(index);
+  };
+
+  const handleDrop = () => {
+    if (
+      typeof dragItemIndex === "number" &&
+      typeof dragOverItemIndex === "number"
+    ) {
+      const _cards = [...mixedCards];
+      const dragItem = _cards[dragItemIndex];
+      const dragOverItem = _cards[dragOverItemIndex];
+      _cards[dragItemIndex] = dragOverItem;
+      _cards[dragOverItemIndex] = dragItem;
+      setMixedCards(_cards);
+      // reorderCards(_cards);
+      setDragItemIndex(undefined);
+      setDragOverItemIndex(undefined);
+    }
+  };
+
+  const handleDragEnter = (index: number) => {
+    setDragOverItemIndex(index);
+  };
+
+  const handleDragLeave = () => {
+    setDragOverItemIndex(undefined);
+  };
+
+  const handleDragEnd = () => {
+    setDragItemIndex(undefined);
+    setDragOverItemIndex(undefined);
+  };
+
   return (
     <Box
       sx={{
@@ -271,7 +333,19 @@ function MixCardsContent() {
             // <Grid item xs={12} sm={12} md={12} key={index}>
 
             <Grid key={`${card.id}-${index}`}>
-              <FinalCard mixedCard={card} />
+              <FinalCard
+                mixedCard={card}
+                index={index}
+                handleTouchStart={handleTouchStart}
+                handleTouchEnd={handleTouchEnd}
+                handleDragStart={handleDragStart}
+                handleDragOver={handleDragOver}
+                handleDrop={handleDrop}
+                handleDragEnter={handleDragEnter}
+                handleDragLeave={handleDragLeave}
+                handleDragEnd={handleDragEnd}
+                dragItemIndex={dragItemIndex}
+              />
             </Grid>
           ))}
         </CustomSlider>
