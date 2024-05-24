@@ -201,16 +201,27 @@ function MixCardsContent() {
             display: "flex",
             alignItems: "center",
             gap: 2,
+            flexDirection: { xs: "column", sm: "column", md: "row" },
           }}
         >
           <Title icon={DashboardIcon} title="Final Cards" />
-          <Button onClick={handleOpen}>Add Cards</Button>
-          <TextField
-            label="Search Card"
-            value={searchQuery}
-            onChange={handleSearchChange}
-            sx={{ width: { xs: "90%", sm: "90%", md: "auto" } }}
-          />
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 2,
+              flexDirection: "row",
+            }}
+          >
+            <TextField
+              label="Search Card"
+              value={searchQuery}
+              onChange={handleSearchChange}
+              sx={{ width: { xs: "90%", sm: "90%", md: "auto" } }}
+            />
+
+            <Button onClick={handleOpen}>Add Cards</Button>
+          </Box>
         </Box>
 
         <Modal
