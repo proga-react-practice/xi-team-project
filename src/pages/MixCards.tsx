@@ -210,10 +210,10 @@ function MixCardsContent() {
             overflowX: "auto",
           }}
         >
-          {mixedCards.map((card) => (
+          {mixedCards.map((card, index) => (
             // <Grid item xs={12} sm={12} md={12} key={index}>
 
-            <Grid key={card.id}>
+            <Grid key={`${card.id}-${index}`}>
               <FinalCard mixedCard={card} />
             </Grid>
           ))}
