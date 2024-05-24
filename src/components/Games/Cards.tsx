@@ -6,6 +6,7 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 import ClearIcon from "@mui/icons-material/Clear";
 import EditIcon from "@mui/icons-material/Edit";
 import { useCardsContext } from "../context/GamesCardsContextProvider";
+import { CardsInfo as CardInfoMix } from "../AI/Cards/AICardComponent";
 
 export interface Card {
   id: string;
@@ -229,9 +230,9 @@ export const CardComponentMix: React.FC<{ card: Card }> = ({ card }) => {
         },
       }}
     >
-      <CardsInfo title="Name of the Game" info={card.name} />
-      <CardsInfo title="Difficulty" info={card.difficulty} />
-      <CardsInfo
+      <CardInfoMix title="Name of the Game" info={card.name} />
+      <CardInfoMix title="Difficulty" info={card.difficulty} />
+      <CardInfoMix
         title="Price"
         info={card.price.toString() + " " + card.currency}
       />
