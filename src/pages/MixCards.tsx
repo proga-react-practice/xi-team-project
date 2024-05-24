@@ -10,6 +10,7 @@ import {
   RadioGroup,
   Typography,
   FormHelperText,
+  TextField,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import {
@@ -28,6 +29,8 @@ import Title from "../components/Title";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
+import { nanoid } from "nanoid";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 const modalStyle = {
   position: "absolute",
@@ -93,6 +96,7 @@ function MixCardsContent() {
 
       const mixedCardData = {
         ...selectedGameCard,
+        id: nanoid(),
         levelOfAI: selectedAICard.levelOfAI,
         whereAIIsUsed: selectedAICard.whereAIIsUsed,
         TypeOfAI: selectedAICard.TypeOfAI,
@@ -168,7 +172,16 @@ function MixCardsContent() {
   const deleteCard = (id: string) => {
     setMixedCards((prevCards) => prevCards.filter((card) => card.id !== id));
   };
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchTerms, setSearchTerms] = useState<string[]>([]);
 
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const query = event.target.value;
+    setSearchQuery(query);
+
+    const terms = query.split(";");
+    setSearchTerms(terms ? terms.map((term) => term.trim()) : []);
+  };
   return (
     <Box
       sx={{
@@ -192,6 +205,12 @@ function MixCardsContent() {
         >
           <Title icon={DashboardIcon} title="Final Cards" />
           <Button onClick={handleOpen}>Add Cards</Button>
+          <TextField
+            label="Search Card"
+            value={searchQuery}
+            onChange={handleSearchChange}
+            sx={{ width: { xs: "90%", sm: "90%", md: "auto" } }}
+          />
         </Box>
 
         <Modal
@@ -339,26 +358,33 @@ function MixCardsContent() {
             overflowX: "auto",
           }}
         >
-          {mixedCards.map((card, index) => (
-            // <Grid item xs={12} sm={12} md={12} key={index}>
-
-            <Grid key={`${card.id}-${index}`}>
-              <FinalCard
-                mixedCard={card}
-                index={index}
-                handleTouchStart={handleTouchStart}
-                handleTouchEnd={handleTouchEnd}
-                handleDragStart={handleDragStart}
-                handleDragOver={handleDragOver}
-                handleDrop={handleDrop}
-                handleDragEnter={handleDragEnter}
-                handleDragLeave={handleDragLeave}
-                handleDragEnd={handleDragEnd}
-                dragItemIndex={dragItemIndex}
-                deleteCard={deleteCard}
-              />
-            </Grid>
-          ))}
+          <TransitionGroup component={null}>
+            {mixedCards
+              .filter((card) =>
+                searchTerms.every((term) => JSON.stringify(card).includes(term))
+              )
+              .map((card, index) => (
+                // <Grid item xs={12} sm={12} md={12} key={index}>
+                <CSSTransition key={index} timeout={500} classNames="card">
+                  <Grid key={`${card.id}-${index}`}>
+                    <FinalCard
+                      mixedCard={card}
+                      index={index}
+                      handleTouchStart={handleTouchStart}
+                      handleTouchEnd={handleTouchEnd}
+                      handleDragStart={handleDragStart}
+                      handleDragOver={handleDragOver}
+                      handleDrop={handleDrop}
+                      handleDragEnter={handleDragEnter}
+                      handleDragLeave={handleDragLeave}
+                      handleDragEnd={handleDragEnd}
+                      dragItemIndex={dragItemIndex}
+                      deleteCard={deleteCard}
+                    />
+                  </Grid>
+                </CSSTransition>
+              ))}
+          </TransitionGroup>
         </CustomSlider>
       </Grid>
     </Box>
