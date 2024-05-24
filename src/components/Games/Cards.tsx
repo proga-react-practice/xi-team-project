@@ -1,4 +1,3 @@
-// Cards.tsx
 import React from "react";
 import { Box, Button } from "@mui/material";
 import { Container, Typography, Chip } from "@mui/material";
@@ -190,6 +189,54 @@ const CardsList: React.FC = () => {
         ))}
       </TransitionGroup>
     </CustomSlider>
+  );
+};
+
+export const CardComponentMix: React.FC<{ card: Card }> = ({ card }) => {
+  const theme = useTheme();
+
+  return (
+    <Box
+      sx={{
+        flexDirection: "column",
+        paddingTop: 2,
+        paddingBottom: 2,
+        paddingLeft: { md: 1, lg: 2 },
+        paddingRight: { md: 0, lg: 8 },
+        maxWidth: { md: "90%", lg: "80%" },
+        border: "2px solid",
+        borderColor: theme.palette.text.primary,
+        py: 2.5,
+        borderRadius: 2,
+        position: "relative",
+        marginBottom: 5,
+        bgcolor: "background.paper",
+        "&::after": {
+          content: '""',
+          position: "absolute",
+          bottom: theme.spacing(1),
+          left: {
+            xs: theme.spacing(1),
+            sm: theme.spacing(2),
+            md: theme.spacing(4),
+          },
+          right: {
+            xs: theme.spacing(0.7),
+            sm: theme.spacing(1),
+            md: theme.spacing(2),
+          },
+          height: "2px",
+          backgroundColor: theme.palette.text.primary,
+        },
+      }}
+    >
+      <CardsInfo title="Name of the Game" info={card.name} />
+      <CardsInfo title="Difficulty" info={card.difficulty} />
+      <CardsInfo
+        title="Price"
+        info={card.price.toString() + " " + card.currency}
+      />
+    </Box>
   );
 };
 

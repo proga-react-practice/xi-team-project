@@ -34,8 +34,6 @@ export default function MainNavigation({
   const theme = useTheme();
   const location = useLocation();
   const [value, setValue] = useState(location.pathname);
-  // const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-  // const open = Boolean(anchorEl);
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [drawerOpen, setDrawerOpen] = useState(false);
 
