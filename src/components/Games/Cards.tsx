@@ -20,21 +20,17 @@ export interface Card {
 
 export const CardComponent: React.FC<{ card: Card }> = ({ card }) => {
   const theme = useTheme();
-  const { deleteCard, setEditingCard } = useCardsContext();
-  const [isEditing, setIsEditing] = useState(false);
+  const { deleteCard, setEditingCard, editingCard } = useCardsContext();
+  // const [isEditing, setIsEditing] = useState(false);
 
   const handleCancel = () => {
     setEditingCard(null);
-    setIsEditing(false);
-    const clearFormEvent = new CustomEvent("clearFormEvent");
-    document.dispatchEvent(clearFormEvent);
   };
 
   const handleEditClick = () => {
-    if (isEditing) {
+    if (editingCard) {
       handleCancel();
     } else {
-      setIsEditing(true);
       setEditingCard(card);
     }
   };
@@ -94,7 +90,7 @@ export const CardComponent: React.FC<{ card: Card }> = ({ card }) => {
       >
         <Button
           variant="contained"
-          endIcon={isEditing ? <ClearIcon /> : <EditIcon />}
+          endIcon={editingCard ? <ClearIcon /> : <EditIcon />}
           onClick={handleEditClick}
           sx={{
             width: {
@@ -105,7 +101,7 @@ export const CardComponent: React.FC<{ card: Card }> = ({ card }) => {
             marginRight: 3,
           }}
         >
-          {isEditing ? "Cancel" : "Edit"}
+          {editingCard ? "Cancel" : "Edit"}
         </Button>
 
         <Button
