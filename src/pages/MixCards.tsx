@@ -420,6 +420,7 @@ function MixCardsContent() {
             flexDirection: "row",
             gap: 6,
             overflowX: "auto",
+            pl: 1,
           }}
         >
           <TransitionGroup component={null}>
