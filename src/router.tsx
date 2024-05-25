@@ -12,6 +12,7 @@ import {
   MIX_ROUTE,
 } from "./routes.tsx";
 import MixCards from "./pages/MixCards.tsx";
+import { PlaygroundRoute } from "./pages/dev/PlaygroundRoute.tsx";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,7 @@ const router = createBrowserRouter([
       { path: GAMES_ROUTE, element: <Game /> },
       { path: ERROR_ROUTE, element: <Error /> },
       { path: MIX_ROUTE, element: <MixCards /> },
+      { path: "/playground", element: <PlaygroundRoute /> },
     ],
   },
 ]);
