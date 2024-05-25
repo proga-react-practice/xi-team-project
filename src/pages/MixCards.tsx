@@ -170,36 +170,24 @@ function MixCardsContent() {
   const deleteCard = (id: string) => {
     setMixedCards((prevCards) => prevCards.filter((card) => card.id !== id));
   };
+  const handleSearchChange =
+    (
+      setSearchQuery: React.Dispatch<React.SetStateAction<string>>,
+      setSearchTerms: React.Dispatch<React.SetStateAction<string[]>>
+    ) =>
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const query = event.target.value;
+      setSearchQuery(query);
+
+      const terms = query.toLowerCase().split(";");
+      setSearchTerms(terms ? terms.map((term) => term.trim()) : []);
+    };
   const [searchQuery, setSearchQuery] = useState("");
   const [searchTerms, setSearchTerms] = useState<string[]>([]);
   const [searchQueryGame, setSearchQueryGame] = useState("");
   const [searchTermsGame, setSearchTermsGame] = useState<string[]>([]);
   const [searchQueryAI, setSearchQueryAI] = useState("");
   const [searchTermsAI, setSearchTermsAI] = useState<string[]>([]);
-
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const query = event.target.value;
-    setSearchQuery(query);
-
-    const terms = query.toLowerCase().split(";");
-    setSearchTerms(terms ? terms.map((term) => term.trim()) : []);
-  };
-  const handleSearchGameChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const query = event.target.value;
-    setSearchQueryGame(query);
-
-    const terms = query.toLowerCase().split(";");
-    setSearchTermsGame(terms ? terms.map((term) => term.trim()) : []);
-  };
-  const handleSearchAIChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const query = event.target.value;
-    setSearchQueryAI(query);
-
-    const terms = query.toLowerCase().split(";");
-    setSearchTermsAI(terms ? terms.map((term) => term.trim()) : []);
-  };
   const isSmallScreen = useMediaQuery("(max-width:600px)");
   return (
     <Box
@@ -235,7 +223,7 @@ function MixCardsContent() {
             <TextField
               label="Search Card"
               value={searchQuery}
-              onChange={handleSearchChange}
+              onChange={handleSearchChange(setSearchQuery, setSearchTerms)}
               sx={{ width: { xs: "90%", sm: "90%", md: "auto" } }}
             />
 
@@ -291,7 +279,10 @@ function MixCardsContent() {
                     <TextField
                       label="Search Game Card"
                       value={searchQueryGame}
-                      onChange={handleSearchGameChange}
+                      onChange={handleSearchChange(
+                        setSearchQueryGame,
+                        setSearchTermsGame
+                      )}
                       sx={{ width: { xs: "90%", sm: "90%", md: "auto" } }}
                     />
                   </Box>
@@ -365,7 +356,10 @@ function MixCardsContent() {
                     <TextField
                       label="Search AI Card"
                       value={searchQueryAI}
-                      onChange={handleSearchAIChange}
+                      onChange={handleSearchChange(
+                        setSearchQueryAI,
+                        setSearchTermsAI
+                      )}
                       sx={{ width: { xs: "90%", sm: "90%", md: "auto" } }}
                     />
                   </Box>
