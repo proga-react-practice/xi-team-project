@@ -25,11 +25,18 @@ export interface AI {
 }
 interface IFormProps {
   onSubmit: (Ai: AI) => void;
-  submitButtonText: string;
+  editCard?: string | null;
   initialData?: AI;
 }
 
-const Form = ({ onSubmit, submitButtonText, initialData }: IFormProps) => {
+const defaultData = {
+  levelOfAI: [],
+  whereAIIsUsed: [],
+  TypeOfAI: "",
+  rateAIIntelligence: 0,
+};
+
+const Form = ({ onSubmit, editCard, initialData }: IFormProps) => {
   const {
     handleSubmit,
     reset,
@@ -38,12 +45,7 @@ const Form = ({ onSubmit, submitButtonText, initialData }: IFormProps) => {
     control,
     formState: { errors },
   } = useForm<AI>({
-    defaultValues: initialData || {
-      levelOfAI: [],
-      whereAIIsUsed: [],
-      TypeOfAI: "",
-      rateAIIntelligence: 0,
-    },
+    defaultValues: initialData || defaultData,
   });
 
   const levelOfAI = watch("levelOfAI");
@@ -57,19 +59,11 @@ const Form = ({ onSubmit, submitButtonText, initialData }: IFormProps) => {
     onSubmit(data);
   });
   const handleClear = () => {
-    reset();
-    setValue("TypeOfAI", "");
+    reset(defaultData);
   };
 
   useEffect(() => {
-    reset(
-      initialData || {
-        levelOfAI: [],
-        whereAIIsUsed: [],
-        TypeOfAI: "",
-        rateAIIntelligence: 0,
-      }
-    );
+    reset(initialData || defaultData);
   }, [initialData, reset]);
 
   return (
@@ -86,7 +80,7 @@ const Form = ({ onSubmit, submitButtonText, initialData }: IFormProps) => {
         }}
       >
         <Typography variant="h3" sx={{ my: 2, textAlign: "center" }}>
-          Register the AI
+          {editCard !== null ? "Edit the AI" : "Register the AI"}
         </Typography>
         <FormHelperText>{errors.levelOfAI?.message ?? " "}</FormHelperText>
         <Controller
@@ -190,7 +184,10 @@ const Form = ({ onSubmit, submitButtonText, initialData }: IFormProps) => {
                     }}
                     size="small"
                     onChange={(event) => {
-                      field.onChange(parseInt(event.target.value));
+                      const value = parseInt(event.target.value);
+                      field.onChange(
+                        isNaN(value) ? RANGE_OPTIONS[0].min : value
+                      );
                     }}
                     onBlur={field.onBlur}
                     inputProps={{
@@ -216,7 +213,7 @@ const Form = ({ onSubmit, submitButtonText, initialData }: IFormProps) => {
         >
           <Button
             variant="contained"
-            sx={{ px: 5 }}
+            sx={{ px: { xs: 3, sm: 5 } }}
             startIcon={<ClearIcon />}
             onClick={handleClear}
           >
@@ -224,11 +221,11 @@ const Form = ({ onSubmit, submitButtonText, initialData }: IFormProps) => {
           </Button>
           <Button
             variant="contained"
-            sx={{ px: 10 }}
+            sx={{ px: { xs: 4, sm: 7 } }}
             endIcon={<SendIcon />}
             type="submit"
           >
-            {submitButtonText}
+            {editCard !== null ? "Save" : "Add"}
           </Button>
         </Container>
       </Container>

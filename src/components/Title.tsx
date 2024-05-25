@@ -16,6 +16,7 @@ export default function Title({ icon: Icon, title }: TitleProps) {
         textAlign: "left",
         display: "flex",
         alignItems: "center",
+        whiteSpace: "nowrap",
       }}
     >
       <Icon sx={{ marginRight: 1, fontSize: "2rem" }} />

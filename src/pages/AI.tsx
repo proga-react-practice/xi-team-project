@@ -1,47 +1,43 @@
 import Form from "../components/AI/Form/Form";
-import Cards from "../components/AI/Cards";
-import { useState } from "react";
+import Cards from "../components/AI/Cards/Cards";
 import { AI } from "../components/AI/Form/Form";
-import { Container, Box } from "@mui/material";
+import { Container, Box, TextField } from "@mui/material";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
 import Title from "../components/Title";
 import StyleIcon from "@mui/icons-material/Style";
 import { useTheme } from "@mui/material/styles";
 import { nanoid } from "nanoid";
+import { HEADER_HEIGHT } from "../constants";
+import { useAICardsContext } from "../components/context/AICardsContextProvider";
 
 export default function App() {
   const theme = useTheme();
-  const [formData, setFormData] = useState<AI[]>([]);
-  const [editingCard, setEditingCard] = useState<number | null>(null);
-
-  const handleDelete = (index: number) => {
-    setFormData((prevCards) => prevCards.filter((_, i) => i !== index));
-    if (index === editingCard) {
-      setEditingCard(null);
-    }
-  };
-
-  const handleEdit = (ai: AI) => {
-    const index = formData.findIndex((card) => card.id === ai.id);
-    setEditingCard(index);
-    if (index !== -1) {
-      console.log(formData[index]);
-    }
-  };
-  const handleReorder = (newOrder: AI[]) => {
-    setFormData(newOrder);
-  };
-
+  const {
+    addCard,
+    updateCard,
+    editingCard,
+    setEditingCard,
+    searchQuery,
+    setSearchQuery,
+    searchTerms,
+    setSearchTerms,
+  } = useAICardsContext();
   const handleFormSubmit = (newData: AI) => {
-    if (editingCard !== null) {
-      setFormData((prevCards) =>
-        prevCards.map((card, i) => (i === editingCard ? newData : card))
-      );
+    if (editingCard) {
+      updateCard({ ...newData, id: editingCard.id });
     } else {
-      setFormData((prevCards) => [...prevCards, { ...newData, id: nanoid() }]);
+      addCard({ ...newData, id: nanoid() });
     }
 
     setEditingCard(null);
+  };
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const query = event.target.value;
+    setSearchQuery(query);
+
+    const terms = query.toLowerCase().split(";");
+    setSearchTerms(terms ? terms.map((term) => term.trim()) : []);
   };
   return (
     <Box
@@ -50,22 +46,21 @@ export default function App() {
         display: "flex",
         justifyContent: "space-between",
         bgcolor: theme.palette.background.default,
-        width: "100vw",
-        minHeight: "calc(100vh - 64px)",
+        minHeight: `calc(100vh - ${HEADER_HEIGHT}px)`,
       }}
     >
       <Container
         sx={{
           width: { sm: "100%", md: "40%" },
-          paddingLeft: { xs: 0, md: 2, lg: 3 },
-          paddingRight: { xs: 0, md: 2, lg: 3 },
+          paddingLeft: theme.spacing(1),
+          paddingRight: theme.spacing(1),
         }}
       >
         <Title icon={SmartToyIcon} title="Registration Form" />
         <Form
           onSubmit={handleFormSubmit}
-          submitButtonText={editingCard !== null ? "Update" : "Add"}
-          initialData={editingCard !== null ? formData[editingCard] : undefined}
+          editCard={editingCard ? editingCard.id : null}
+          initialData={editingCard || undefined}
         />
       </Container>
       <Container
@@ -73,17 +68,29 @@ export default function App() {
           minWidth: { md: "40%", lg: "59%" },
           maxWidth: { md: "100%", lg: "70%" },
           flexGrow: 1,
-          paddingLeft: { xs: 0, md: 2, lg: 3 },
-          paddingRight: { xs: 0, md: 2, lg: 3 },
+          paddingLeft: theme.spacing(1),
+          paddingRight: theme.spacing(1),
         }}
       >
-        <Title icon={StyleIcon} title="Submitted Cards" />
-        <Cards
-          cards={formData}
-          onDelete={handleDelete}
-          onEdit={handleEdit}
-          onReorder={handleReorder}
-        />
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", sm: "column", md: "row" },
+            justifyContent: "flex-start",
+            gap: { xs: 0, sm: 0, md: 2 },
+            alignItems: "center",
+            marginBottom: { xs: 2, sm: 2, md: 0 },
+          }}
+        >
+          <Title icon={StyleIcon} title="Submitted Cards" />
+          <TextField
+            label="Search Card"
+            value={searchQuery}
+            onChange={handleSearchChange}
+            sx={{ width: { xs: "90%", sm: "90%", md: "auto" } }}
+          />
+        </Box>
+        <Cards searchTerms={searchTerms} />
       </Container>
     </Box>
   );

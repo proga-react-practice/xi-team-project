@@ -1,38 +1,5 @@
 /* TODO drop any css, rewrite layouts */
 
-:root {
-  line-height: 1.5;
-  font-weight: 400;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-height: 100vh;
-  padding: 0;
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-}
-
-/* * {
-  box-sizing: border-box;
-} */
-
-html {
-  -webkit-text-size-adjust: 100%;
-}
-
-label {
-  display: block;
-  margin-bottom: 0.25em;
-}
-
 /* Animations */
 .card-enter {
   opacity: 0;

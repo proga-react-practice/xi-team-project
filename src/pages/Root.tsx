@@ -3,22 +3,28 @@ import MainNavigation from "../components/Menu/MainNavigation";
 import { darkTheme, lightTheme } from "../theme";
 import { useState } from "react";
 import { ThemeProvider } from "@mui/material/styles";
+import Footer from "../components/Footer";
 
 export default function RootLayout() {
-  const [currentTheme, setCurrentTheme] = useState(lightTheme);
+  enum Theme {
+    Light = "light",
+    Dark = "dark",
+  }
+  const [theme, setTheme] = useState<Theme>(Theme.Light);
   const handleThemeChange = () => {
-    setCurrentTheme(currentTheme === lightTheme ? darkTheme : lightTheme);
+    setTheme(theme === Theme.Light ? Theme.Dark : Theme.Light);
   };
+  const currentTheme = theme === "light" ? lightTheme : darkTheme;
   return (
     <>
       <ThemeProvider theme={currentTheme}>
         <MainNavigation
           onThemeChange={handleThemeChange}
-          // TODO discussion(prop value)
-          currentTheme={currentTheme}
+          currentTheme={Theme.Light}
         />
         <Outlet />
+        <Footer />
       </ThemeProvider>
     </>
-  ); 
+  );
 }

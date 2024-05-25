@@ -1,9 +1,8 @@
 import { Box } from "@mui/material";
-import gamesAIImage from "../images/games-ai.jpg";
+import gamesAIImage from "../images/AI-in-Gaming.png";
 import { useTheme } from "@mui/material/styles";
 import TextFields from "../components/HomePage/TextFields";
 import About from "../components/HomePage/Description";
-import Footer from "../components/Footer";
 
 export default function Home() {
   const theme = useTheme();
@@ -57,8 +56,9 @@ export default function Home() {
               src={gamesAIImage}
             />
             <TextFields
-              text="Welcome to our site. The topic is games and
-they have artificial intelligence."
+              text="Welcome to our site. We are the Xi team. 
+            The team members are Sofiia Stanishevska and Maxym Matskiv. Our project 
+            is based on the topic of artificial intelligence in games."
             />
           </Box>
         </Box>
@@ -66,7 +66,11 @@ they have artificial intelligence."
         <About
           link="/games"
           title="About Games"
-          article="Games are very popular in the modern world...."
+          article="A video game, also known as a computer game, 
+          is an electronic game that can be interacted with using an 
+          input device, such as a controller, keyboard, or joystick. 
+          Video games can be used for entertainment and relaxation, but they can also 
+          be used for competitions and for computer learning."
           aboveButtonText="Right now you can add info about Game here:"
           button="Add game"
         />
@@ -74,14 +78,14 @@ they have artificial intelligence."
         <About
           link="/AI"
           title="About Artificial Intelligence"
-          article="Nowadays, artificial intelligence plays an important role
-        in our lifes. Now it's like the Internet in the
-         nineties. Without it, our life does not exist"
+          article="Artificial Intelligence (AI) has the potential to completely revolutionize the video 
+          game industry, from how games are developed to how they are experienced and played. 
+          AI promises to unlock new frontiers in terms of scale, realism, interactivity, 
+          and more that could profoundly change gaming as we know it."
           aboveButtonText="Right now you can add info about AI here:"
           button="Add AI"
         />
       </Box>
-      <Footer />
     </>
   );
 }

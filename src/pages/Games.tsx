@@ -1,77 +1,85 @@
-import { useState } from "react";
-import { Box, Container } from "@mui/material";
+import { Box, Container, TextField } from "@mui/material";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import Title from "../components/Title";
 import StyleIcon from "@mui/icons-material/Style";
 import { useTheme } from "@mui/material/styles";
-
 import Form from "../components/Games/Form";
-import Cards, { Card } from "../components/Games/Cards";
+import CardsList from "../components/Games/Cards";
+import {
+  CardsProvider,
+  useCardsContext,
+} from "../components/context/GamesCardsContextProvider";
+import { HEADER_HEIGHT } from "../constants";
 
-export default function App() {
+const GamesContent = () => {
   const theme = useTheme();
-  const [cards, setCards] = useState<Card[]>([]);
-  const [editingCard, setEditingCard] = useState<Card | null>(null);
+  const { searchQuery, setSearchQuery, searchTerms, setSearchTerms } =
+    useCardsContext();
 
-  const handleFormSubmit = (newCard: Card) => {
-    if (editingCard) {
-      const updatedCards = cards.map((card) =>
-        card.id === editingCard.id ? newCard : card
-      );
-      setCards(updatedCards);
-      setEditingCard(null);
-    } else {
-      setCards((prevCards) => [...prevCards, newCard]);
-    }
-  };
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const query = event.target.value;
+    setSearchQuery(query);
 
-  const deleteCard = (id: string) => {
-    setCards((prevCards) => prevCards.filter((card: Card) => card.id !== id));
+    // Split the query into words and phrases
+    const terms = query.split(";");
+    setSearchTerms(terms ? terms.map((term) => term.trim()) : []);
   };
 
   return (
     <Box
       sx={{
-        flexDirection: { xs: "column", sm: "column", md: "row" },
         display: "flex",
+        flexDirection: { xs: "column", sm: "column", md: "row" },
         justifyContent: "space-between",
-        bgcolor: theme.palette.background.default,
-        // TODO fix layout
-        width: "98.9vw",
-        maxWidth: "100%",
-        minHeight: "100vh",
+        backgroundColor: theme.palette.background.default,
+        minHeight: `calc(100vh - ${HEADER_HEIGHT}px)`,
       }}
     >
       <Container
         sx={{
-          width: { sm: "100%", md: "40%" },
-          paddingLeft: { xs: 0, md: 2, lg: 3 },
-          paddingRight: { xs: 0, md: 2, lg: 3 },
+          width: { xs: "100%", md: "35%" },
+          padding: theme.spacing(2),
+          boxSizing: "border-box",
         }}
       >
         <Title icon={SportsEsportsIcon} title="Registration Form" />
-        <Form
-          onSubmit={handleFormSubmit}
-          editCard={editingCard}
-          onCancel={() => setEditingCard(null)}
-        />
+        <Form />
       </Container>
       <Container
         sx={{
-          minWidth: { md: "40%", lg: "59%" },
-          maxWidth: { md: "100%", lg: "70%" },
-          flexGrow: 1,
-          paddingLeft: { xs: 0, md: 2, lg: 3 },
-          paddingRight: { xs: 0, md: 2, lg: 3 },
+          width: { xs: "100%", md: "60%" },
+          padding: theme.spacing(2),
+          boxSizing: "border-box",
         }}
       >
-        <Title icon={StyleIcon} title="Submitted Cards" />
-        <Cards
-          cards={cards}
-          onDelete={deleteCard}
-          handleEdit={(card) => setEditingCard(card)}
-        />
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", sm: "column", md: "row" },
+            justifyContent: "flex-start",
+            gap: { xs: 0, sm: 0, md: 2 },
+            alignItems: "center",
+            marginBottom: { xs: 2, sm: 2, md: 0 },
+          }}
+        >
+          <Title icon={StyleIcon} title="Submitted Cards" />
+          <TextField
+            label="Search Card"
+            value={searchQuery}
+            onChange={handleSearchChange}
+            sx={{ width: { xs: "90%", sm: "90%", md: "auto" } }}
+          />
+        </Box>
+        <CardsList searchTerms={searchTerms} />
       </Container>
     </Box>
+  );
+};
+
+export default function Games() {
+  return (
+    <CardsProvider>
+      <GamesContent />
+    </CardsProvider>
   );
 }

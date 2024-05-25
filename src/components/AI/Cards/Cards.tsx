@@ -1,91 +1,28 @@
-import { INPUT_DATA_ASSETS, RANGE_OPTIONS } from "./inputDataAssets";
+import { INPUT_DATA_ASSETS, RANGE_OPTIONS } from "../inputDataAssets";
 import ClearIcon from "@mui/icons-material/Clear";
 import EditIcon from "@mui/icons-material/Edit";
-import { Box, Button, Chip, Container, Typography } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { Box, Button } from "@mui/material";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { useTheme } from "@mui/material/styles";
-import { AI } from "./Form/Form";
+import CustomSlider from "../../ScrollContainer";
 import { useState, useEffect } from "react";
+import { useAICardsContext } from "../../context/AICardsContextProvider";
+import { CardsInfo } from "../../Cards/CardsInfo";
 
 interface ICardsProps {
-  cards: AI[];
-  onDelete: (index: number) => void;
-  onEdit: (ai: AI) => void;
-  onReorder: (cards: AI[]) => void;
+  searchTerms: string[];
 }
 
-interface ICardsInfoProps {
-  title: string;
-  info: string | string[];
-}
-const CardsInfo: React.FC<ICardsInfoProps> = ({ title, info }) => {
+export default function Cards({ searchTerms }: ICardsProps) {
   const theme = useTheme();
-  return (
-    <Container
-      sx={{
-        display: "flex",
-        alignItems: "baseline",
-        gap: 2,
-        flexDirection: "row",
-        marginBottom: 2,
-      }}
-    >
-      <Typography
-        variant="h4"
-        color="text.primary"
-        sx={{
-          width: { xs: "5em", sm: "14.6em", md: "6.7em", lg: "14.6em" },
-          textAlign: "right",
-          flexShrink: 0,
-        }}
-      >
-        {title}
-      </Typography>
-      <Box
-        sx={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "center",
-          gap: 1,
-        }}
-      >
-        {Array.isArray(info) ? (
-          info.map((option, index) => (
-            <Chip
-              key={index}
-              label={option}
-              sx={{
-                margin: theme.spacing(0, 0.5),
-                display: "flex",
-              }}
-            />
-          ))
-        ) : (
-          <Chip
-            label={info}
-            sx={{
-              margin: theme.spacing(0, 0.5),
-              padding: { xs: 0.5, sm: 1, md: 1.5 },
-            }}
-          />
-        )}
-      </Box>
-    </Container>
-  );
-};
+  const { AICards, deleteCard, setEditingCard, reorderCards, editingCard } =
+    useAICardsContext();
 
-export default function Cards({
-  cards,
-  onDelete,
-  onEdit,
-  onReorder,
-}: ICardsProps) {
-  const theme = useTheme();
-
-  const [cardsState, setCards] = useState(cards);
+  const [cardsState, setCards] = useState(AICards);
   useEffect(() => {
-    setCards(cards);
-  }, [cards]);
+    setCards(AICards);
+  }, [AICards]);
   const [dragItemIndex, setDragItemIndex] = useState<number | undefined>();
   const [dragOverItemIndex, setDragOverItemIndex] = useState<
     number | undefined
@@ -129,7 +66,7 @@ export default function Cards({
       _cards[dragItemIndex] = dragOverItem;
       _cards[dragOverItemIndex] = dragItem;
       setCards(_cards);
-      onReorder(_cards);
+      reorderCards(_cards);
       setDragItemIndex(undefined);
       setDragOverItemIndex(undefined);
     }
@@ -149,18 +86,23 @@ export default function Cards({
   };
 
   return (
-    <Box
+    <CustomSlider
       sx={{
         display: "flex",
         flexDirection: "column",
         gap: 6,
-        overflowY: "auto",
-        maxHeight: "75vh",
+        overflowY: { sm: "none", md: "auto" },
+        maxHeight: { sm: "auto", md: "75vh" },
       }}
     >
       <TransitionGroup>
-        {cardsState.map((card, index) => (
+        {AICards.filter((card) =>
+          searchTerms.every((term) =>
+            JSON.stringify(card).toLowerCase().includes(term)
+          )
+        ).map((card, index) => (
           <CSSTransition key={index} timeout={500} classNames="card">
+            {/* TODO: This Box can be reused (in Games Cards too) */}
             <Box
               sx={{
                 flexDirection: "column",
@@ -253,10 +195,20 @@ export default function Cards({
               >
                 <Button
                   variant="contained"
-                  endIcon={<EditIcon />}
-                  onClick={() => onEdit(cards[index])}
+                  endIcon={
+                    editingCard?.id === AICards[index].id ? (
+                      <ClearIcon />
+                    ) : (
+                      <EditIcon />
+                    )
+                  }
+                  onClick={() => {
+                    editingCard?.id === AICards[index].id
+                      ? setEditingCard(null)
+                      : setEditingCard(AICards[index]);
+                  }}
                   sx={{
-                    marginRight: 2.5,
+                    marginRight: 3,
                     width: {
                       xs: theme.spacing(13),
                       sm: theme.spacing(16),
@@ -264,12 +216,12 @@ export default function Cards({
                     },
                   }}
                 >
-                  Edit
+                  {editingCard?.id === AICards[index].id ? "Cancel" : "Edit"}
                 </Button>
                 <Button
                   variant="contained"
-                  endIcon={<ClearIcon />}
-                  onClick={() => onDelete(index)}
+                  endIcon={<DeleteIcon />}
+                  onClick={() => deleteCard(card.id)}
                   sx={{
                     width: {
                       xs: theme.spacing(16),
@@ -285,6 +237,6 @@ export default function Cards({
           </CSSTransition>
         ))}
       </TransitionGroup>
-    </Box>
+    </CustomSlider>
   );
 }

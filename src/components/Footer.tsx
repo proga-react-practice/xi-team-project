@@ -56,7 +56,11 @@ function Footer() {
                     gap: 2,
                   }}
                 >
-                  <Links link="#" icon={InstagramIcon} title="Instagram" />
+                  <Links
+                    link="https://www.instagram.com/mir_maks13"
+                    icon={InstagramIcon}
+                    title="Instagram"
+                  />
                   <Links link="#" icon={YouTubeIcon} title="YouTube" />
                 </Container>
               </Grid>
@@ -70,8 +74,16 @@ function Footer() {
                     gap: 2,
                   }}
                 >
-                  <Links link="#" icon={XIcon} title="X" />
-                  <Links link="#" icon={TelegramIcon} title="Telegram" />
+                  <Links
+                    link="https://x.com/Sofiia_Stanish"
+                    icon={XIcon}
+                    title="X"
+                  />
+                  <Links
+                    link="https://t.me/Sofia_Stanishevska"
+                    icon={TelegramIcon}
+                    title="Telegram"
+                  />
                 </Container>
               </Grid>
             </Grid>

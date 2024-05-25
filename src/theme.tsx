@@ -24,9 +24,6 @@ const lightTheme: ThemeOptions = createTheme({
     secondary: {
       main: lightBlue,
     },
-    error: {
-      main: "#ed5d53",
-    },
     background: {
       default: lightBackgroundColor,
       paper: lightSecondBackgroundColor,
@@ -372,5 +369,4 @@ const darkTheme: ThemeOptions = createTheme({
 });
 
 // theme = responsiveFontSizes(theme);
-// якщо адаптовувати шрифти, то потрібно й адаптовувати розмір Chip на формі
 export { lightTheme, darkTheme };
