@@ -77,13 +77,12 @@ export const CardComponent: React.FC<{ card: Card }> = ({ card }) => {
   );
 };
 
-
 interface ICardsProps {
   searchTerms: string[];
 }
 
 export default function CardsList({ searchTerms }: ICardsProps) {
-  const { cards, reorderCards } = useCardsContext();
+  const { cards, reorderCards } = useGamesCardsContext();
   const [dragItemIndex, setDragItemIndex] = useState<number | null>(null);
   const [dragOverItemIndex, setDragOverItemIndex] = useState<number | null>(
     null
