@@ -9,6 +9,7 @@ import CustomSlider from "../../ScrollContainer";
 import { useState, useEffect } from "react";
 import { useAICardsContext } from "../../context/useAICardsContext";
 import { CardsInfo } from "../../Cards/CardsInfo";
+import BasisCard from "../../Cards/BasisCard";
 
 interface ICardsProps {
   searchTerms: string[];
@@ -103,42 +104,8 @@ export default function Cards({ searchTerms }: ICardsProps) {
         ).map((card, index) => (
           <CSSTransition key={index} timeout={500} classNames="card">
             {/* TODO: This Box can be reused (in Games Cards too) */}
-            <Box
+            <BasisCard
               sx={{
-                flexDirection: "column",
-                paddingTop: 2,
-                paddingBottom: 2,
-                paddingLeft: { md: 0, lg: 2 },
-                paddingRight: { md: 0, lg: 2 },
-                maxWidth: { md: "90%", lg: "80%" },
-                border: "2px solid",
-                borderColor: theme.palette.text.primary,
-                py: 2.5,
-                borderRadius: 2,
-                position: "relative",
-                marginBottom: 5,
-                bgcolor: "background.paper",
-                "&::after": {
-                  content: '""',
-                  position: "absolute",
-                  bottom: {
-                    xs: theme.spacing(1),
-                    md: theme.spacing(0.875),
-                    lg: theme.spacing(1),
-                  },
-                  left: {
-                    xs: theme.spacing(1),
-                    sm: theme.spacing(2),
-                    md: theme.spacing(4),
-                  },
-                  right: {
-                    xs: theme.spacing(0.7),
-                    sm: theme.spacing(1),
-                    md: theme.spacing(2),
-                  },
-                  height: "2px",
-                  backgroundColor: theme.palette.text.primary,
-                },
                 "& > *:not(.MuiButton-root)": {
                   pointerEvents: "auto",
                 },
@@ -233,7 +200,7 @@ export default function Cards({ searchTerms }: ICardsProps) {
                   Delete
                 </Button>
               </Box>
-            </Box>
+            </BasisCard>
           </CSSTransition>
         ))}
       </TransitionGroup>

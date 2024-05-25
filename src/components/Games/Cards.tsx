@@ -8,6 +8,7 @@ import { useGamesCardsContext } from "../context/useGamesCardsContext";
 import { CardsInfo } from "../Cards/CardsInfo";
 import { CardInfoMix } from "../Cards/CardsInfoMix";
 import { ModalCardBox } from "../Cards/ModalCardBox";
+import BasisCard from "../Cards/BasisCard";
 
 export interface Card {
   id: string;
@@ -22,40 +23,7 @@ export const CardComponent: React.FC<{ card: Card }> = ({ card }) => {
   const { deleteCard, setEditingCard } = useGamesCardsContext();
 
   return (
-    <Box
-      sx={{
-        flexDirection: "column",
-        paddingTop: 2,
-        paddingBottom: 2,
-        paddingLeft: { md: 0, lg: 2 },
-        paddingRight: { md: 0, lg: 2 },
-        maxWidth: { md: "90%", lg: "80%" },
-        border: "2px solid",
-        borderColor: theme.palette.text.primary,
-        py: 2.5,
-        borderRadius: 2,
-        position: "relative",
-        marginBottom: 5,
-        bgcolor: "background.paper",
-        "&::after": {
-          content: '""',
-          position: "absolute",
-          bottom: theme.spacing(1),
-          left: {
-            xs: theme.spacing(1),
-            sm: theme.spacing(2),
-            md: theme.spacing(4),
-          },
-          right: {
-            xs: theme.spacing(0.7),
-            sm: theme.spacing(1),
-            md: theme.spacing(2),
-          },
-          height: "2px",
-          backgroundColor: theme.palette.text.primary,
-        },
-      }}
-    >
+    <BasisCard>
       <CardsInfo title="Name of the Game" info={card.name} />
       <CardsInfo title="Difficulty" info={card.difficulty} />
       <CardsInfo
@@ -104,7 +72,7 @@ export const CardComponent: React.FC<{ card: Card }> = ({ card }) => {
           Delete
         </Button>
       </Box>
-    </Box>
+    </BasisCard>
   );
 };
 
