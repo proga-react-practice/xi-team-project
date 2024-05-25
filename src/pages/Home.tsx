@@ -57,7 +57,7 @@ export default function Home() {
             />
             <TextFields
               text="Welcome to our site. We are the Xi team. 
-            The team members are Sofiia Stanishevska and Maksym Matskiv. Our project 
+            The team members are Sofiia Stanishevska and Maxym Matskiv. Our project 
             is based on the topic of artificial intelligence in games."
             />
           </Box>
