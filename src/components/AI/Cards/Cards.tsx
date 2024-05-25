@@ -157,7 +157,9 @@ export default function Cards({ searchTerms }: ICardsProps) {
     >
       <TransitionGroup>
         {AICards.filter((card) =>
-          searchTerms.every((term) => JSON.stringify(card).includes(term))
+          searchTerms.every((term) =>
+            JSON.stringify(card).toLowerCase().includes(term)
+          )
         ).map((card, index) => (
           <CSSTransition key={index} timeout={500} classNames="card">
             <Box

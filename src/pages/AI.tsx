@@ -36,7 +36,7 @@ export default function App() {
     const query = event.target.value;
     setSearchQuery(query);
 
-    const terms = query.split(";");
+    const terms = query.toLowerCase().split(";");
     setSearchTerms(terms ? terms.map((term) => term.trim()) : []);
   };
   return (
