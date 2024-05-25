@@ -154,19 +154,6 @@ function MixCardsContent() {
     }
   };
 
-  const handleDragEnter = (index: number) => {
-    setDragOverItemIndex(index);
-  };
-
-  const handleDragLeave = () => {
-    setDragOverItemIndex(undefined);
-  };
-
-  const handleDragEnd = () => {
-    setDragItemIndex(undefined);
-    setDragOverItemIndex(undefined);
-  };
-
   const deleteCard = (id: string) => {
     setMixedCards((prevCards) => prevCards.filter((card) => card.id !== id));
   };
@@ -440,9 +427,6 @@ function MixCardsContent() {
                       handleDragStart={handleDragStart}
                       handleDragOver={handleDragOver}
                       handleDrop={handleDrop}
-                      handleDragEnter={handleDragEnter}
-                      handleDragLeave={handleDragLeave}
-                      handleDragEnd={handleDragEnd}
                       dragItemIndex={dragItemIndex}
                       deleteCard={deleteCard}
                     />

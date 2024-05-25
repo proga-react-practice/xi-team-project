@@ -22,9 +22,6 @@ const FinalCard: React.FC<{
     index: number
   ) => void;
   handleDrop: () => void;
-  handleDragEnter: (index: number) => void;
-  handleDragLeave: () => void;
-  handleDragEnd: () => void;
   dragItemIndex: number | undefined;
   deleteCard: (id: string) => void;
 }> = ({
@@ -35,9 +32,6 @@ const FinalCard: React.FC<{
   handleDragStart,
   handleDragOver,
   handleDrop,
-  handleDragEnter,
-  handleDragLeave,
-  handleDragEnd,
   dragItemIndex,
   deleteCard,
 }) => {
@@ -57,9 +51,6 @@ const FinalCard: React.FC<{
         handleDragOver(event, index)
       }
       onDrop={handleDrop}
-      onDragEnter={() => handleDragEnter(index)}
-      onDragLeave={handleDragLeave}
-      onDragEnd={handleDragEnd}
       sx={{
         cursor: dragItemIndex === index ? "grabbing" : "grab",
       }}

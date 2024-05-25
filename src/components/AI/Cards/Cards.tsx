@@ -73,19 +73,6 @@ export default function Cards({ searchTerms }: ICardsProps) {
     }
   };
 
-  const handleDragEnter = (index: number) => {
-    setDragOverItemIndex(index);
-  };
-
-  const handleDragLeave = () => {
-    setDragOverItemIndex(undefined);
-  };
-
-  const handleDragEnd = () => {
-    setDragItemIndex(undefined);
-    setDragOverItemIndex(undefined);
-  };
-
   return (
     <CustomSlider
       sx={{
@@ -124,9 +111,6 @@ export default function Cards({ searchTerms }: ICardsProps) {
                   handleDragOver(event, index)
                 }
                 onDrop={handleDrop}
-                onDragEnter={() => handleDragEnter(index)}
-                onDragLeave={handleDragLeave}
-                onDragEnd={handleDragEnd}
                 sx={{
                   cursor: dragItemIndex === index ? "grabbing" : "grab",
                 }}
