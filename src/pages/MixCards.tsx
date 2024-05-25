@@ -37,7 +37,7 @@ const modalStyle = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: { xs: "95%", sm: "90%" },
+  width: { xs: "98%", sm: "90%" },
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -242,7 +242,7 @@ function MixCardsContent() {
           <Box sx={modalStyle}>
             <Box
               sx={{
-                marginTop: { sm: -3, md: -5 },
+                marginTop: { xs: -3, sm: -3, md: -5 },
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
