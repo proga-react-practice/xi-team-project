@@ -146,10 +146,15 @@ const Form: React.FC = () => {
             display: { xs: "block", sm: "flex", md: "flex" },
             justifyContent: "space-between",
             marginBottom: 1,
-            gap: 1,
+            gap: { xs: 3, sm: 1, md: 1 },
           }}
         >
-          <Box sx={{ flex: 1 }}>
+          <Box
+            sx={{
+              flex: 1,
+              mb: { xs: 3, sm: 0, md: 0 },
+            }}
+          >
             <FormControl fullWidth>
               <TextField
                 label={placeholders.price}
