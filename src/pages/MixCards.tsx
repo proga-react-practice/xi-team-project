@@ -239,7 +239,9 @@ function MixCardsContent() {
               sx={{ width: { xs: "90%", sm: "90%", md: "auto" } }}
             />
 
-            <Button onClick={handleOpen}>Add Cards</Button>
+            <Button variant="contained" onClick={handleOpen}>
+              Add Cards
+            </Button>
           </Box>
         </Box>
 

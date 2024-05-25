@@ -102,6 +102,7 @@ export default function Cards({ searchTerms }: ICardsProps) {
           )
         ).map((card, index) => (
           <CSSTransition key={index} timeout={500} classNames="card">
+            {/* TODO: This Box can be reused (in Games Cards too) */}
             <Box
               sx={{
                 flexDirection: "column",

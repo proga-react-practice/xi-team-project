@@ -1,8 +1,8 @@
-import { Container, Typography, Chip, Box } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+import { Container, Typography, Chip, Box } from "@mui/material";
 import { ICardsInfoProps } from "./ICardsInfoProps";
 
-export const CardsInfo: React.FC<ICardsInfoProps> = ({ title, info }) => {
+export const CardInfoMix: React.FC<ICardsInfoProps> = ({ title, info }) => {
   const theme = useTheme();
   return (
     <Container
@@ -12,14 +12,15 @@ export const CardsInfo: React.FC<ICardsInfoProps> = ({ title, info }) => {
         gap: 2,
         flexDirection: "row",
         marginBottom: 2,
+        paddingLeft: { xs: 1, sm: 1, md: 1, lg: 2 },
       }}
     >
       <Typography
         variant="h4"
         color="text.primary"
         sx={{
-          width: { xs: "5em", sm: "14.6em", md: "6.7em", lg: "14.6em" },
-          textAlign: "right",
+          width: { xs: "5em", sm: "5em", md: "5em", lg: "4.5em" },
+          textAlign: "left",
           flexShrink: 0,
         }}
       >
