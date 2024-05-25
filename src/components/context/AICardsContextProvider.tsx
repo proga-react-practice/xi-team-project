@@ -14,18 +14,6 @@ export interface AICard {
   id: string;
 }
 
-// export interface MixedCard {
-//   name: string;
-//   difficulty: string;
-//   price: number;
-//   currency: string;
-//   levelOfAI?: string[];
-//   whereAIIsUsed?: string[];
-//   TypeOfAI?: string;
-//   rateAIIntelligence?: number;
-//   id: string;
-// }
-
 interface AICardsContextType {
   AICards: AICard[];
   addCard: (card: AICard) => void;
@@ -38,8 +26,6 @@ interface AICardsContextType {
   setSearchQuery: (query: string) => void;
   searchTerms: string[];
   setSearchTerms: (terms: string[]) => void;
-  // mixedCard: MixedCard | null;
-  // setMixedCard: React.Dispatch<React.SetStateAction<MixedCard | null>>;
 }
 
 const AICardsContext = createContext<AICardsContextType | undefined>(undefined);
@@ -62,7 +48,6 @@ export const AICardsProvider: React.FC<{ children: React.ReactNode }> = ({
   const [editingCard, setEditingCard] = useState<AICard | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [searchTerms, setSearchTerms] = useState<string[]>([]);
-  // const [mixedCard, setMixedCard] = useState<MixedCard | null>(null);
 
   useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(AICards));
@@ -101,8 +86,6 @@ export const AICardsProvider: React.FC<{ children: React.ReactNode }> = ({
         setSearchQuery,
         searchTerms,
         setSearchTerms,
-        // mixedCard,
-        // setMixedCard,
       }}
     >
       {children}
