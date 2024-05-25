@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { Card } from "./Cards";
 import {
   TextField,
@@ -16,8 +16,7 @@ import { Controller, useForm } from "react-hook-form";
 import { useCardsContext } from "../context/GamesCardsContextProvider";
 
 const Form: React.FC = () => {
-  const { addCard, updateCard, editingCard, setEditingCard } =
-    useCardsContext();
+  const { addCard, updateCard, editingCard } = useCardsContext();
 
   const placeholders = {
     name: "Name of the Game",
@@ -38,11 +37,24 @@ const Form: React.FC = () => {
   const { register, handleSubmit, control, formState, reset, setValue } = form;
   const { errors } = formState;
 
+  const clearForm = useCallback(() => {
+    reset({
+      name: "",
+      difficulty: "",
+      price: 0,
+      currency: "",
+    });
+  }, [reset]);
   useEffect(() => {
-    if (editingCard) {
-      reset(editingCard);
-    }
-  }, [editingCard, reset]);
+    const clearOrResetForm = () => {
+      if (!editingCard) {
+        clearForm();
+      } else {
+        reset(editingCard);
+      }
+    };
+    clearOrResetForm();
+  }, [editingCard, reset, clearForm]);
 
   const onSubmitHandler = (data: Card) => {
     if (editingCard) {
@@ -51,20 +63,6 @@ const Form: React.FC = () => {
       addCard({ ...data, id: crypto.randomUUID() });
     }
     clearForm();
-  };
-
-  const clearForm = () => {
-    reset({
-      name: "",
-      difficulty: "",
-      price: 0,
-      currency: "",
-    });
-  };
-
-  const handleCancel = () => {
-    clearForm();
-    setEditingCard(null);
   };
 
   return (
@@ -100,7 +98,7 @@ const Form: React.FC = () => {
           render={({ field: { onChange, onBlur, value } }) => (
             <TextField
               fullWidth
-              label={placeholders.name}
+              label={editingCard ? editingCard.name : placeholders.name}
               variant="outlined"
               value={value || ""}
               onChange={(e) => {
@@ -111,6 +109,7 @@ const Form: React.FC = () => {
             />
           )}
         />
+
         <FormHelperText>{errors.name?.message ?? " "}</FormHelperText>
 
         <FormControl fullWidth>
@@ -219,25 +218,15 @@ const Form: React.FC = () => {
             gap: 1,
           }}
         >
-          {!editingCard ? (
-            <Button
-              fullWidth
-              variant="contained"
-              startIcon={<ClearIcon />}
-              onClick={clearForm}
-            >
-              Clear
-            </Button>
-          ) : (
-            <Button
-              fullWidth
-              variant="contained"
-              startIcon={<ClearIcon />}
-              onClick={handleCancel}
-            >
-              Cancel
-            </Button>
-          )}
+          <Button
+            fullWidth
+            variant="contained"
+            startIcon={<ClearIcon />}
+            onClick={clearForm}
+          >
+            Clear
+          </Button>
+
           <Button
             fullWidth
             variant="contained"

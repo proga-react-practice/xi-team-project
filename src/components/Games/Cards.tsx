@@ -21,6 +21,23 @@ export interface Card {
 export const CardComponent: React.FC<{ card: Card }> = ({ card }) => {
   const theme = useTheme();
   const { deleteCard, setEditingCard } = useCardsContext();
+  const [isEditing, setIsEditing] = useState(false);
+
+  const handleCancel = () => {
+    setEditingCard(null);
+    setIsEditing(false);
+    const clearFormEvent = new CustomEvent("clearFormEvent");
+    document.dispatchEvent(clearFormEvent);
+  };
+
+  const handleEditClick = () => {
+    if (isEditing) {
+      handleCancel();
+    } else {
+      setIsEditing(true);
+      setEditingCard(card);
+    }
+  };
 
   return (
     <Box
@@ -77,8 +94,8 @@ export const CardComponent: React.FC<{ card: Card }> = ({ card }) => {
       >
         <Button
           variant="contained"
-          endIcon={<EditIcon />}
-          onClick={() => setEditingCard(card)}
+          endIcon={isEditing ? <ClearIcon /> : <EditIcon />}
+          onClick={handleEditClick}
           sx={{
             width: {
               xs: theme.spacing(16.5),
@@ -88,8 +105,9 @@ export const CardComponent: React.FC<{ card: Card }> = ({ card }) => {
             marginRight: 3,
           }}
         >
-          Edit
+          {isEditing ? "Cancel" : "Edit"}
         </Button>
+
         <Button
           variant="contained"
           endIcon={<ClearIcon />}
