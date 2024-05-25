@@ -19,10 +19,10 @@ export interface MixedCard {
   difficulty: string;
   price: number;
   currency: string;
-  levelOfAI?: string[];
-  whereAIIsUsed?: string[];
-  TypeOfAI?: string;
-  rateAIIntelligence?: number;
+  levelOfAI: string[];
+  whereAIIsUsed: string[];
+  TypeOfAI: string;
+  rateAIIntelligence: number;
   id: string;
 }
 

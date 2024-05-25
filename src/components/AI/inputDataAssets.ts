@@ -22,7 +22,7 @@ export const INPUT_DATA_ASSETS: CheckboxRadioOptions[] = [
     value: [
       "Enemy AI",
       "Friendly AI",
-      "Character Interaction",
+      "Interaction",
       "Pathfinding",
       "Decision Making",
     ],
