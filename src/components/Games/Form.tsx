@@ -12,7 +12,7 @@ import { Container, Typography, FormControl } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import ClearIcon from "@mui/icons-material/Clear";
 import SendIcon from "@mui/icons-material/Send";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useCardsContext } from "../context/GamesCardsContextProvider";
 
 const Form: React.FC = () => {
@@ -31,11 +31,11 @@ const Form: React.FC = () => {
     defaultValues: {
       name: "",
       difficulty: "",
-      price: 0, // Ensure price is initialized as a number
+      price: 0,
       currency: "",
     },
   });
-  const { register, handleSubmit, formState, reset, setValue } = form;
+  const { register, handleSubmit, control, formState, reset, setValue } = form;
   const { errors } = formState;
 
   useEffect(() => {
@@ -66,6 +66,7 @@ const Form: React.FC = () => {
     clearForm();
     setEditingCard(null);
   };
+
   return (
     <>
       <Container
@@ -86,19 +87,29 @@ const Form: React.FC = () => {
           {editingCard ? "Edit the Game" : "Register the Game"}
         </Typography>
 
-        <TextField
-          fullWidth
-          label={placeholders.name}
-          variant="outlined"
-          value={form.watch("name")}
-          {...register("name", {
+        <Controller
+          name="name"
+          control={control}
+          rules={{
             required: { value: true, message: "Name is required" },
             maxLength: {
               value: 30,
               message: "Name cannot exceed 30 characters",
             },
-            onChange: (e) => setValue("name", e.target.value),
-          })}
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextField
+              fullWidth
+              label={placeholders.name}
+              variant="outlined"
+              value={value || ""}
+              onChange={(e) => {
+                onChange(e);
+                setValue("name", e.target.value);
+              }}
+              onBlur={onBlur}
+            />
+          )}
         />
         <FormHelperText>{errors.name?.message ?? " "}</FormHelperText>
 
@@ -148,7 +159,19 @@ const Form: React.FC = () => {
                 {...register("price", {
                   required: { value: true, message: "Price is required" },
                   min: { value: 0, message: "Price must be a positive number" },
-                  onChange: (e) => setValue("price", e.target.value),
+                  validate: (value) => {
+                    const stringValue = value.toString();
+                    return stringValue.startsWith("0") && stringValue !== "0"
+                      ? "Price cannot start with zero"
+                      : true;
+                  },
+                  onChange: (e) => {
+                    let value = e.target.value;
+                    if (value.startsWith("0") && value !== "0") {
+                      value = value.slice(1);
+                    }
+                    setValue("price", value, { shouldValidate: true });
+                  },
                 })}
               />
             </FormControl>
