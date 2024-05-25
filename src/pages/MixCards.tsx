@@ -23,7 +23,7 @@ import { AICardComponent } from "../components/AI/Cards/AICardComponent";
 import FinalCard from "../components/Cards/FinalCard";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { CardComponentMix } from "../components/Games/Cards";
-import { useAICardsContext } from "../components/context/AICardsContextProvider";
+import { useAICardsContext } from "../components/context/useAICardsContext";
 import CustomSlider from "../components/ScrollContainer";
 import { HEADER_HEIGHT } from "../constants";
 import Title from "../components/Title";

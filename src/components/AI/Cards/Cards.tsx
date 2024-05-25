@@ -7,7 +7,7 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { useTheme } from "@mui/material/styles";
 import CustomSlider from "../../ScrollContainer";
 import { useState, useEffect } from "react";
-import { useAICardsContext } from "../../context/AICardsContextProvider";
+import { useAICardsContext } from "../../context/useAICardsContext";
 import { CardsInfo } from "../../Cards/CardsInfo";
 
 interface ICardsProps {
