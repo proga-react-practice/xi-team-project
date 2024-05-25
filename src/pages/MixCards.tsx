@@ -208,7 +208,7 @@ function MixCardsContent() {
             display: "flex",
             alignItems: "center",
             gap: 2,
-            flexDirection: { sm: "column", md: "row" },
+            flexDirection: { xs: "column", sm: "column", md: "row" },
           }}
         >
           <Title icon={DashboardIcon} title="Final Cards" />
@@ -224,7 +224,7 @@ function MixCardsContent() {
               label="Search Card"
               value={searchQuery}
               onChange={handleSearchChange(setSearchQuery, setSearchTerms)}
-              sx={{ width: { sm: "90%", md: "auto" } }}
+              sx={{ width: { xs: "90%", sm: "90%", md: "auto" } }}
             />
 
             <Button variant="contained" onClick={handleOpen}>
