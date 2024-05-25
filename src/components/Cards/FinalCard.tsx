@@ -1,8 +1,8 @@
 import React from "react";
 import { Box, Grid, Button } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { CardsInfo as CardsInfoGames } from "../components/Cards/CardsInfo";
-import { MixedCard } from "./context/GamesCardsContextProvider";
+import { CardsInfo as CardsInfoGames } from "./CardsInfo";
+import { MixedCard } from "../context/GamesCardsContextProvider";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 const FinalCard: React.FC<{

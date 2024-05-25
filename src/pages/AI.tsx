@@ -46,15 +46,14 @@ export default function App() {
         display: "flex",
         justifyContent: "space-between",
         bgcolor: theme.palette.background.default,
-
         minHeight: `calc(100vh - ${HEADER_HEIGHT}px)`,
       }}
     >
       <Container
         sx={{
           width: { sm: "100%", md: "40%" },
-          paddingLeft: { xs: 0, md: 2, lg: 3 },
-          paddingRight: { xs: 0, md: 2, lg: 3 },
+          paddingLeft: theme.spacing(1),
+          paddingRight: theme.spacing(1),
         }}
       >
         <Title icon={SmartToyIcon} title="Registration Form" />
@@ -69,8 +68,8 @@ export default function App() {
           minWidth: { md: "40%", lg: "59%" },
           maxWidth: { md: "100%", lg: "70%" },
           flexGrow: 1,
-          paddingLeft: { xs: 0, md: 2, lg: 3 },
-          paddingRight: { xs: 0, md: 2, lg: 3 },
+          paddingLeft: theme.spacing(1),
+          paddingRight: theme.spacing(1),
         }}
       >
         <Box

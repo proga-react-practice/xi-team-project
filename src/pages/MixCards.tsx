@@ -20,7 +20,7 @@ import {
   useCardsContext,
 } from "../components/context/GamesCardsContextProvider";
 import { AICardComponent } from "../components/AI/Cards/AICardComponent";
-import FinalCard from "../components/FinalCard";
+import FinalCard from "../components/Cards/FinalCard";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { CardComponentMix } from "../components/Games/Cards";
 import { useAICardsContext } from "../components/context/AICardsContextProvider";
@@ -37,11 +37,11 @@ const modalStyle = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: { xs: "95%", sm: "90%", md: "90%" },
+  width: { xs: "95%", sm: "90%" },
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
-  p: { xs: 1, sm: 2, md: 4, lg: 4 },
+  p: { xs: 1, sm: 2, md: 4 },
   height: { xs: "70vh", sm: "75vh", md: "80vh" },
   overflowY: "auto",
   borderRadius: 2,
@@ -208,7 +208,7 @@ function MixCardsContent() {
             display: "flex",
             alignItems: "center",
             gap: 2,
-            flexDirection: { xs: "column", sm: "column", md: "row" },
+            flexDirection: { sm: "column", md: "row" },
           }}
         >
           <Title icon={DashboardIcon} title="Final Cards" />
@@ -224,7 +224,7 @@ function MixCardsContent() {
               label="Search Card"
               value={searchQuery}
               onChange={handleSearchChange(setSearchQuery, setSearchTerms)}
-              sx={{ width: { xs: "90%", sm: "90%", md: "auto" } }}
+              sx={{ width: { sm: "90%", md: "auto" } }}
             />
 
             <Button variant="contained" onClick={handleOpen}>
@@ -242,20 +242,16 @@ function MixCardsContent() {
           <Box sx={modalStyle}>
             <Box
               sx={{
-                marginTop: { xs: -3, sm: -3, md: -5, lg: -5 },
-                marginLeft: { xs: 0, sm: 0, md: 0, lg: 0 },
-                marginRight: { xs: 0, sm: 0, md: 0, lg: 0 },
-                width: { xs: "100%", sm: "100%", md: "100%", lg: "100%" },
+                marginTop: { sm: -3, md: -5 },
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
-                height: "100%",
               }}
             >
               <Grid
                 container
                 spacing={2}
-                sx={{ flexDirection: { xs: "column", md: "row", lg: "row" } }}
+                sx={{ flexDirection: { xs: "column", md: "row" } }}
               >
                 <Grid
                   item
@@ -283,7 +279,7 @@ function MixCardsContent() {
                         setSearchQueryGame,
                         setSearchTermsGame
                       )}
-                      sx={{ width: { xs: "90%", sm: "90%", md: "auto" } }}
+                      sx={{ width: { sm: "90%", md: "auto" } }}
                     />
                   </Box>
                   <RadioGroup
@@ -302,7 +298,6 @@ function MixCardsContent() {
                         <Accordion
                           key={card.id}
                           sx={{
-                            width: { xs: "100%", md: "100%", lg: "100%" },
                             border:
                               card.id === selectedCardGames
                                 ? "2px solid"
@@ -318,14 +313,14 @@ function MixCardsContent() {
                             expandIcon={<ArrowDropDownIcon />}
                             aria-controls="panel1-content"
                             id="panel1-header"
-                            sx={{ marginLeft: { xs: 0, sm: 0, md: 0, lg: 2 } }}
+                            sx={{ marginLeft: { md: 0, lg: 2 } }}
                           >
                             <Typography>{card.name}</Typography>
                           </AccordionSummary>
                           <AccordionDetails
                             sx={{
-                              paddingRight: { xs: 2, sm: 2, md: 0, lg: 2 },
-                              paddingLeft: { xs: 2, sm: 2, md: 1, lg: 2 },
+                              paddingRight: { sm: 2, md: 0, lg: 2 },
+                              paddingLeft: { sm: 2, md: 1, lg: 2 },
                             }}
                           >
                             <CardComponentMix card={card} />
@@ -337,7 +332,7 @@ function MixCardsContent() {
                 <Grid
                   item
                   sx={{
-                    width: { xs: "100%", md: "50%", lg: "50%" },
+                    width: { xs: "100%", md: "50%" },
                   }}
                 >
                   <Box
@@ -360,7 +355,7 @@ function MixCardsContent() {
                         setSearchQueryAI,
                         setSearchTermsAI
                       )}
-                      sx={{ width: { xs: "90%", sm: "90%", md: "auto" } }}
+                      sx={{ width: { sm: "90%", md: "auto" } }}
                     />
                   </Box>
                   <RadioGroup
@@ -377,7 +372,6 @@ function MixCardsContent() {
                       <Accordion
                         key={card.id}
                         sx={{
-                          width: { xs: "100%", md: "100%", lg: "100%" },
                           border:
                             card.id === selectedCardAI ? "2px solid" : "none",
                           backgroundColor:

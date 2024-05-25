@@ -208,7 +208,7 @@ export default function Cards({ searchTerms }: ICardsProps) {
                       : setEditingCard(AICards[index]);
                   }}
                   sx={{
-                    marginRight: 2.5,
+                    marginRight: 3,
                     width: {
                       xs: theme.spacing(13),
                       sm: theme.spacing(16),
