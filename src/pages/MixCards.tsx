@@ -11,6 +11,7 @@ import {
   Typography,
   FormHelperText,
   TextField,
+  useMediaQuery,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import {
@@ -31,7 +32,6 @@ import SmartToyIcon from "@mui/icons-material/SmartToy";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import { nanoid } from "nanoid";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
-
 const modalStyle = {
   position: "absolute",
   top: "50%",
@@ -172,6 +172,10 @@ function MixCardsContent() {
   };
   const [searchQuery, setSearchQuery] = useState("");
   const [searchTerms, setSearchTerms] = useState<string[]>([]);
+  const [searchQueryGame, setSearchQueryGame] = useState("");
+  const [searchTermsGame, setSearchTermsGame] = useState<string[]>([]);
+  const [searchQueryAI, setSearchQueryAI] = useState("");
+  const [searchTermsAI, setSearchTermsAI] = useState<string[]>([]);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const query = event.target.value;
@@ -180,6 +184,23 @@ function MixCardsContent() {
     const terms = query.toLowerCase().split(";");
     setSearchTerms(terms ? terms.map((term) => term.trim()) : []);
   };
+  const handleSearchGameChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const query = event.target.value;
+    setSearchQueryGame(query);
+
+    const terms = query.toLowerCase().split(";");
+    setSearchTermsGame(terms ? terms.map((term) => term.trim()) : []);
+  };
+  const handleSearchAIChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const query = event.target.value;
+    setSearchQueryAI(query);
+
+    const terms = query.toLowerCase().split(";");
+    setSearchTermsAI(terms ? terms.map((term) => term.trim()) : []);
+  };
+  const isSmallScreen = useMediaQuery("(max-width:600px)");
   return (
     <Box
       sx={{
@@ -252,47 +273,72 @@ function MixCardsContent() {
                     width: { xs: "100%", md: "50%", lg: "50%", xl: "45%" },
                   }}
                 >
-                  <Title icon={SportsEsportsIcon} title="Games Cards"></Title>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      gap: 2,
+                      marginTop: { xs: 1, sm: 0 },
+                    }}
+                  >
+                    <Title
+                      icon={SportsEsportsIcon}
+                      title={isSmallScreen ? "" : "Games Cards"}
+                    ></Title>
+                    <TextField
+                      label="Search Game Card"
+                      value={searchQueryGame}
+                      onChange={handleSearchGameChange}
+                      sx={{ width: { xs: "90%", sm: "90%", md: "auto" } }}
+                    />
+                  </Box>
                   <RadioGroup
                     aria-label="games-cards"
                     name="games-cards"
                     value={selectedCardGames}
                     onChange={handleRadioChangeGames}
                   >
-                    {cards.map((card) => (
-                      <Accordion
-                        key={card.id}
-                        sx={{
-                          width: { xs: "100%", md: "100%", lg: "100%" },
-                          border:
-                            card.id === selectedCardGames
-                              ? "2px solid"
-                              : "none",
-                          backgroundColor:
-                            card.id === selectedCardGames
-                              ? theme.palette.background.default
-                              : "none",
-                        }}
-                        onClick={() => setSelectedCardGames(card.id)}
-                      >
-                        <AccordionSummary
-                          expandIcon={<ArrowDropDownIcon />}
-                          aria-controls="panel1-content"
-                          id="panel1-header"
-                          sx={{ marginLeft: { xs: 0, sm: 0, md: 0, lg: 2 } }}
-                        >
-                          <Typography>{card.name}</Typography>
-                        </AccordionSummary>
-                        <AccordionDetails
+                    {cards
+                      .filter((card) =>
+                        searchTermsGame.every((term) =>
+                          JSON.stringify(card).toLowerCase().includes(term)
+                        )
+                      )
+                      .map((card) => (
+                        <Accordion
+                          key={card.id}
                           sx={{
-                            paddingRight: { xs: 2, sm: 2, md: 0, lg: 2 },
-                            paddingLeft: { xs: 2, sm: 2, md: 1, lg: 2 },
+                            width: { xs: "100%", md: "100%", lg: "100%" },
+                            border:
+                              card.id === selectedCardGames
+                                ? "2px solid"
+                                : "none",
+                            backgroundColor:
+                              card.id === selectedCardGames
+                                ? theme.palette.background.default
+                                : "none",
                           }}
+                          onClick={() => setSelectedCardGames(card.id)}
                         >
-                          <CardComponentMix card={card} />
-                        </AccordionDetails>
-                      </Accordion>
-                    ))}
+                          <AccordionSummary
+                            expandIcon={<ArrowDropDownIcon />}
+                            aria-controls="panel1-content"
+                            id="panel1-header"
+                            sx={{ marginLeft: { xs: 0, sm: 0, md: 0, lg: 2 } }}
+                          >
+                            <Typography>{card.name}</Typography>
+                          </AccordionSummary>
+                          <AccordionDetails
+                            sx={{
+                              paddingRight: { xs: 2, sm: 2, md: 0, lg: 2 },
+                              paddingLeft: { xs: 2, sm: 2, md: 1, lg: 2 },
+                            }}
+                          >
+                            <CardComponentMix card={card} />
+                          </AccordionDetails>
+                        </Accordion>
+                      ))}
                   </RadioGroup>
                 </Grid>
                 <Grid
@@ -301,14 +347,37 @@ function MixCardsContent() {
                     width: { xs: "100%", md: "50%", lg: "50%" },
                   }}
                 >
-                  <Title icon={SmartToyIcon} title="AI Cards"></Title>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      gap: 2,
+                      marginTop: { xs: 1, sm: 0 },
+                    }}
+                  >
+                    <Title
+                      icon={SmartToyIcon}
+                      title={isSmallScreen ? "" : "AI Cards"}
+                    ></Title>
+                    <TextField
+                      label="Search AI Card"
+                      value={searchQueryAI}
+                      onChange={handleSearchAIChange}
+                      sx={{ width: { xs: "90%", sm: "90%", md: "auto" } }}
+                    />
+                  </Box>
                   <RadioGroup
                     aria-label="ai-cards"
                     name="ai-cards"
                     value={selectedCardAI}
                     onChange={handleRadioChangeAI}
                   >
-                    {AICards.map((card, index) => (
+                    {AICards.filter((card) =>
+                      searchTermsAI.every((term) =>
+                        JSON.stringify(card).toLowerCase().includes(term)
+                      )
+                    ).map((card, index) => (
                       <Accordion
                         key={card.id}
                         sx={{

@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Grid, Button } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { CardsInfo as CardsInfoGames } from "../components/AI/Cards/Cards";
+import { CardsInfo as CardsInfoGames } from "../components/Cards/CardsInfo";
 import { MixedCard } from "./context/GamesCardsContextProvider";
 import DeleteIcon from "@mui/icons-material/Delete";
 
