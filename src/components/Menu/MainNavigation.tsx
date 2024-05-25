@@ -135,7 +135,7 @@ export default function MainNavigation({
               sx={{
                 flexGrow: 1,
                 "& .MuiTab-root": {
-                  mx: { sm: 0.5, md: 3, lg: 8, xl: 14 },
+                  mx: { sm: 0.5, md: 2, lg: 8, xl: 14 },
                 },
                 "& .MuiTabs-indicator": {
                   display: "none",
