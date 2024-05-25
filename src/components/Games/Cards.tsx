@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Button } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import ClearIcon from "@mui/icons-material/Clear";
 import EditIcon from "@mui/icons-material/Edit";
 import { useGamesCardsContext } from "../context/useGamesCardsContext";
+import CustomSlider from "../ScrollContainer";
 import { CardsInfo } from "../Cards/CardsInfo";
 import { CardInfoMix } from "../Cards/CardsInfoMix";
 import { ModalCardBox } from "../Cards/ModalCardBox";
@@ -76,29 +77,88 @@ export const CardComponent: React.FC<{ card: Card }> = ({ card }) => {
   );
 };
 
-const CardsList: React.FC = () => {
-  const { cards } = useGamesCardsContext();
+
+interface ICardsProps {
+  searchTerms: string[];
+}
+
+export default function CardsList({ searchTerms }: ICardsProps) {
+  const { cards, reorderCards } = useCardsContext();
+  const [dragItemIndex, setDragItemIndex] = useState<number | null>(null);
+  const [dragOverItemIndex, setDragOverItemIndex] = useState<number | null>(
+    null
+  );
+  const [cardsState, setCardsState] = useState(cards);
+
+  useEffect(() => {
+    setCardsState(cards);
+  }, [cards]);
+
+  const handleDragStart = (index: number) => {
+    setDragItemIndex(index);
+  };
+
+  const handleDragOver = (
+    event: React.DragEvent<HTMLDivElement>,
+    index: number
+  ) => {
+    event.preventDefault();
+    setDragOverItemIndex(index);
+  };
+
+  const handleDrop = () => {
+    if (
+      dragItemIndex !== null &&
+      dragOverItemIndex !== null &&
+      dragItemIndex !== dragOverItemIndex
+    ) {
+      const updatedCards = [...cardsState];
+      const [draggedItem] = updatedCards.splice(dragItemIndex, 1);
+      updatedCards.splice(dragOverItemIndex, 0, draggedItem);
+
+      setCardsState(updatedCards);
+      reorderCards(updatedCards);
+    }
+    setDragItemIndex(null);
+    setDragOverItemIndex(null);
+  };
 
   return (
-    <Box
+    <CustomSlider
       sx={{
         display: "flex",
         flexDirection: "column",
         gap: 6,
-        overflowY: "auto",
-        maxHeight: "75vh",
+        overflowY: { sm: "none", md: "auto" },
+        maxHeight: { sm: "auto", md: "75vh" },
       }}
     >
       <TransitionGroup>
-        {cards.map((card) => (
-          <CSSTransition key={card.id} timeout={500} classNames="card">
-            <CardComponent card={card} />
-          </CSSTransition>
-        ))}
+        {cardsState
+          .filter((card) =>
+            searchTerms.every((term) =>
+              JSON.stringify(card).toLowerCase().includes(term.toLowerCase())
+            )
+          )
+          .map((card, index) => (
+            <CSSTransition key={card.id} timeout={500} classNames="card">
+              <Box
+                draggable
+                onDragStart={() => handleDragStart(index)}
+                onDragOver={(event) => handleDragOver(event, index)}
+                onDrop={handleDrop}
+                sx={{
+                  cursor: dragItemIndex === index ? "grabbing" : "grab",
+                }}
+              >
+                <CardComponent card={card} />
+              </Box>
+            </CSSTransition>
+          ))}
       </TransitionGroup>
-    </Box>
+    </CustomSlider>
   );
-};
+}
 
 export const CardComponentMix: React.FC<{ card: Card }> = ({ card }) => {
   return (
@@ -112,5 +172,3 @@ export const CardComponentMix: React.FC<{ card: Card }> = ({ card }) => {
     </ModalCardBox>
   );
 };
-
-export { CardsList as Cards };

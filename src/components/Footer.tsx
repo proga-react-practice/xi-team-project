@@ -79,7 +79,11 @@ function Footer() {
                     icon={XIcon}
                     title="X"
                   />
-                  <Links link="#" icon={TelegramIcon} title="Telegram" />
+                  <Links
+                    link="https://t.me/Sofia_Stanishevska"
+                    icon={TelegramIcon}
+                    title="Telegram"
+                  />
                 </Container>
               </Grid>
             </Grid>
