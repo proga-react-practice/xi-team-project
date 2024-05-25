@@ -93,6 +93,21 @@ export default function CardsList({ searchTerms }: ICardsProps) {
     setCardsState(cards);
   }, [cards]);
 
+  const handleTouchStart = (
+    _event: React.TouchEvent<HTMLDivElement>,
+    index: number
+  ) => {
+    setDragItemIndex(index);
+  };
+
+  const handleTouchEnd = (
+    _event: React.TouchEvent<HTMLDivElement>,
+    index: number
+  ) => {
+    setDragOverItemIndex(index);
+    handleDrop();
+  };
+
   const handleDragStart = (index: number) => {
     setDragItemIndex(index);
   };
@@ -112,14 +127,15 @@ export default function CardsList({ searchTerms }: ICardsProps) {
       dragItemIndex !== dragOverItemIndex
     ) {
       const updatedCards = [...cardsState];
-      const [draggedItem] = updatedCards.splice(dragItemIndex, 1);
-      updatedCards.splice(dragOverItemIndex, 0, draggedItem);
-
+      const dragItem = updatedCards[dragItemIndex];
+      const dragOverItem = updatedCards[dragOverItemIndex];
+      updatedCards[dragItemIndex] = dragOverItem;
+      updatedCards[dragOverItemIndex] = dragItem;
       setCardsState(updatedCards);
       reorderCards(updatedCards);
+      setDragItemIndex(null);
+      setDragOverItemIndex(null);
     }
-    setDragItemIndex(null);
-    setDragOverItemIndex(null);
   };
 
   return (
@@ -143,6 +159,12 @@ export default function CardsList({ searchTerms }: ICardsProps) {
             <CSSTransition key={card.id} timeout={500} classNames="card">
               <Box
                 draggable
+                onTouchStart={(event: React.TouchEvent<HTMLDivElement>) =>
+                  handleTouchStart(event, index)
+                }
+                onTouchEnd={(event: React.TouchEvent<HTMLDivElement>) =>
+                  handleTouchEnd(event, index)
+                }
                 onDragStart={() => handleDragStart(index)}
                 onDragOver={(event) => handleDragOver(event, index)}
                 onDrop={handleDrop}
