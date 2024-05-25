@@ -4,7 +4,7 @@ import { useTheme } from "@mui/material/styles";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import ClearIcon from "@mui/icons-material/Clear";
 import EditIcon from "@mui/icons-material/Edit";
-import { useCardsContext } from "../context/GamesCardsContextProvider";
+import { useGamesCardsContext } from "../context/useGamesCardsContext";
 import { CardsInfo } from "../Cards/CardsInfo";
 import { CardInfoMix } from "../Cards/CardsInfoMix";
 import { ModalCardBox } from "../Cards/ModalCardBox";
@@ -19,7 +19,7 @@ export interface Card {
 
 export const CardComponent: React.FC<{ card: Card }> = ({ card }) => {
   const theme = useTheme();
-  const { deleteCard, setEditingCard } = useCardsContext();
+  const { deleteCard, setEditingCard } = useGamesCardsContext();
 
   return (
     <Box
@@ -109,7 +109,7 @@ export const CardComponent: React.FC<{ card: Card }> = ({ card }) => {
 };
 
 const CardsList: React.FC = () => {
-  const { cards } = useCardsContext();
+  const { cards } = useGamesCardsContext();
 
   return (
     <Box

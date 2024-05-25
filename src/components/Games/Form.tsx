@@ -13,11 +13,11 @@ import { useTheme } from "@mui/material/styles";
 import ClearIcon from "@mui/icons-material/Clear";
 import SendIcon from "@mui/icons-material/Send";
 import { useForm } from "react-hook-form";
-import { useCardsContext } from "../context/GamesCardsContextProvider";
+import { useGamesCardsContext } from "../context/useGamesCardsContext";
 
 const Form: React.FC = () => {
   const { addCard, updateCard, editingCard, setEditingCard } =
-    useCardsContext();
+    useGamesCardsContext();
 
   const placeholders = {
     name: "Name of the Game",

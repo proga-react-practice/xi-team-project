@@ -17,8 +17,8 @@ import { useTheme } from "@mui/material/styles";
 import {
   CardsProvider,
   MixedCard,
-  useCardsContext,
 } from "../components/context/GamesCardsContextProvider";
+import { useGamesCardsContext } from "../components/context/useGamesCardsContext";
 import { AICardComponent } from "../components/AI/Cards/AICardComponent";
 import FinalCard from "../components/Cards/FinalCard";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
@@ -49,7 +49,7 @@ const modalStyle = {
 
 function MixCardsContent() {
   const theme = useTheme();
-  const { cards } = useCardsContext();
+  const { cards } = useGamesCardsContext();
   const { AICards } = useAICardsContext();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);

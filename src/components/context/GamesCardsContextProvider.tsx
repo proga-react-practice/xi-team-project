@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect } from "react";
 
 const LOCAL_STORAGE_KEY = "cards";
 
@@ -37,17 +37,9 @@ interface CardsContextType {
   setMixedCard: React.Dispatch<React.SetStateAction<MixedCard | null>>;
 }
 
-const GamesCardsContext = createContext<CardsContextType | undefined>(
+export const GamesCardsContext = createContext<CardsContextType | undefined>(
   undefined
 );
-
-export const useCardsContext = () => {
-  const context = useContext(GamesCardsContext);
-  if (context === undefined) {
-    throw new Error("useCardsContext must be used within a CardsProvider");
-  }
-  return context;
-};
 
 export const CardsProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
