@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Grid, Button } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { CardsInfo as CardsInfoGames } from "./CardsInfo";
+import { CardsInfo } from "./CardsInfo";
 import { MixedCard } from "../context/GamesCardsContextProvider";
 import DeleteIcon from "@mui/icons-material/Delete";
 
@@ -93,21 +93,21 @@ const FinalCard: React.FC<{
         >
           <Grid container spacing={2}>
             <Grid item>
-              <CardsInfoGames title="Name of the Game" info={mixedCard.name} />
-              <CardsInfoGames title="Difficulty" info={mixedCard.difficulty} />
-              <CardsInfoGames
+              <CardsInfo title="Name of the Game" info={mixedCard.name} />
+              <CardsInfo title="Difficulty" info={mixedCard.difficulty} />
+              <CardsInfo
                 title="Price"
                 info={mixedCard.price.toString() + " " + mixedCard.currency}
               />
             </Grid>
             <Grid item>
-              <CardsInfoGames title="Level of AI" info={mixedCard.levelOfAI} />
-              <CardsInfoGames
+              <CardsInfo title="Level of AI" info={mixedCard.levelOfAI} />
+              <CardsInfo
                 title="Where AI is used"
                 info={mixedCard.whereAIIsUsed}
               />
-              <CardsInfoGames title="Type of AI" info={mixedCard.TypeOfAI} />
-              <CardsInfoGames
+              <CardsInfo title="Type of AI" info={mixedCard.TypeOfAI} />
+              <CardsInfo
                 title="AI intelligence"
                 info={mixedCard.rateAIIntelligence.toString()}
               />
