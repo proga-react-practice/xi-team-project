@@ -243,7 +243,7 @@ function MixCardsContent() {
                 <Grid
                   item
                   sx={{
-                    width: { xs: "100%", md: "50%", lg: "50%", xl: "45%" },
+                    width: { xs: "100%", md: "50%" },
                   }}
                 >
                   <Box
@@ -285,6 +285,7 @@ function MixCardsContent() {
                         <Accordion
                           key={card.id}
                           sx={{
+                            width: "100%",
                             border:
                               card.id === selectedCardGames
                                 ? "2px solid"
@@ -359,6 +360,7 @@ function MixCardsContent() {
                       <Accordion
                         key={card.id}
                         sx={{
+                          width: "100%",
                           border:
                             card.id === selectedCardAI ? "2px solid" : "none",
                           backgroundColor:
