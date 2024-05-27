@@ -37,9 +37,9 @@ There are several ways to use our product:
 - Node.js installed
 
 1) Download the repository:
-   ```bash
-   git clone https://github.com/proga-react-practice/xi-team-project.git
-    ```
+```bash
+git clone https://github.com/proga-react-practice/xi-team-project.git
+```
 2) Install all necessary packages:
 ```bash
  npm install
@@ -70,9 +70,9 @@ npm run dev
 - Встановлений Node.js
 
 1) Завантажити репозиторій:
-   ```bash
-   git clone https://github.com/proga-react-practice/xi-team-project.git
-    ```
+```bash
+git clone https://github.com/proga-react-practice/xi-team-project.git
+```
 2) Завантажити всі необхідні пакети:
 ```bash
  npm install
@@ -85,7 +85,7 @@ npm run dev
 ```bash
 npm start
 ```
-or
+або
 ```bash
 npm run dev
 ```
