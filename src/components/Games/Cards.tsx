@@ -21,7 +21,19 @@ export interface Card {
 
 export const CardComponent: React.FC<{ card: Card }> = ({ card }) => {
   const theme = useTheme();
-  const { deleteCard, setEditingCard } = useGamesCardsContext();
+  const { deleteCard, setEditingCard, editingCard } = useGamesCardsContext();
+
+  const handleCancel = () => {
+    setEditingCard(null);
+  };
+
+  const handleEditClick = () => {
+    if (editingCard) {
+      handleCancel();
+    } else {
+      setEditingCard(card);
+    }
+  };
 
   return (
     <BasisCard>
@@ -45,8 +57,8 @@ export const CardComponent: React.FC<{ card: Card }> = ({ card }) => {
       >
         <Button
           variant="contained"
-          endIcon={<EditIcon />}
-          onClick={() => setEditingCard(card)}
+          endIcon={editingCard ? <ClearIcon /> : <EditIcon />}
+          onClick={handleEditClick}
           sx={{
             width: {
               xs: theme.spacing(16.5),
@@ -56,8 +68,9 @@ export const CardComponent: React.FC<{ card: Card }> = ({ card }) => {
             marginRight: 3,
           }}
         >
-          Edit
+          {editingCard ? "Cancel" : "Edit"}
         </Button>
+
         <Button
           variant="contained"
           endIcon={<ClearIcon />}

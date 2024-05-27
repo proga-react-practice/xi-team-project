@@ -54,6 +54,7 @@ export default function App() {
           width: { sm: "100%", md: "40%" },
           paddingLeft: theme.spacing(1),
           paddingRight: theme.spacing(1),
+          marginBottom: 2,
         }}
       >
         <Title icon={SmartToyIcon} title="Registration Form" />
