@@ -1,6 +1,7 @@
-import { Container, Typography, Chip, Box } from "@mui/material";
+import { Container, Typography, Box } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { ICardsInfoProps } from "./ICardsInfoProps";
+import CardChip from "./CardChip";
 
 export const CardsInfo: React.FC<ICardsInfoProps> = ({ title, info }) => {
   const theme = useTheme();
@@ -25,6 +26,7 @@ export const CardsInfo: React.FC<ICardsInfoProps> = ({ title, info }) => {
       >
         {title}
       </Typography>
+      {/*TODO: Reuse this part? (same in CardsInfoMix) */}
       <Box
         sx={{
           display: "flex",
@@ -35,22 +37,23 @@ export const CardsInfo: React.FC<ICardsInfoProps> = ({ title, info }) => {
       >
         {Array.isArray(info) ? (
           info.map((option, index) => (
-            <Chip
+            <CardChip
               key={index}
               label={option}
               sx={{
                 margin: theme.spacing(0, 0.5),
-                display: "flex",
+                padding: { xs: 0.5, sm: 1, md: 1.5 },
+                height: "auto",
               }}
             />
           ))
         ) : (
-          <Chip
+          <CardChip
             label={info}
             sx={{
               margin: theme.spacing(0, 0.5),
               padding: { xs: 0.5, sm: 1, md: 1.5 },
-              //TODO: Add hyphenation
+              height: "auto",
             }}
           />
         )}

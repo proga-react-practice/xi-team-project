@@ -17,13 +17,13 @@ import { useTheme } from "@mui/material/styles";
 import {
   CardsProvider,
   MixedCard,
-  useCardsContext,
 } from "../components/context/GamesCardsContextProvider";
+import { useGamesCardsContext } from "../components/context/useGamesCardsContext";
 import { AICardComponent } from "../components/AI/Cards/AICardComponent";
 import FinalCard from "../components/Cards/FinalCard";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { CardComponentMix } from "../components/Games/Cards";
-import { useAICardsContext } from "../components/context/AICardsContextProvider";
+import { useAICardsContext } from "../components/context/useAICardsContext";
 import CustomSlider from "../components/ScrollContainer";
 import { HEADER_HEIGHT } from "../constants";
 import Title from "../components/Title";
@@ -49,7 +49,7 @@ const modalStyle = {
 
 function MixCardsContent() {
   const theme = useTheme();
-  const { cards } = useCardsContext();
+  const { cards } = useGamesCardsContext();
   const { AICards } = useAICardsContext();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -154,19 +154,6 @@ function MixCardsContent() {
     }
   };
 
-  const handleDragEnter = (index: number) => {
-    setDragOverItemIndex(index);
-  };
-
-  const handleDragLeave = () => {
-    setDragOverItemIndex(undefined);
-  };
-
-  const handleDragEnd = () => {
-    setDragItemIndex(undefined);
-    setDragOverItemIndex(undefined);
-  };
-
   const deleteCard = (id: string) => {
     setMixedCards((prevCards) => prevCards.filter((card) => card.id !== id));
   };
@@ -256,7 +243,7 @@ function MixCardsContent() {
                 <Grid
                   item
                   sx={{
-                    width: { xs: "100%", md: "50%", lg: "50%", xl: "45%" },
+                    width: { xs: "100%", md: "50%" },
                   }}
                 >
                   <Box
@@ -298,6 +285,7 @@ function MixCardsContent() {
                         <Accordion
                           key={card.id}
                           sx={{
+                            width: "100%",
                             border:
                               card.id === selectedCardGames
                                 ? "2px solid"
@@ -372,6 +360,7 @@ function MixCardsContent() {
                       <Accordion
                         key={card.id}
                         sx={{
+                          width: "100%",
                           border:
                             card.id === selectedCardAI ? "2px solid" : "none",
                           backgroundColor:
@@ -440,9 +429,6 @@ function MixCardsContent() {
                       handleDragStart={handleDragStart}
                       handleDragOver={handleDragOver}
                       handleDrop={handleDrop}
-                      handleDragEnter={handleDragEnter}
-                      handleDragLeave={handleDragLeave}
-                      handleDragEnd={handleDragEnd}
                       dragItemIndex={dragItemIndex}
                       deleteCard={deleteCard}
                     />

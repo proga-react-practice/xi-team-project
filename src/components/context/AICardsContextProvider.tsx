@@ -1,12 +1,8 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect } from "react";
 
 const LOCAL_STORAGE_KEY = "ai_cards";
 
 export interface AICard {
-  //   name: string;
-  //   difficulty: string;
-  //   price: number;
-  //   currency: string;
   levelOfAI: string[];
   whereAIIsUsed: string[];
   TypeOfAI: string;
@@ -28,15 +24,9 @@ interface AICardsContextType {
   setSearchTerms: (terms: string[]) => void;
 }
 
-const AICardsContext = createContext<AICardsContextType | undefined>(undefined);
-
-export const useAICardsContext = () => {
-  const context = useContext(AICardsContext);
-  if (context === undefined) {
-    throw new Error("useCardsContext must be used within a AICardsProvider");
-  }
-  return context;
-};
+export const AICardsContext = createContext<AICardsContextType | undefined>(
+  undefined
+);
 
 export const AICardsProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
