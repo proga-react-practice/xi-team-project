@@ -21,7 +21,6 @@ export interface Card {
 export const CardComponent: React.FC<{ card: Card }> = ({ card }) => {
   const theme = useTheme();
   const { deleteCard, setEditingCard, editingCard } = useCardsContext();
-  // const [isEditing, setIsEditing] = useState(false);
 
   const handleCancel = () => {
     setEditingCard(null);
