@@ -5,16 +5,14 @@ import StyleIcon from "@mui/icons-material/Style";
 import { useTheme } from "@mui/material/styles";
 import Form from "../components/Games/Form";
 import CardsList from "../components/Games/Cards";
-import {
-  CardsProvider,
-  useCardsContext,
-} from "../components/context/GamesCardsContextProvider";
+import { CardsProvider } from "../components/context/GamesCardsContextProvider";
 import { HEADER_HEIGHT } from "../constants";
+import { useGamesCardsContext } from "../components/context/useGamesCardsContext";
 
 const GamesContent = () => {
   const theme = useTheme();
   const { searchQuery, setSearchQuery, searchTerms, setSearchTerms } =
-    useCardsContext();
+    useGamesCardsContext();
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const query = event.target.value;

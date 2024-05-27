@@ -8,7 +8,7 @@ import StyleIcon from "@mui/icons-material/Style";
 import { useTheme } from "@mui/material/styles";
 import { nanoid } from "nanoid";
 import { HEADER_HEIGHT } from "../constants";
-import { useAICardsContext } from "../components/context/AICardsContextProvider";
+import { useAICardsContext } from "../components/context/useAICardsContext";
 
 export default function App() {
   const theme = useTheme();
